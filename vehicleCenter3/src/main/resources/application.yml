@@ -1,0 +1,14 @@
+netty:
+  port: 80
+  read-timeout: 15 #读超时 15分钟
+  threads:
+    boss: 1
+    worker: 4
+    business: 20 #业务线程数量
+spring:   
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/eshop?serverTimezone=UTC&allowMultiQueries=true
+    username: root
+    password: yjys136
