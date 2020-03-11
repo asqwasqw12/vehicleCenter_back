@@ -28,3 +28,10 @@ spring:
       pool-prepared-statements: true
       max-open-prepared-statements: 50
       max-pool-prepared-statement-per-connection-size: 20
+# 文件存储路径
+file:
+  path: C:\vehicleCenter\file\
+  avatar: C:\vehicleCenter\avatar\
+  # 文件大小 /M
+  maxSize: 100
+  avatarMaxSize: 5      
