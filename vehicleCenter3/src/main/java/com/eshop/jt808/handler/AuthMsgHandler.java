@@ -11,17 +11,16 @@ import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
 
+
 @Slf4j
 @Component
 @ChannelHandler.Sharable
-public class AuthMsgHandler extends BaseHandler<AuthMsg> {
-	
+public class AuthMsgHandler extends BaseHandler<AuthMsg>{
 	@Autowired
     private ChannelManager channelManager;
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, AuthMsg msg) throws Exception {
         //log.debug(msg.toString());
-    	System.out.println("msg:"+msg.toString());
         channelManager.add(msg.getHeader().getTerminalPhone(), ctx.channel());
         CommonRespMsg resp = CommonRespMsg.success(msg, getSerialNumber(ctx.channel()));
         write(ctx,resp);

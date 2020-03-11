@@ -5,6 +5,7 @@ import org.springframework.beans.BeanUtils;
 import com.eshop.jt808.pojo.req.LocationMsg;
 
 public class Location  {
+	private Long id;
 	private String terminalPhone; // 终端手机号
     private Integer alarm;       // 告警信息
     private Integer statusField; //状态
@@ -14,6 +15,14 @@ public class Location  {
     private Short speed;		//速度
     private Short direction;	//方向
     private String time;		//时间
+    
+    public void setId(Long id) {
+    	this.id = id;
+    }
+    
+    public Long getId() {
+    	return this.id;
+    }
     
     public void setTerminalPhone(String terminalPhone) {
     	this.terminalPhone = terminalPhone;

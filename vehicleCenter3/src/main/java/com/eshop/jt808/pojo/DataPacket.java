@@ -1,5 +1,7 @@
 package com.eshop.jt808.pojo;
 
+import java.util.Arrays;
+
 import org.apache.commons.lang3.StringUtils;
 
 import com.eshop.jt808.config.JT808Const;
@@ -97,6 +99,15 @@ public class DataPacket {
 	     * @return
 	     */
 	    public String readString(int length) {
+	    	System.out.println("length:"+length);
+	    	byte[] bytes = { 49,50,51,52,53};
+	    	System.out.println("bytes:"+Arrays.toString(bytes));
+	    	byte[] byteSuccess = "success".getBytes();
+	    	System.out.println("byteSuccess:"+Arrays.toString(byteSuccess));
+	    	String strSuccess =new String(byteSuccess,JT808Const.DEFAULT_CHARSET);
+	    	System.out.println("strSuccess:"+strSuccess);
+	    	String str = new String(bytes,JT808Const.DEFAULT_CHARSET);
+	    	System.out.println("test:"+str);
 	       return new String(readBytes(length),JT808Const.DEFAULT_CHARSET);
 	    }
 }

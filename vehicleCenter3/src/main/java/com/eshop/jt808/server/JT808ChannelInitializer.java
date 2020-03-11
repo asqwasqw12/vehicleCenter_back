@@ -15,7 +15,6 @@ import com.eshop.jt808.handler.CancellationMsgHandler;
 import com.eshop.jt808.handler.HeartBeatMsgHandler;
 import com.eshop.jt808.handler.LocationMsgHandler;
 import com.eshop.jt808.handler.RegisterMsgHandler;
-
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;

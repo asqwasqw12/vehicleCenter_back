@@ -18,7 +18,7 @@ public class CancellationMsgHandler extends BaseHandler<CancellationMsg> {
 	 @Override
 	    protected void channelRead0(ChannelHandlerContext ctx, CancellationMsg msg) throws Exception {
 		//log.debug(msg.toString());
-	    	System.out.println("msg:"+msg.toString());
+	    	System.out.println("CancellationMsgHandler.msg:"+msg.toString());
 	        CommonRespMsg resp = CommonRespMsg.success(msg, getSerialNumber(ctx.channel()));
 	        write(ctx,resp);
 	    }

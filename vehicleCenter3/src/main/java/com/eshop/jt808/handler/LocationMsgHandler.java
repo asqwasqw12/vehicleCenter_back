@@ -29,7 +29,7 @@ public class LocationMsgHandler extends BaseHandler<LocationMsg>{
 	@Override
     protected void channelRead0(ChannelHandlerContext ctx, LocationMsg msg) throws Exception {
         //log.debug(msg.toString());
-		System.out.println("msg:"+msg.toString());
+		System.out.println("LocationMsgHandler.msg:"+msg.toString());
 		locationService.saveLocation(Location.parseFromLocationMsg(msg));
         CommonRespMsg resp = CommonRespMsg.success(msg, getSerialNumber(ctx.channel()));
         workerGroup.execute(() -> write(ctx, resp));//直接write是由businessGroup执行，换成workerGroup写可以少一些判断逻辑，略微提升性能

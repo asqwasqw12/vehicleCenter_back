@@ -24,7 +24,7 @@ import io.netty.util.ReferenceCountUtil;
 public class JT808Decoder extends ByteToMessageDecoder {
 	@Override
     protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) {
-        System.out.println("<<<<< ip:"+ctx.channel().remoteAddress()+"hex:"+ByteBufUtil.hexDump(in));
+        System.out.println("decode<<<<< ip:"+ctx.channel().remoteAddress()+"hex:"+ByteBufUtil.hexDump(in));
         DataPacket msg = decode(in);
         if (msg != null) {
             out.add(msg);
@@ -38,6 +38,7 @@ public class JT808Decoder extends ByteToMessageDecoder {
         //转义
         byte[] raw = new byte[in.readableBytes()];
         in.readBytes(raw);
+        System.out.println("raw:"+raw);
         ByteBuf escape = revert(raw);
         //校验
         byte pkgCheckSum = escape.getByte(escape.writerIndex() - 1);
@@ -74,6 +75,7 @@ public class JT808Decoder extends ByteToMessageDecoder {
                 buf.writeByte(raw[i]);
             }
         }
+        System.out.println("buf:"+buf);
         return buf;
     }
 

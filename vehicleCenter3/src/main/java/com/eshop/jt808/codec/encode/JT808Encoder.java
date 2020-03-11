@@ -7,6 +7,7 @@ import com.eshop.jt808.util.JT808Util;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
 import io.netty.buffer.ByteBufUtil;
+import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToByteEncoder;
 import io.netty.util.ReferenceCountUtil;
@@ -19,7 +20,7 @@ public class JT808Encoder extends MessageToByteEncoder<DataPacket>{
 	 @Override
 	    protected void encode(ChannelHandlerContext ctx, DataPacket msg, ByteBuf out) throws Exception {
 	        //log.debug(msg.toString());
-		    System.out.println("msg.toString="+msg.toString());
+		    System.out.println("encode.msg"+msg.toString());
 	        ByteBuf bb = msg.toByteBufMsg();
 	        bb.markWriterIndex();//标记一下，先到前面去写覆盖的，然后回到标记写校验码
 	        short bodyLen = (short) (bb.readableBytes() - 12);//包体长度=总长度-头部长度
