@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 @Configuration
-@MapperScan(basePackages = {"com.eshop.dao","com.eshop.jt808.dao"})  //扫描DAO
+@MapperScan(basePackages = {"com.eshop.dao","com.eshop.jt808.dao","com.eshop.sys.dao"})  //扫描DAO
 public class MybatisConfig {
   @Autowired
   private DataSource dataSource;
@@ -20,7 +20,7 @@ public class MybatisConfig {
   public SqlSessionFactory sqlSessionFactory() throws Exception {
     SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
     sessionFactory.setDataSource(dataSource);
-    sessionFactory.setTypeAliasesPackage("com.eshop.**.model");    // 扫描Model
+    sessionFactory.setTypeAliasesPackage("com.eshop.**.pojo");    // 扫描pojo
     
     PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
     sessionFactory.setMapperLocations(resolver.getResources("classpath*:**/sqlmap/*.xml"));    // 扫描映射文件
