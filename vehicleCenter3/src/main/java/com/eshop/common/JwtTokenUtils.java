@@ -51,6 +51,7 @@ public class JwtTokenUtils implements Serializable {
 	 * @return 令牌
 	 */
 	public static String generateToken(Authentication authentication) {
+		System.out.println("开始生成claim...");
 	    Map<String, Object> claims = new HashMap<>(3);
 	    claims.put(USERNAME, SecurityUtils.getUsername(authentication));
 	    claims.put(CREATED, new Date());
@@ -65,6 +66,7 @@ public class JwtTokenUtils implements Serializable {
      * @return 令牌
      */
     private static String generateToken(Map<String, Object> claims) {
+    	System.out.println("开始生成token。。。");
         Date expirationDate = new Date(System.currentTimeMillis() + EXPIRE_TIME);
         return Jwts.builder().setClaims(claims).setExpiration(expirationDate).signWith(SignatureAlgorithm.HS512, SECRET).compact();
     }

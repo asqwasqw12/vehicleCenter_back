@@ -26,10 +26,13 @@ public class SecurityUtils {
 		JwtAuthenticatioToken token = new JwtAuthenticatioToken(username, password);
 		token.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 		// 执行登录认证过程
+		System.out.println("执行登录认证过程...");
 	    Authentication authentication = authenticationManager.authenticate(token);
 	    // 认证成功存储认证信息到上下文
+	    System.out.println("认证成功存储认证信息到上下文...");
 	    SecurityContextHolder.getContext().setAuthentication(authentication);
 		// 生成令牌并返回给客户端
+	    System.out.println("生成令牌并返回给客户端...");
 	    token.setToken(JwtTokenUtils.generateToken(authentication));
 		return token;
 	}

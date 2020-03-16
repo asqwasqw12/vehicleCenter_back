@@ -9,6 +9,8 @@ public class SysUser extends BaseModel {
     private String name;
 
     private String nickName;
+    
+    private String realName;
 
     private String avatar;
 
@@ -43,6 +45,12 @@ public class SysUser extends BaseModel {
 	}
 	public void setNickName(String nickName) {
 		this.nickName = nickName;
+	}
+	public String getRealName() {
+		return realName;
+	}
+	public void setRealName(String realName) {
+		this.realName = realName;
 	}
 	public String getAvatar() {
 		return avatar;
