@@ -12,9 +12,8 @@ import com.eshop.sys.pojo.SysUserRole;
 
 
 
-public interface SysUserService {
+public interface SysUserService extends CurdService<SysUser> {
 	
-	public SysUser findById(Long id);
 	
 	public SysUser findByName(String username);
 
@@ -30,7 +29,7 @@ public interface SysUserService {
 	 * @param userName
 	 * @return
 	 */
-	//List<SysUserRole> findUserRoles(Long userId);
+	List<SysUserRole> findUserRoles(Long userId);
 
 	/**
 	 * 生成用户信息Excel文件

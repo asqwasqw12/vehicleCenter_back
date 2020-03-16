@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.eshop.sys.dao.SysUserDao;
+import com.eshop.sys.dao.SysUserRoleDao;
 import com.eshop.sys.pojo.SysUser;
 import com.eshop.sys.pojo.SysUserRole;
 import com.eshop.sys.service.SysUserService;
@@ -17,6 +18,7 @@ import com.eshop.sys.service.SysUserService;
 public class SysUserServiceImpl implements SysUserService {
  
 	@Autowired SysUserDao sysUserDao;
+	@Autowired SysUserRoleDao sysUserRoleDao;
 	
 	@Override
 	public SysUser findById(Long id) {
@@ -43,4 +45,27 @@ public class SysUserServiceImpl implements SysUserService {
 	 * @Override public List<SysUserRole> findUserRoles(Long userId) { // TODO
 	 * Auto-generated method stub return null; }
 	 */
+
+	@Override
+	public int save(SysUser record) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int delete(SysUser record) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int delete(List<SysUser> records) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public List<SysUserRole> findUserRoles(Long userId) {
+		return sysUserRoleDao.findUserRoles(userId);
+	}
 }
