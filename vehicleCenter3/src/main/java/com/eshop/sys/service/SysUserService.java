@@ -6,7 +6,6 @@ import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.eshop.sys.dao.SysUserDao;
 import com.eshop.sys.pojo.SysUser;
 import com.eshop.sys.pojo.SysUserRole;
 
@@ -15,7 +14,7 @@ import com.eshop.sys.pojo.SysUserRole;
 public interface SysUserService extends CurdService<SysUser> {
 	
 	
-	public SysUser findByName(String username);
+	SysUser findByName(String username);
 
 	/**
 	 * 查找用户的菜单权限标识集合
@@ -37,5 +36,6 @@ public interface SysUserService extends CurdService<SysUser> {
 	 * @return
 	 */
 	//File createUserExcelFile(PageRequest pageRequest);
+
 
 }

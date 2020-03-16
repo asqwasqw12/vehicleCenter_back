@@ -22,6 +22,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		System.out.println("执行UserDetails loadUserByUsername...");
 		SysUser user = sysUserService.findByName(username);
         if (user == null) {
             throw new UsernameNotFoundException("该用户不存在");
@@ -29,6 +30,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         // 用户权限列表，根据用户拥有的权限标识与如 @PreAuthorize("hasAuthority('sys:menu:view')") 标注的接口对比，决定是否可以调用接口
         Set<String> permissions = sysUserService.findPermissions(user.getName());
         List<GrantedAuthority> grantedAuthorities = permissions.stream().map(GrantedAuthorityImpl::new).collect(Collectors.toList());
+        for(GrantedAuthority authority:grantedAuthorities) {
+        System.out.println("Authority:"+authority.getAuthority());
+        }
         return new JwtUserDetails(user.getName(), user.getPassword(), user.getSalt(), grantedAuthorities);
 	}
 
