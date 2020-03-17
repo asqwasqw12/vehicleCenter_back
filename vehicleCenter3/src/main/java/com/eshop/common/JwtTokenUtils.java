@@ -42,8 +42,8 @@ public class JwtTokenUtils implements Serializable {
     /**
      * 有效期12小时
      */
-    private static final long EXPIRE_TIME = 12 * 60 * 60 * 1000;
-
+   // private static final long EXPIRE_TIME = 12 * 60 * 60 * 1000;
+    private static final long EXPIRE_TIME = 1 * 60 * 1000;
     /**
 	 * 生成令牌
 	 *
@@ -83,6 +83,7 @@ public class JwtTokenUtils implements Serializable {
 	        Claims claims = getClaimsFromToken(token);
 	        username = claims.getSubject();
 	    } catch (Exception e) {
+	    	System.out.println("解析token错误");
 	        username = null;
 	    }
 	    return username;
@@ -111,6 +112,7 @@ public class JwtTokenUtils implements Serializable {
 					return null;
 				}
 				if(isTokenExpired(token)) {
+					System.out.println("token过期");
 					return null;
 				}
 				Object authors = claims.get(AUTHORITIES);
@@ -122,8 +124,11 @@ public class JwtTokenUtils implements Serializable {
 				}
 				authentication = new JwtAuthenticatioToken(username, null, authorities, token);
 			} else {
+				System.out.println("authentication.Username="+SecurityUtils.getUsername());
+				System.out.println("解析token的Username="+getUsernameFromToken(token));
 				if(validateToken(token, SecurityUtils.getUsername())) {
 					// 如果上下文中Authentication非空，且请求令牌合法，直接返回当前登录认证信息
+					System.out.println("authentication.Username="+SecurityUtils.getUsername());
 					authentication = SecurityUtils.getAuthentication();
 				}
 			}
@@ -155,7 +160,12 @@ public class JwtTokenUtils implements Serializable {
 	 */
 	public static Boolean validateToken(String token, String username) {
 	    String userName = getUsernameFromToken(token);
-	    return (userName.equals(username) && !isTokenExpired(token));
+	    //如果解析令牌无误
+	    if(userName !=null) {
+	       return userName.equals(username);
+	    }else {
+	    	return false;
+	    }
 	}
 
 	/**

@@ -6,6 +6,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,6 +18,7 @@ import com.eshop.common.SecurityUtils;
 import com.eshop.sys.pojo.LoginBean;
 import com.eshop.sys.pojo.SysUser;
 import com.eshop.sys.security.JwtAuthenticatioToken;
+import com.eshop.sys.security.JwtUserDetails;
 import com.eshop.sys.service.SysUserService;
 
 
@@ -25,6 +28,9 @@ public class SysLoginController {
 	
 	@Autowired
 	private SysUserService sysUserService;
+	
+	@Autowired
+	UserDetailsService userDetailsService;
 	
 	@Autowired
 	private AuthenticationManager authenticationManager;
@@ -51,7 +57,20 @@ public class SysLoginController {
 		System.out.println("开始系统登录认证。。。");
 		// 系统登录认证
 		JwtAuthenticatioToken token = SecurityUtils.login(request, username, password, authenticationManager);
-		return HttpResult.ok(token);
+		return HttpResult.ok(token,"ok");
 	}
 
+	@GetMapping("/getInfo")
+	public HttpResult getInfo() {
+		String userName = SecurityUtils.getUsername();
+		System.out.println("用户名："+userName);
+		if(userName != null)
+		{
+		JwtUserDetails jwtUser =  (JwtUserDetails) userDetailsService.loadUserByUsername(userName);
+		return HttpResult.ok(jwtUser);
+		}else {
+			return HttpResult.error("用户令牌过期或者错误");
+		}
+	}
+	
 }

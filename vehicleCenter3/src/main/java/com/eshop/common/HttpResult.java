@@ -6,7 +6,7 @@ package com.eshop.common;
 public class HttpResult {
 
 		private int code = 200;
-		private String msg;
+		private String msg = "ok";
 		private Object data;
 		
 		public static HttpResult error() {
