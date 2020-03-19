@@ -39,6 +39,7 @@ public class SysMenuController {
 	@PreAuthorize("hasAuthority('sys:menu:view')")
 	@GetMapping(value="/findNavTree")
 	public HttpResult findNavTree(@RequestParam String userName) {
+		System.out.println("响应菜单树查询...");
 		return HttpResult.ok(sysMenuService.findTree(userName, 1));
 	}
 	

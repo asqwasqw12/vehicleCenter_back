@@ -43,8 +43,10 @@ public class SecurityUtils {
 	 */
 	public static void checkAuthentication(HttpServletRequest request) {
 		// 获取令牌并根据令牌获取登录认证信息
+		System.out.println("获取令牌并根据令牌获取登录认证信息。。。");
 		Authentication authentication = JwtTokenUtils.getAuthenticationeFromToken(request);
 		// 设置登录认证信息到上下文
+		System.out.println("设置登录认证信息到上下文。。。");
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 	}
 

@@ -57,7 +57,7 @@ public class SysLoginController {
 		System.out.println("开始系统登录认证。。。");
 		// 系统登录认证
 		JwtAuthenticatioToken token = SecurityUtils.login(request, username, password, authenticationManager);
-		return HttpResult.ok(token,"ok");
+		return HttpResult.ok(token);
 	}
 
 	@GetMapping("/getInfo")

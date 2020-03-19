@@ -43,7 +43,7 @@ public class JwtTokenUtils implements Serializable {
      * 有效期12小时
      */
    // private static final long EXPIRE_TIME = 12 * 60 * 60 * 1000;
-    private static final long EXPIRE_TIME = 1 * 60 * 1000;
+    private static final long EXPIRE_TIME = 10 * 60 * 1000;
     /**
 	 * 生成令牌
 	 *
@@ -122,6 +122,7 @@ public class JwtTokenUtils implements Serializable {
 						authorities.add(new GrantedAuthorityImpl((String) ((Map) object).get("authority")));
 					}
 				}
+				System.out.println("生成authentication。。。");
 				authentication = new JwtAuthenticatioToken(username, null, authorities, token);
 			} else {
 				System.out.println("authentication.Username="+SecurityUtils.getUsername());

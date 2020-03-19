@@ -11,6 +11,8 @@ public class SysMenu extends BaseModel {
 	    private String name;
 
 	    private String url;
+	    
+	    private String location;
 
 	    private String perms;
 
@@ -51,6 +53,14 @@ public class SysMenu extends BaseModel {
 
 		public void setUrl(String url) {
 			this.url = url;
+		}
+		
+		public String getLocation() {
+			return location;
+		}
+
+		public void setLocation(String location) {
+			this.location = location;
 		}
 
 		public String getPerms() {

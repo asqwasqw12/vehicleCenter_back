@@ -207,7 +207,8 @@ CREATE TABLE `sys_menu` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '编号',
   `name` varchar(50) DEFAULT NULL COMMENT '菜单名称',
   `parent_id` bigint(20) DEFAULT NULL COMMENT '父菜单ID，一级菜单为0',
-  `url` varchar(200) DEFAULT NULL COMMENT '菜单URL,类型：1.普通页面（如用户管理， /sys/user） 2.嵌套完整外部页面，以http(s)开头的链接 3.嵌套服务器页面，使用iframe:前缀+目标URL(如SQL监控， iframe:/druid/login.html, iframe:前缀会替换成服务器地址)',
+  `url` varchar(200) DEFAULT NULL COMMENT '菜单URL,类型：1.普通页面（如用户管理， /user） 2.嵌套完整外部页面，以http(s)开头的链接 3.嵌套服务器页面，使用iframe:前缀+目标URL(如SQL监控， iframe:/druid/login.html, iframe:前缀会替换成服务器地址)',
+  `location` varchar(200) DEFAULT NULL COMMENT '菜单location,vue组件位置',
   `perms` varchar(500) DEFAULT NULL COMMENT '授权(多个用逗号分隔，如：sys:user:add,sys:user:edit)',
   `type` int(11) DEFAULT NULL COMMENT '类型   0：目录   1：菜单   2：按钮',
   `icon` varchar(50) DEFAULT NULL COMMENT '菜单图标',
@@ -223,61 +224,61 @@ CREATE TABLE `sys_menu` (
 -- ----------------------------
 -- Records of sys_menu
 -- ----------------------------
-INSERT INTO `sys_menu` VALUES ('1', '系统管理', '0', null, null, '0', 'el-icon-setting', '0', null, null, null, null, '0');
-INSERT INTO `sys_menu` VALUES ('2', '用户管理', '1', '/sys/user', null, '1', 'el-icon-service', '1', null, null, null, null, '0');
-INSERT INTO `sys_menu` VALUES ('3', '查看', '2', null, 'sys:user:view', '2', null, '0', null, null, null, null, '0');
-INSERT INTO `sys_menu` VALUES ('4', '新增', '2', null, 'sys:user:add', '2', null, '0', null, null, null, null, '0');
-INSERT INTO `sys_menu` VALUES ('5', '修改', '2', null, 'sys:user:edit', '2', null, '0', null, null, null, null, '0');
-INSERT INTO `sys_menu` VALUES ('6', '删除', '2', null, 'sys:user:delete', '2', null, '0', null, null, null, null, '0');
-INSERT INTO `sys_menu` VALUES ('7', '单位管理', '1', '/sys/dept', null, '1', 'el-icon-news', '2', null, null, null, null, '0');
-INSERT INTO `sys_menu` VALUES ('8', '查看', '7', null, 'sys:dept:view', '2', null, '0', null, null, null, null, '0');
-INSERT INTO `sys_menu` VALUES ('9', '新增', '7', null, 'sys:dept:add', '2', null, '0', null, null, null, null, '0');
-INSERT INTO `sys_menu` VALUES ('10', '修改', '7', null, 'sys:dept:edit', '2', null, '0', null, null, null, null, '0');
-INSERT INTO `sys_menu` VALUES ('11', '删除', '7', null, 'sys:dept:delete', '2', null, '0', null, null, null, null, '0');
-INSERT INTO `sys_menu` VALUES ('12', '角色管理', '1', '/sys/role', null, '1', 'el-icon-view', '4', null, null, null, null, '0');
-INSERT INTO `sys_menu` VALUES ('13', '查看', '12', null, 'sys:role:view', '2', null, '0', null, null, null, null, '0');
-INSERT INTO `sys_menu` VALUES ('14', '新增', '12', null, 'sys:role:add', '2', null, '0', null, null, null, null, '0');
-INSERT INTO `sys_menu` VALUES ('15', '修改', '12', null, 'sys:role:edit', '2', null, '0', null, null, null, null, '0');
-INSERT INTO `sys_menu` VALUES ('16', '删除', '12', null, 'sys:role:delete', '2', null, '0', null, null, null, null, '0');
-INSERT INTO `sys_menu` VALUES ('17', '菜单管理', '1', '/sys/menu', null, '1', 'el-icon-menu', '5', null, null, null, null, '0');
-INSERT INTO `sys_menu` VALUES ('18', '查看', '17', null, 'sys:menu:view', '2', null, '0', null, null, null, null, '0');
-INSERT INTO `sys_menu` VALUES ('19', '新增', '17', null, 'sys:menu:add', '2', null, '0', null, null, null, null, '0');
-INSERT INTO `sys_menu` VALUES ('20', '修改', '17', null, 'sys:menu:edit', '2', null, '0', null, null, null, null, '0');
-INSERT INTO `sys_menu` VALUES ('21', '删除', '17', null, 'sys:menu:delete', '2', null, '0', null, null, null, null, '0');
-INSERT INTO `sys_menu` VALUES ('22', '字典管理', '1', '/sys/dict', null, '1', 'el-icon-edit-outline', '7', null, null, null, null, '0');
-INSERT INTO `sys_menu` VALUES ('23', '查看', '22', null, 'sys:dict:view', '2', null, '0', null, null, null, null, '0');
-INSERT INTO `sys_menu` VALUES ('24', '新增', '22', null, 'sys:dict:add', '2', null, '0', null, null, null, null, '0');
-INSERT INTO `sys_menu` VALUES ('25', '修改', '22', null, 'sys:dict:edit', '2', null, '0', null, null, null, null, '0');
-INSERT INTO `sys_menu` VALUES ('26', '删除', '22', null, 'sys:dict:delete', '2', null, '0', null, null, null, null, '0');
-INSERT INTO `sys_menu` VALUES ('27', '系统配置', '1', '/sys/config', null, '1', 'el-icon-edit-outline', '7', null, null, null, null, '0');
-INSERT INTO `sys_menu` VALUES ('28', '查看', '27', null, 'sys:config:view', '2', null, '0', null, null, null, null, '0');
-INSERT INTO `sys_menu` VALUES ('29', '新增', '27', null, 'sys:config:add', '2', null, '0', null, null, null, null, '0');
-INSERT INTO `sys_menu` VALUES ('30', '修改', '27', null, 'sys:config:edit', '2', null, '0', null, null, null, null, '0');
-INSERT INTO `sys_menu` VALUES ('31', '删除', '27', null, 'sys:config:delete', '2', null, '0', null, null, null, null, '0');
-INSERT INTO `sys_menu` VALUES ('32', '登录日志', '1', '/sys/loginlog', null, '1', 'el-icon-info', '8', null, null, 'admin', '2018-09-23 19:32:28', '0');
-INSERT INTO `sys_menu` VALUES ('33', '查看', '32', null, 'sys:loginlog:view', '2', null, '0', null, null, null, null, '0');
-INSERT INTO `sys_menu` VALUES ('34', '删除', '32', null, 'sys:loginlog:delete', '2', null, '0', null, null, null, null, '0');
-INSERT INTO `sys_menu` VALUES ('35', '操作日志', '1', '/sys/log', null, '1', 'el-icon-info', '8', null, null, 'admin', '2018-09-23 19:32:28', '0');
-INSERT INTO `sys_menu` VALUES ('36', '查看', '35', null, 'sys:log:view', '2', null, '0', null, null, null, null, '0');
-INSERT INTO `sys_menu` VALUES ('37', '删除', '35', null, 'sys:log:delete', '2', null, '0', null, null, null, null, '0');
-INSERT INTO `sys_menu` VALUES ('38', '系统监控', '0', '', '', '0', 'el-icon-info', '4', 'admin', '2018-12-27 10:57:29', 'admin', '2019-01-10 17:31:04', '0');
-INSERT INTO `sys_menu` VALUES ('39', '数据监控', '38', 'http://127.0.0.1:8001/druid/login.html', null, '1', 'el-icon-warning', '0', null, null, 'admin', '2018-12-27 11:03:45', '0');
-INSERT INTO `sys_menu` VALUES ('40', '查看', '39', null, 'sys:druid:view', '2', null, '0', null, null, null, null, '0');
-INSERT INTO `sys_menu` VALUES ('41', '服务监控', '38', 'http://127.0.0.1:8000/', null, '1', 'el-icon-view', '1', 'admin', '2018-11-02 20:02:15', 'admin', '2018-12-27 11:03:53', '0');
-INSERT INTO `sys_menu` VALUES ('42', '查看', '41', null, 'sys:monitor:view', '2', null, '0', null, null, null, null, '0');
-INSERT INTO `sys_menu` VALUES ('43', '服务治理', '0', '', '', '0', 'el-icon-service', '2', 'admin', '2018-12-27 11:05:48', 'admin', '2018-12-27 11:06:39', '0');
-INSERT INTO `sys_menu` VALUES ('44', '注册中心', '43', 'http://127.0.0.1:8500', null, '1', ' el-icon-view', '0', 'admin', '2018-11-03 11:06:48', 'admin', '2018-12-27 11:08:11', '0');
-INSERT INTO `sys_menu` VALUES ('45', '查看', '44', null, 'sys:consul:view', '2', null, '0', null, null, null, null, '0');
-INSERT INTO `sys_menu` VALUES ('46', '接口文档', '0', 'http://127.0.0.1:8001/swagger-ui.html', null, '1', 'el-icon-document', '3', null, null, 'admin', '2018-12-27 11:04:18', '0');
-INSERT INTO `sys_menu` VALUES ('47', '查看', '46', null, 'sys:swagger:view', '2', null, '0', null, null, null, null, '0');
-INSERT INTO `sys_menu` VALUES ('49', '查看', '48', null, 'sys:generator:view', '2', null, '0', null, null, null, null, '0');
-INSERT INTO `sys_menu` VALUES ('50', '在线用户', '0', '/sys/online', '', '1', 'el-icon-view', '5', 'admin', '2018-11-15 14:39:30', 'admin', '2018-11-15 14:56:18', '0');
-INSERT INTO `sys_menu` VALUES ('51', '查看', '50', null, 'sys:online:view', '2', null, '0', null, null, null, null, '0');
-INSERT INTO `sys_menu` VALUES ('52', '使用案例', '0', null, null, '0', 'el-icon-picture-outline', '6', null, null, 'admin', '2018-11-15 14:39:43', '0');
-INSERT INTO `sys_menu` VALUES ('53', '国际化', '52', '/demo/i18n', null, '1', 'el-icon-edit', '1', null, null, null, null, '0');
-INSERT INTO `sys_menu` VALUES ('54', '查看', '53', null, 'sys:dict:view', '2', null, '0', null, null, null, null, '0');
-INSERT INTO `sys_menu` VALUES ('55', '换皮肤', '52', '/demo/theme', null, '1', 'el-icon-picture', '2', null, null, null, null, '0');
-INSERT INTO `sys_menu` VALUES ('56', '查看', '55', null, 'sys:dict:view', '2', null, '0', null, null, null, null, '0');
+INSERT INTO `sys_menu` VALUES ('1', '系统管理', '0', null,null, null, '0', 'el-icon-setting', '0', null, null, null, null, '0');
+INSERT INTO `sys_menu` VALUES ('2', '用户管理', '1', '/sys/user',null, null, '1', 'el-icon-service', '1', null, null, null, null, '0');
+INSERT INTO `sys_menu` VALUES ('3', '查看', '2', null,null, 'sys:user:view', '2', null, '0', null, null, null, null, '0');
+INSERT INTO `sys_menu` VALUES ('4', '新增', '2', null,null, 'sys:user:add', '2', null, '0', null, null, null, null, '0');
+INSERT INTO `sys_menu` VALUES ('5', '修改', '2', null,null, 'sys:user:edit', '2', null, '0', null, null, null, null, '0');
+INSERT INTO `sys_menu` VALUES ('6', '删除', '2', null,null, 'sys:user:delete', '2', null, '0', null, null, null, null, '0');
+INSERT INTO `sys_menu` VALUES ('7', '单位管理', '1', '/sys/dept',null, null, '1', 'el-icon-news', '2', null, null, null, null, '0');
+INSERT INTO `sys_menu` VALUES ('8', '查看', '7', null,null, 'sys:dept:view', '2', null, '0', null, null, null, null, '0');
+INSERT INTO `sys_menu` VALUES ('9', '新增', '7', null, null,'sys:dept:add', '2', null, '0', null, null, null, null, '0');
+INSERT INTO `sys_menu` VALUES ('10', '修改', '7', null,null, 'sys:dept:edit', '2', null, '0', null, null, null, null, '0');
+INSERT INTO `sys_menu` VALUES ('11', '删除', '7', null,null, 'sys:dept:delete', '2', null, '0', null, null, null, null, '0');
+INSERT INTO `sys_menu` VALUES ('12', '角色管理', '1', '/sys/role',null, null, '1', 'el-icon-view', '4', null, null, null, null, '0');
+INSERT INTO `sys_menu` VALUES ('13', '查看', '12', null,null, 'sys:role:view', '2', null, '0', null, null, null, null, '0');
+INSERT INTO `sys_menu` VALUES ('14', '新增', '12', null,null, 'sys:role:add', '2', null, '0', null, null, null, null, '0');
+INSERT INTO `sys_menu` VALUES ('15', '修改', '12', null,null, 'sys:role:edit', '2', null, '0', null, null, null, null, '0');
+INSERT INTO `sys_menu` VALUES ('16', '删除', '12', null,null, 'sys:role:delete', '2', null, '0', null, null, null, null, '0');
+INSERT INTO `sys_menu` VALUES ('17', '菜单管理', '1', '/sys/menu',null, null, '1', 'el-icon-menu', '5', null, null, null, null, '0');
+INSERT INTO `sys_menu` VALUES ('18', '查看', '17', null,null, 'sys:menu:view', '2', null, '0', null, null, null, null, '0');
+INSERT INTO `sys_menu` VALUES ('19', '新增', '17', null,null, 'sys:menu:add', '2', null, '0', null, null, null, null, '0');
+INSERT INTO `sys_menu` VALUES ('20', '修改', '17', null,null, 'sys:menu:edit', '2', null, '0', null, null, null, null, '0');
+INSERT INTO `sys_menu` VALUES ('21', '删除', '17', null,null, 'sys:menu:delete', '2', null, '0', null, null, null, null, '0');
+INSERT INTO `sys_menu` VALUES ('22', '字典管理', '1', '/sys/dict',null, null, '1', 'el-icon-edit-outline', '7', null, null, null, null, '0');
+INSERT INTO `sys_menu` VALUES ('23', '查看', '22', null,null, 'sys:dict:view', '2', null, '0', null, null, null, null, '0');
+INSERT INTO `sys_menu` VALUES ('24', '新增', '22', null,null, 'sys:dict:add', '2', null, '0', null, null, null, null, '0');
+INSERT INTO `sys_menu` VALUES ('25', '修改', '22', null,null, 'sys:dict:edit', '2', null, '0', null, null, null, null, '0');
+INSERT INTO `sys_menu` VALUES ('26', '删除', '22', null,null, 'sys:dict:delete', '2', null, '0', null, null, null, null, '0');
+INSERT INTO `sys_menu` VALUES ('27', '系统配置', '1', '/sys/config',null, null, '1', 'el-icon-edit-outline', '7', null, null, null, null, '0');
+INSERT INTO `sys_menu` VALUES ('28', '查看', '27', null,null, 'sys:config:view', '2', null, '0', null, null, null, null, '0');
+INSERT INTO `sys_menu` VALUES ('29', '新增', '27', null,null, 'sys:config:add', '2', null, '0', null, null, null, null, '0');
+INSERT INTO `sys_menu` VALUES ('30', '修改', '27', null,null, 'sys:config:edit', '2', null, '0', null, null, null, null, '0');
+INSERT INTO `sys_menu` VALUES ('31', '删除', '27', null,null, 'sys:config:delete', '2', null, '0', null, null, null, null, '0');
+INSERT INTO `sys_menu` VALUES ('32', '登录日志', '1', '/sys/loginlog',null, null, '1', 'el-icon-info', '8', null, null, 'admin', '2018-09-23 19:32:28', '0');
+INSERT INTO `sys_menu` VALUES ('33', '查看', '32', null,null, 'sys:loginlog:view', '2', null, '0', null, null, null, null, '0');
+INSERT INTO `sys_menu` VALUES ('34', '删除', '32', null,null, 'sys:loginlog:delete', '2', null, '0', null, null, null, null, '0');
+INSERT INTO `sys_menu` VALUES ('35', '操作日志', '1', '/sys/log',null, null, '1', 'el-icon-info', '8', null, null, 'admin', '2018-09-23 19:32:28', '0');
+INSERT INTO `sys_menu` VALUES ('36', '查看', '35', null,null, 'sys:log:view', '2', null, '0', null, null, null, null, '0');
+INSERT INTO `sys_menu` VALUES ('37', '删除', '35', null,null, 'sys:log:delete', '2', null, '0', null, null, null, null, '0');
+INSERT INTO `sys_menu` VALUES ('38', '系统监控', '0', '',null, '', '0', 'el-icon-info', '4', 'admin', '2018-12-27 10:57:29', 'admin', '2019-01-10 17:31:04', '0');
+INSERT INTO `sys_menu` VALUES ('39', '数据监控', '38', 'http://127.0.0.1:8001/druid/login.html',null, null, '1', 'el-icon-warning', '0', null, null, 'admin', '2018-12-27 11:03:45', '0');
+INSERT INTO `sys_menu` VALUES ('40', '查看', '39', null,null, 'sys:druid:view', '2', null, '0', null, null, null, null, '0');
+INSERT INTO `sys_menu` VALUES ('41', '服务监控', '38', 'http://127.0.0.1:8000/',null, null, '1', 'el-icon-view', '1', 'admin', '2018-11-02 20:02:15', 'admin', '2018-12-27 11:03:53', '0');
+INSERT INTO `sys_menu` VALUES ('42', '查看', '41', null, null,'sys:monitor:view', '2', null, '0', null, null, null, null, '0');
+INSERT INTO `sys_menu` VALUES ('43', '服务治理', '0', '', null,'', '0', 'el-icon-service', '2', 'admin', '2018-12-27 11:05:48', 'admin', '2018-12-27 11:06:39', '0');
+INSERT INTO `sys_menu` VALUES ('44', '注册中心', '43', 'http://127.0.0.1:8500',null, null, '1', ' el-icon-view', '0', 'admin', '2018-11-03 11:06:48', 'admin', '2018-12-27 11:08:11', '0');
+INSERT INTO `sys_menu` VALUES ('45', '查看', '44', null,null, 'sys:consul:view', '2', null, '0', null, null, null, null, '0');
+INSERT INTO `sys_menu` VALUES ('46', '接口文档', '0', 'http://127.0.0.1:8001/swagger-ui.html',null, null, '1', 'el-icon-document', '3', null, null, 'admin', '2018-12-27 11:04:18', '0');
+INSERT INTO `sys_menu` VALUES ('47', '查看', '46', null,null, 'sys:swagger:view', '2', null, '0', null, null, null, null, '0');
+INSERT INTO `sys_menu` VALUES ('49', '查看', '48', null,null, 'sys:generator:view', '2', null, '0', null, null, null, null, '0');
+INSERT INTO `sys_menu` VALUES ('50', '在线用户', '0', '/sys/online',null, '', '1', 'el-icon-view', '5', 'admin', '2018-11-15 14:39:30', 'admin', '2018-11-15 14:56:18', '0');
+INSERT INTO `sys_menu` VALUES ('51', '查看', '50', null,null, 'sys:online:view', '2', null, '0', null, null, null, null, '0');
+INSERT INTO `sys_menu` VALUES ('52', '使用案例', '0', null,null, null, '0', 'el-icon-picture-outline', '6', null, null, 'admin', '2018-11-15 14:39:43', '0');
+INSERT INTO `sys_menu` VALUES ('53', '国际化', '52', '/demo/i18n',null, null, '1', 'el-icon-edit', '1', null, null, null, null, '0');
+INSERT INTO `sys_menu` VALUES ('54', '查看', '53', null,null, 'sys:dict:view', '2', null, '0', null, null, null, null, '0');
+INSERT INTO `sys_menu` VALUES ('55', '换皮肤', '52', '/demo/theme',null, null, '1', 'el-icon-picture', '2', null, null, null, null, '0');
+INSERT INTO `sys_menu` VALUES ('56', '查看', '55', null,null, 'sys:dict:view', '2', null, '0', null, null, null, null, '0');
 
 -- ----------------------------
 -- Table structure for sys_role
