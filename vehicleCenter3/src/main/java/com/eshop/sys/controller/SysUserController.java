@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.eshop.common.HttpResult;
 import com.eshop.common.PasswordUtils;
@@ -17,6 +18,8 @@ import com.eshop.common.SecurityUtils;
 import com.eshop.common.SysConstants;
 import com.eshop.sys.pojo.SysUser;
 import com.eshop.sys.service.SysUserService;
+
+import io.swagger.annotations.ApiOperation;
 
 
 
@@ -30,6 +33,7 @@ public class SysUserController {
 	@PreAuthorize("hasAuthority('sys:user:add') AND hasAuthority('sys:user:edit')")
 	@PostMapping(value="/save")
 	public HttpResult save(@RequestBody SysUser record) {
+		System.out.println("user:"+record);
 		SysUser user = sysUserService.findById(record.getId());
 		if(user != null) {
 			if(SysConstants.ADMIN.equalsIgnoreCase(user.getName())) {
@@ -41,7 +45,7 @@ public class SysUserController {
 			if(user == null) {
 				// 新增用户
 				if(sysUserService.findByName(record.getName()) != null) {
-					return HttpResult.error("用户名已存在!");
+					return HttpResult.ok("用户名已存在!");
 				}
 				String password = PasswordUtils.encode(record.getPassword(), salt);
 				record.setSalt(salt);
@@ -120,4 +124,11 @@ public class SysUserController {
 		user.setPassword(PasswordUtils.encode(newPassword, user.getSalt()));
 		return HttpResult.ok(sysUserService.save(user));
 	}
+	
+	@ApiOperation("修改头像")
+    @PostMapping(value = "/updateAvatar")
+    public HttpResult updateAvatar(@RequestParam MultipartFile file){
+        sysUserService.updateAvatar(file);
+        return HttpResult.ok();
+    }
 }

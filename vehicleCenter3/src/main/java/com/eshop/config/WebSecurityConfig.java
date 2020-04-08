@@ -31,6 +31,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
         // 使用自定义身份验证组件
+    	System.out.println("userDetailService="+userDetailsService);
         auth.authenticationProvider(new JwtAuthenticationProvider(userDetailsService));
     }
     
@@ -51,6 +52,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .antMatchers(
                     HttpMethod.GET,
                     "/*.html",
+                    "/*.jpg",
+                    "/avatar/**/*.jpg",
+                    "/avatar/**/*.png",
+                    "/avatar/**/*.gif",
+                    "/avatar/**/*.bmp",
+                    "/avatar/**/*.ico",
+                    "/file/**",
                     "/**/*.html",
                     "/**/*.css",
                     "/**/*.js",

@@ -14,11 +14,11 @@ import org.springframework.stereotype.Service;
 import com.eshop.sys.pojo.SysUser;
 import com.eshop.sys.service.SysUserService;
 
-@Service
+@Service("userDetailsServiceImpl")
 public class UserDetailsServiceImpl implements UserDetailsService {
 	
 	 @Autowired
-	    private SysUserService sysUserService;
+	private SysUserService sysUserService;
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

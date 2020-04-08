@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.eshop.sys.pojo.SysUser;
 import com.eshop.sys.pojo.SysUserRole;
@@ -36,6 +37,9 @@ public interface SysUserService extends CurdService<SysUser> {
 	 * @return
 	 */
 	//File createUserExcelFile(PageRequest pageRequest);
+	
+	//更新用户头像
+	void updateAvatar(MultipartFile file);
 
 
 }

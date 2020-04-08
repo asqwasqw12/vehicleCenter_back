@@ -9,9 +9,15 @@ import java.util.Set;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.eshop.common.FileUtil;
+import com.eshop.common.SecurityUtils;
+import com.eshop.common.StringUtils;
 import com.eshop.sys.dao.SysRoleMapper;
 import com.eshop.sys.dao.SysUserMapper;
 import com.eshop.sys.dao.SysUserRoleMapper;
@@ -34,6 +40,8 @@ public class SysUserServiceImpl implements SysUserService {
 	private SysUserRoleMapper sysUserRoleMapper;
 	@Autowired
 	private SysRoleMapper sysRoleMapper;
+	@Value("${file.avatar}")
+    private String avatar;
 	
 	@Transactional
 	@Override
@@ -148,6 +156,26 @@ public class SysUserServiceImpl implements SysUserService {
 	public List<SysUserRole> findUserRoles(Long userId) {
 		return sysUserRoleMapper.findUserRoles(userId);
 	}
+	
+		@Override
+	    @CacheEvict(allEntries = true)
+	    @Transactional(rollbackFor = Exception.class)
+	    public void updateAvatar(MultipartFile multipartFile) {
+	        SysUser user = sysUserMapper.findByName(SecurityUtils.getUsername());
+	        String userAvatar = user.getAvatar();
+	        String oldPath = "";
+	        if(userAvatar != null){
+	           oldPath = avatar+userAvatar;
+	           System.out.println("oldPath="+oldPath);
+	        }
+	        File file = FileUtil.upload(multipartFile, avatar);
+	        assert file != null;
+	        user.setAvatar(file.getName());
+	        sysUserMapper.updateByPrimaryKeySelective(user);
+	        if(StringUtils.isNotBlank(oldPath)){
+	            FileUtil.del(oldPath);
+	        }
+	    }
 	
 	/*
 	 * @Override public File createUserExcelFile(PageRequest pageRequest) {

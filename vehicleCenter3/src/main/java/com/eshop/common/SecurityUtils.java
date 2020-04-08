@@ -24,6 +24,7 @@ public class SecurityUtils {
 	 */
 	public static JwtAuthenticatioToken login(HttpServletRequest request, String username, String password, AuthenticationManager authenticationManager) {
 		JwtAuthenticatioToken token = new JwtAuthenticatioToken(username, password);
+		
 		token.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 		// 执行登录认证过程
 		System.out.println("执行登录认证过程...");
