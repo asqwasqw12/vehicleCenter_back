@@ -6,6 +6,7 @@
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="nick_name" jdbcType="VARCHAR" property="nickName" />
     <result column="real_name" jdbcType="VARCHAR" property="realName" />
+    <result column="job" jdbcType="VARCHAR" property="job" />
     <result column="avatar" jdbcType="VARCHAR" property="avatar" />
     <result column="password" jdbcType="VARCHAR" property="password" />
     <result column="salt" jdbcType="VARCHAR" property="salt" />
@@ -20,7 +21,7 @@
     <result column="del_flag" jdbcType="TINYINT" property="delFlag" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, name, nick_name,real_name, avatar, password, salt, email, mobile, status, dept_id, create_by, 
+    id, name, nick_name,real_name, job,avatar, password, salt, email, mobile, status, dept_id, create_by, 
     create_time, last_update_by, last_update_time, del_flag
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
@@ -34,14 +35,14 @@
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.eshop.sys.pojo.SysUser">
-    insert into sys_user (id, name, nick_name, real_name,
+    insert into sys_user (id, name, nick_name, real_name,job,
       avatar, password, salt, 
       email, mobile, status, 
       dept_id, create_by, create_time, 
       last_update_by, last_update_time, del_flag
       )
     values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{nickName,jdbcType=VARCHAR},#{realName,jdbcType=VARCHAR}, 
-      #{avatar,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{salt,jdbcType=VARCHAR}, 
+      #{job,jdbcType=VARCHAR},#{avatar,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{salt,jdbcType=VARCHAR}, 
       #{email,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}, 
       #{deptId,jdbcType=BIGINT}, #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
       #{lastUpdateBy,jdbcType=VARCHAR}, #{lastUpdateTime,jdbcType=TIMESTAMP}, #{delFlag,jdbcType=TINYINT}
@@ -61,6 +62,9 @@
       </if>
       <if test="realName != null">
         real_name,
+      </if>
+      <if test="job != null">
+        job,
       </if>
       <if test="avatar != null">
         avatar,
@@ -112,6 +116,9 @@
       <if test="realName != null">
         #{realName,jdbcType=VARCHAR},
       </if>
+      <if test="job != null">
+        #{job,jdbcType=VARCHAR},
+      </if>
       <if test="avatar != null">
         #{avatar,jdbcType=VARCHAR},
       </if>
@@ -162,6 +169,9 @@
       <if test="realName != null">
         real_name = #{realName,jdbcType=VARCHAR},
       </if>
+      <if test="job != null">
+        job = #{job,jdbcType=VARCHAR},
+      </if>
       <if test="avatar != null">
         avatar = #{avatar,jdbcType=VARCHAR},
       </if>
@@ -206,6 +216,7 @@
     set name = #{name,jdbcType=VARCHAR},
       nick_name = #{nickName,jdbcType=VARCHAR},
       real_name = #{reakName,jdbcType=VARCHAR},
+      job = #{job,jdbcType=VARCHAR},
       avatar = #{avatar,jdbcType=VARCHAR},
       password = #{password,jdbcType=VARCHAR},
       salt = #{salt,jdbcType=VARCHAR},

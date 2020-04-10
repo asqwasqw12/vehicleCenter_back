@@ -460,6 +460,8 @@ CREATE TABLE `sys_user` (
   `id` bigint(20) NOT null AUTO_INCREMENT COMMENT '编号',
   `name` varchar(50) NOT null COMMENT '用户名',
   `nick_name` varchar(150) DEFAULT null COMMENT '昵称',
+  `real_name` varchar(150) DEFAULT null COMMENT '真实姓名',
+  `job` varchar(150) DEFAULT null COMMENT '职位',
   `avatar` varchar(150) DEFAULT null COMMENT '头像',
   `password` varchar(100) DEFAULT null COMMENT '密码',
   `salt` varchar(40) DEFAULT null COMMENT '加密盐',
@@ -479,18 +481,18 @@ CREATE TABLE `sys_user` (
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES ('1', 'admin', '超管', null, 'bd1718f058d8a02468134432b8656a86', 'YzcmCZNvbXocrsz9dm8e', 'admin@qq.com', '13612345678', '1', '4', 'admin', '2018-08-14 11:11:11', 'admin', '2018-08-14 11:11:11', '0');
-INSERT INTO `sys_user` VALUES ('22', 'zhangsan1', '张三1', NULL, NULL, 'fd80ebd493a655608dc893a9f897d845', 'YzcmCZNvbXocrsz9dm8e', 'test@qq.com', '13889700023', '1', '7', 'admin', '2018-09-23 19:43:00', 'admin', '2019-01-10 11:41:13', '0');
-INSERT INTO `sys_user` VALUES ('23', 'zhangsan2', '张三2', null, 'fd80ebd493a655608dc893a9f897d845', 'YzcmCZNvbXocrsz9dm8e', 'test@qq.com', '13889700023', '1', '7', 'admin', '2018-09-23 19:43:44', 'admin', '2018-09-23 19:43:52', '0');
-INSERT INTO `sys_user` VALUES ('24', 'zhangsan3', '张三3', null, 'fd80ebd493a655608dc893a9f897d845', 'YzcmCZNvbXocrsz9dm8e', 'test@qq.com', '13889700023', '7', '11', 'admin', '2018-09-23 19:44:23', 'admin', '2018-09-23 19:44:29', '0');
-INSERT INTO `sys_user` VALUES ('25', 'zhangsan4', '张三4', null, 'fd80ebd493a655608dc893a9f897d845', 'YzcmCZNvbXocrsz9dm8e', 'test@qq.com', '13889700023', '1', '8', 'admin', '2018-09-23 19:45:32', 'admin', '2019-01-10 17:59:14', '0');
-INSERT INTO `sys_user` VALUES ('26', 'lisi1', '李四1', null, 'fd80ebd493a655608dc893a9f897d845', 'YzcmCZNvbXocrsz9dm8e', 'test@qq.com', '13889700023', '1', '10', 'admin', '2018-09-23 19:45:48', 'admin', '2018-09-23 19:45:57', '0');
-INSERT INTO `sys_user` VALUES ('27', 'lisi2', '李四2', null, 'fd80ebd493a655608dc893a9f897d845', 'YzcmCZNvbXocrsz9dm8e', 'test@qq.com', '13889700023', '1', '8', 'admin', '2018-09-23 19:46:09', 'admin', '2018-09-23 19:46:17', '0');
-INSERT INTO `sys_user` VALUES ('28', 'lisi3', '李四3', null, 'fd80ebd493a655608dc893a9f897d845', 'YzcmCZNvbXocrsz9dm8e', 'test@qq.com', '13889700023', '1', '10', 'admin', '2018-09-23 19:46:38', 'admin', '2018-11-04 15:33:17', '0');
-INSERT INTO `sys_user` VALUES ('29', 'lisi4', '李四4', null, 'fd80ebd493a655608dc893a9f897d845', 'YzcmCZNvbXocrsz9dm8e', 'test@qq.com', '13889700023', '1', '10', 'admin', '2018-09-23 19:46:54', 'admin', '2018-09-23 19:47:03', '0');
-INSERT INTO `sys_user` VALUES ('30', 'wangwu1', '王五1', null, 'fd80ebd493a655608dc893a9f897d845', 'YzcmCZNvbXocrsz9dm8e', 'test@qq.com', '13889700023', '1', '11', 'admin', '2018-09-23 19:47:28', 'admin', '2018-09-23 19:48:04', '0');
-INSERT INTO `sys_user` VALUES ('31', 'wangwu2', '王五2', null, 'fd80ebd493a655608dc893a9f897d845', 'YzcmCZNvbXocrsz9dm8e', 'test@qq.com', '13889700023', '1', '11', 'admin', '2018-09-23 19:47:44', 'admin', '2018-09-23 19:47:58', '0');
-INSERT INTO `sys_user` VALUES ('32', 'wwangwu3', '王五3', null, 'fd80ebd493a655608dc893a9f897d845', 'YzcmCZNvbXocrsz9dm8e', 'test@qq.com', '13889700023', '1', '11', 'admin', '2018-09-23 19:48:38', 'admin', '2018-09-23 19:49:02', '0');
+INSERT INTO `sys_user` VALUES ('1', 'admin', '丁一', '阳云', '电气工程师', null, 'bd1718f058d8a02468134432b8656a86', 'YzcmCZNvbXocrsz9dm8e', 'admin@qq.com', '13612345678', '1', '4', 'admin', '2018-08-14 11:11:11', 'admin', '2018-08-14 11:11:11', '0');
+INSERT INTO `sys_user` VALUES ('22', 'zhangsan1', '张三1', '张三1', '结构工程师', null, 'fd80ebd493a655608dc893a9f897d845', 'YzcmCZNvbXocrsz9dm8e', 'test@qq.com', '13889700023', '1', '7', 'admin', '2018-09-23 19:43:00', 'admin', '2019-01-10 11:41:13', '0');
+INSERT INTO `sys_user` VALUES ('23', 'zhangsan2', '张三2','张三2', '结构工程师', null, 'fd80ebd493a655608dc893a9f897d845', 'YzcmCZNvbXocrsz9dm8e', 'test@qq.com', '13889700023', '1', '7', 'admin', '2018-09-23 19:43:44', 'admin', '2018-09-23 19:43:52', '0');
+INSERT INTO `sys_user` VALUES ('24', 'zhangsan3', '张三3','张三3', '结构工程师', null, 'fd80ebd493a655608dc893a9f897d845', 'YzcmCZNvbXocrsz9dm8e', 'test@qq.com', '13889700023', '7', '11', 'admin', '2018-09-23 19:44:23', 'admin', '2018-09-23 19:44:29', '0');
+INSERT INTO `sys_user` VALUES ('25', 'zhangsan4', '张三4','张三4', '结构工程师', null, 'fd80ebd493a655608dc893a9f897d845', 'YzcmCZNvbXocrsz9dm8e', 'test@qq.com', '13889700023', '1', '8', 'admin', '2018-09-23 19:45:32', 'admin', '2019-01-10 17:59:14', '0');
+INSERT INTO `sys_user` VALUES ('26', 'lisi1', '李四1','李四1', '液压结构工程师', null, 'fd80ebd493a655608dc893a9f897d845', 'YzcmCZNvbXocrsz9dm8e', 'test@qq.com', '13889700023', '1', '10', 'admin', '2018-09-23 19:45:48', 'admin', '2018-09-23 19:45:57', '0');
+INSERT INTO `sys_user` VALUES ('27', 'lisi2', '李四2','李四2', '液压结构工程师',null, 'fd80ebd493a655608dc893a9f897d845', 'YzcmCZNvbXocrsz9dm8e', 'test@qq.com', '13889700023', '1', '8', 'admin', '2018-09-23 19:46:09', 'admin', '2018-09-23 19:46:17', '0');
+INSERT INTO `sys_user` VALUES ('28', 'lisi3', '李四3','李四3', '工艺工程师', null, 'fd80ebd493a655608dc893a9f897d845', 'YzcmCZNvbXocrsz9dm8e', 'test@qq.com', '13889700023', '1', '10', 'admin', '2018-09-23 19:46:38', 'admin', '2018-11-04 15:33:17', '0');
+INSERT INTO `sys_user` VALUES ('29', 'lisi4', '李四4','李四4', '研究院院长', null, 'fd80ebd493a655608dc893a9f897d845', 'YzcmCZNvbXocrsz9dm8e', 'test@qq.com', '13889700023', '1', '10', 'admin', '2018-09-23 19:46:54', 'admin', '2018-09-23 19:47:03', '0');
+INSERT INTO `sys_user` VALUES ('30', 'wangwu1', '王五1','王五1', '售后工程师', null, 'fd80ebd493a655608dc893a9f897d845', 'YzcmCZNvbXocrsz9dm8e', 'test@qq.com', '13889700023', '1', '11', 'admin', '2018-09-23 19:47:28', 'admin', '2018-09-23 19:48:04', '0');
+INSERT INTO `sys_user` VALUES ('31', 'wangwu2', '王五2', '王五2', '售后工程师',null, 'fd80ebd493a655608dc893a9f897d845', 'YzcmCZNvbXocrsz9dm8e', 'test@qq.com', '13889700023', '1', '11', 'admin', '2018-09-23 19:47:44', 'admin', '2018-09-23 19:47:58', '0');
+INSERT INTO `sys_user` VALUES ('32', 'wwangwu3', '王五3','王五3', '售后部长', null, 'fd80ebd493a655608dc893a9f897d845', 'YzcmCZNvbXocrsz9dm8e', 'test@qq.com', '13889700023', '1', '11', 'admin', '2018-09-23 19:48:38', 'admin', '2018-09-23 19:49:02', '0');
 
 -- ----------------------------
 -- Table structure for sys_user_role

@@ -21,6 +21,8 @@ public class SysUser extends BaseModel {
     private String email;
 
     private String mobile;
+    
+    private String job;
 
     private Byte status;
 
@@ -81,6 +83,12 @@ public class SysUser extends BaseModel {
 	}
 	public void setMobile(String mobile) {
 		this.mobile = mobile;
+	}
+	public String getJob() {
+		return job;
+	}
+	public void setJob(String job) {
+		this.job = job;
 	}
 	public Byte getStatus() {
 		return status;

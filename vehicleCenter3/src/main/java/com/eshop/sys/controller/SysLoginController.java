@@ -1,6 +1,7 @@
 package com.eshop.sys.controller;
 
 import java.io.IOException;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -74,4 +75,22 @@ public class SysLoginController {
 		}
 	}
 	
+	@PostMapping(value = "/register")
+	public HttpResult saveRegisterInfo(@RequestBody SysUser record) {
+		System.out.println("user:"+record);
+		SysUser user = sysUserService.findByName(record.getName());
+		if(user !=null) {
+			return HttpResult.error("用户名已存在，请重新申请！");
+		}else {
+			String salt = PasswordUtils.getSalt();
+			String password = PasswordUtils.encode(record.getPassword(), salt);
+			record.setSalt(salt);
+			record.setPassword(password);
+			Byte status =2;				//设置用户状态为2，表示新用户
+			record.setStatus(status);
+			return HttpResult.ok(sysUserService.save(record));
+		}
+		
+		
+	}
 }

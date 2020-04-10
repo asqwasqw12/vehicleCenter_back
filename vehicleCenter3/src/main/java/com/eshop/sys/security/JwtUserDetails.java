@@ -1,29 +1,48 @@
 package com.eshop.sys.security;
 
 import java.util.Collection;
+import java.util.Date;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 //安全用户模型
+@Getter
+@AllArgsConstructor
 public class JwtUserDetails implements UserDetails {
 
 	private static final long serialVersionUID = 1L;
 	
+    private  Long id;
 	private String username;
+	@JsonIgnore
     private String password;
-    private String salt;
+    private String salt;  
+    private  String realName;
+    private  String nickName;
+    private  String avatar;
+    private  String email;
+    private  String mobile;
+    private  Long   deptId;
+    private String deptName;
+    private String job;
+    private String roleNames;
+    private Date createTime;
     private Collection<? extends GrantedAuthority> authorities;
 
-    JwtUserDetails(String username, String password, String salt, Collection<? extends GrantedAuthority> authorities) {
-        this.username = username;
-        this.password = password;
-        this.salt = salt;
-        this.authorities = authorities;
-    }
+	
+	  JwtUserDetails(String username, String password, String salt, Collection<?extends GrantedAuthority> authorities) { 
+		  this.username = username;
+		  this.password = password; 
+		  this.salt = salt; 
+		  this.authorities = authorities; 
+		  }
+	 
 
+    
     @Override
     public String getUsername() {
         return username;

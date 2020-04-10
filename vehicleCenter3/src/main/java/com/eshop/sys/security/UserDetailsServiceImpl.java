@@ -33,7 +33,28 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         for(GrantedAuthority authority:grantedAuthorities) {
         System.out.println("Authority:"+authority.getAuthority());
         }
-        return new JwtUserDetails(user.getName(), user.getPassword(), user.getSalt(), grantedAuthorities);
+        //return new JwtUserDetails(user.getName(), user.getPassword(), user.getSalt(), grantedAuthorities);
+        return createJwtUserDetails(user,grantedAuthorities);
 	}
+	
+	private UserDetails createJwtUserDetails(SysUser user,List<GrantedAuthority> grantedAuthorities) {
+        return new JwtUserDetails(
+                user.getId(),
+                user.getName(),
+                user.getPassword(),
+                user.getSalt(),
+                user.getRealName(),
+                user.getNickName(),               
+                user.getAvatar(),
+                user.getEmail(),
+                user.getMobile(),
+                user.getDeptId(),
+                user.getDeptName(),
+                user.getJob(),
+                user.getRoleNames(),
+                user.getCreateTime(),
+                grantedAuthorities        
+        );
+    }
 
 }
