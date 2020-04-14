@@ -14,8 +14,11 @@ import com.eshop.sys.pojo.SysUserRole;
 
 public interface SysUserService extends CurdService<SysUser> {
 	
-	
+	//通过用户名查询用户
 	SysUser findByName(String username);
+	
+	//通过用户状态查询用户
+	List<SysUser> findByStatus(Byte status);
 
 	/**
 	 * 查找用户的菜单权限标识集合

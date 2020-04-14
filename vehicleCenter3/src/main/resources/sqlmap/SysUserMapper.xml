@@ -30,6 +30,10 @@
     from sys_user
     where id = #{id,jdbcType=BIGINT}
   </select>
+  <select id="selectByStatus" parameterType="java.lang.Byte" resultMap="BaseResultMap">
+	select u.*,(select d.name from sys_dept d where d.id = u.dept_id) deptName from sys_user u
+	where status = #{status,jdbcType=TINYINT}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from sys_user
     where id = #{id,jdbcType=BIGINT}

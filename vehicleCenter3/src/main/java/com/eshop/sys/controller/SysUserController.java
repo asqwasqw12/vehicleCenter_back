@@ -80,6 +80,16 @@ public class SysUserController {
 		return HttpResult.ok(sysUserService.findByName(name));
 	}
 	
+	
+	  @PreAuthorize("hasAuthority('sys:user:edit')")	  
+	  @GetMapping(value="/findByStatus") 
+	  public HttpResult findByStatus(@RequestParam String status) { 
+		  Byte userStatus = new Byte(status);
+		  //return HttpResult.ok(sysUserService.findByStatus((byte) '2'));
+		  return HttpResult.ok(sysUserService.findByStatus(userStatus));
+		  }
+	 
+   	
 	@PreAuthorize("hasAuthority('sys:user:view')")
 	@GetMapping(value="/findPermissions")
 	public HttpResult findPermissions(@RequestParam String name) {

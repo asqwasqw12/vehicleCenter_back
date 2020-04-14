@@ -103,6 +103,15 @@ public class SysUserServiceImpl implements SysUserService {
 		return sysUser;
 	}
 	
+	@Override
+	public List<SysUser> findByStatus(Byte status){
+		List<SysUser> list = sysUserMapper.selectByStatus(status);
+		if(list !=null) {
+		findUserRoles(list);
+		}
+		return list;
+	}
+	
 	/*
 	 * @Override public PageResult findPage(PageRequest pageRequest) { PageResult
 	 * pageResult = null; Object name = pageRequest.getParamValue("name"); Object
@@ -118,13 +127,15 @@ public class SysUserServiceImpl implements SysUserService {
 	 * 加载用户角色
 	 * @param pageResult
 	 */
-	/*
-	 * private void findUserRoles(PageResult pageResult) { List<?> content =
-	 * pageResult.getContent(); for(Object object:content) { SysUser sysUser =
-	 * (SysUser) object; List<SysUserRole> userRoles =
-	 * findUserRoles(sysUser.getId()); sysUser.setUserRoles(userRoles);
-	 * sysUser.setRoleNames(getRoleNames(userRoles)); } }
-	 */
+	
+	  private void findUserRoles(List<SysUser> list) {
+		  for(SysUser sysUser:list) { 
+			  List<SysUserRole> userRoles = findUserRoles(sysUser.getId()); 
+			  sysUser.setUserRoles(userRoles);
+			  sysUser.setRoleNames(getRoleNames(userRoles));
+			  }
+		  }
+	 
 
 	private String getRoleNames(List<SysUserRole> userRoles) {
 		StringBuilder sb = new StringBuilder();
