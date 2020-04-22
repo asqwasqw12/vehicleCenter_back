@@ -35,3 +35,9 @@ file:
   # 文件大小 /M
   maxSize: 100
   avatarMaxSize: 5      
+ # pagehelper
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+params: count=countSql

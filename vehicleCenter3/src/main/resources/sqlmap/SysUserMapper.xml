@@ -254,4 +254,49 @@
     where u.name like #{patternName}
     and u.email like #{patternEmail}
   </select>
+  <select id="findPageByParams" parameterType="java.util.Map" resultMap="BaseResultMap">
+  	select u.*, (select d.name from sys_dept d where d.id = u.dept_id) deptName from sys_user u
+  	<if test="name !=null and name !=''">
+  		where u.name LIKE CONCAT(CONCAT('%',#{name}),'%')
+  	</if>
+  	<if test="realName !=null and realName !=''">
+  		where u.real_name LIKE CONCAT(CONCAT('%',#{realName}),'%')
+  	</if>
+  	<if test="nickName != null and nickName !=''">
+        where u.nick_name LIKE CONCAT(CONCAT('%',#{nickName}),'%')
+    </if>
+    <if test="job != null and job !=''">
+        where u.job LIKE CONCAT(CONCAT('%',#{job}),'%')
+    </if>
+    <if test="avatar != null and avatar !=''">
+        where u.avatar LIKE CONCAT(CONCAT('%',#{avatar}),'%')
+    </if>
+   <if test="email != null and email !=''">
+        where u.email LIKE CONCAT(CONCAT('%',#{email}),'%')
+    </if>
+    <if test="mobile != null and mobile !=''">
+        where u.mobile LIKE CONCAT(CONCAT('%',#{mobile}),'%')
+    </if>
+    <if test="status != '-1'">
+        where u.status = #{status,jdbcType=TINYINT}
+    </if>
+    <if test="deptId != null and deptId !='' and deptId !=0 ">
+        where u.dept_id = #{deptId,jdbcType=BIGINT}
+    </if>
+    <if test="createBy != null and createBy !=''">
+        where u.create_by LIKE CONCAT(CONCAT('%',#{createBy}),'%')
+    </if>
+    <if test="createTime != null and createTime !=''">
+        where u.create_time LIKE CONCAT(CONCAT('%',#{createTime}),'%')
+    </if>
+    <if test="lastUpdateBy != null and lastUpdateBy !=''">
+        where u.last_update_by LIKE CONCAT(CONCAT('%',#{lastUpdateBy}),'%')
+    </if>
+    <if test="lastUpdateTime != null and lastUpdateTime !=''">
+        where u.last_update_time LIKE CONCAT(CONCAT('%',#{lastUpdateTime}),'%')
+    </if>
+    <if test="delFlag != null and delFlag !=''">
+        where u.del_flag LIKE CONCAT(CONCAT('%',#{delFlag}),'%')
+    </if>
+  </select>
 </mapper>

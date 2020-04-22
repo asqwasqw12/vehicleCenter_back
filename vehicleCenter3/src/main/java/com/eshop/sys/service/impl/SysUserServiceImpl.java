@@ -2,9 +2,11 @@ package com.eshop.sys.service.impl;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.apache.ibatis.annotations.Param;
@@ -18,6 +20,9 @@ import org.springframework.web.multipart.MultipartFile;
 import com.eshop.common.FileUtil;
 import com.eshop.common.SecurityUtils;
 import com.eshop.common.StringUtils;
+import com.eshop.common.page.MybatisPageHelper;
+import com.eshop.common.page.PageRequest;
+import com.eshop.common.page.PageResult;
 import com.eshop.sys.dao.SysRoleMapper;
 import com.eshop.sys.dao.SysUserMapper;
 import com.eshop.sys.dao.SysUserRoleMapper;
@@ -27,6 +32,8 @@ import com.eshop.sys.pojo.SysUser;
 import com.eshop.sys.pojo.SysUserRole;
 import com.eshop.sys.service.SysMenuService;
 import com.eshop.sys.service.SysUserService;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 
 
 @Service
@@ -112,16 +119,39 @@ public class SysUserServiceImpl implements SysUserService {
 		return list;
 	}
 	
-	/*
-	 * @Override public PageResult findPage(PageRequest pageRequest) { PageResult
-	 * pageResult = null; Object name = pageRequest.getParamValue("name"); Object
-	 * email = pageRequest.getParamValue("email"); if(name != null) { if(email !=
-	 * null) { pageResult = MybatisPageHelper.findPage(pageRequest, sysUserMapper,
-	 * "findPageByNameAndEmail", name, email); } else { pageResult =
-	 * MybatisPageHelper.findPage(pageRequest, sysUserMapper, "findPageByName",
-	 * name); } } else { pageResult = MybatisPageHelper.findPage(pageRequest,
-	 * sysUserMapper); } // 加载用户角色信息 findUserRoles(pageResult); return pageResult; }
-	 */
+	
+	  @Override public PageResult findPage(PageRequest pageRequest) { 
+		  PageResult pageResult = null;
+		  Object name = pageRequest.getParamValue("name");
+		  Object email = pageRequest.getParamValue("email"); 
+		  Map<String,Object> params = new HashMap<>();
+		  params = pageRequest.getObjectParam();
+		  if(params.get("status") !=null && params.get("status")!="") {
+			  params.put("status", Byte.valueOf((String)params.get("status")));
+		  }else {
+			  params.put("status", Byte.valueOf("-1"));
+		  }
+		  System.out.println("status="+params.get("status"));
+		/*
+		 * if(name != null) { if(email != null) { pageResult =
+		 * MybatisPageHelper.findPage(pageRequest,
+		 * sysUserMapper,"findPageByNameAndEmail", name, email); } else { pageResult =
+		 * MybatisPageHelper.findPage(pageRequest, sysUserMapper,
+		 * "findPageByName",name); } } else { pageResult =
+		 * MybatisPageHelper.findPage(pageRequest,sysUserMapper); }
+		 */
+		 // pageResult = MybatisPageHelper.findPage(pageRequest,sysUserMapper,"findPageByParams", map);
+		//  pageResult =MybatisPageHelper.findPage(pageRequest,sysUserMapper,"findPageByParams",map);
+                //加载用户角色信息
+			int pageNum = pageRequest.getPageNum();
+			int pageSize = pageRequest.getPageSize();
+			PageHelper.startPage(pageNum, pageSize);
+			List<SysUser> result = sysUserMapper.findPageByParams(params);
+			pageResult = MybatisPageHelper.getPageResult(pageRequest, new PageInfo((List) result));		  
+		    findUserRoles((List<SysUser>) pageResult.getContent()); 
+		       return pageResult; 
+		       }
+	 
 	
 	/**
 	 * 加载用户角色

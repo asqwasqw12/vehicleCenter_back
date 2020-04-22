@@ -2,11 +2,14 @@ package com.eshop.sys.service;
 
 import java.io.File;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.eshop.common.page.PageRequest;
+import com.eshop.common.page.PageResult;
 import com.eshop.sys.pojo.SysUser;
 import com.eshop.sys.pojo.SysUserRole;
 
@@ -43,6 +46,9 @@ public interface SysUserService extends CurdService<SysUser> {
 	
 	//更新用户头像
 	void updateAvatar(MultipartFile file);
-
+	
+	//查询用户信息
+	public PageResult findPage(PageRequest pageRequest);
+	
 
 }

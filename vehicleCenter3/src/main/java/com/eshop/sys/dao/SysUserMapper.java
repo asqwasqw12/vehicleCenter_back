@@ -1,6 +1,7 @@
 package com.eshop.sys.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
@@ -30,5 +31,8 @@ public interface SysUserMapper {
 	List<SysUser> findPageByName(@Param(value="name") String name);
 	
 	List<SysUser> findPageByNameAndEmail(@Param(value="name") String name, @Param(value="email") String email);
+	
+	List<SysUser> findPageByParams(Map<String,Object>  params);
+	//List<SysUser> findPageByParams(SysUser  map);
 
 }
