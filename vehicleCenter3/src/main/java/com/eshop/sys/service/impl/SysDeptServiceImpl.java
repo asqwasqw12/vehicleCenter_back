@@ -60,6 +60,8 @@ public class SysDeptServiceImpl implements SysDeptService {
 		findChildren(sysDepts, depts);
 		return sysDepts;
 	}
+	
+	
 
 	private void findChildren(List<SysDept> sysDepts, List<SysDept> depts) {
 		for (SysDept sysDept : sysDepts) {
@@ -75,5 +77,50 @@ public class SysDeptServiceImpl implements SysDeptService {
 			findChildren(children, depts);
 		}
 	}
-
+	
+	@Override
+	public List<Long> getDeptChildren(Long id){
+		SysDept sysDept = findById(id);
+		List<SysDept> depts = sysDeptMapper.findAll();
+		List<Long> list =new ArrayList<>();
+		List<Long> temp =new ArrayList<>();
+		if(sysDept !=null) {
+		for(SysDept dept : depts) {
+			if(sysDept.getId() != null && sysDept.getId().equals(dept.getParentId())) {
+				temp.add(dept.getId());
+			}			
+		}
+		if(temp.size()!=0) {
+		 list.addAll(temp);
+		  for(Long ChildId :temp) {
+			list.addAll(getDeptChildren(ChildId));
+		  }
+		}
+		}
+		return list;
+	}
+	
+	
+	
+	@Override
+	public List<Long> getDeptChildren(List<SysDept> deptList) {
+        List<Long> list = new ArrayList<>();
+        deptList.forEach(dept -> {
+                    if (dept!=null ){
+                        List<SysDept> depts = sysDeptMapper.findByPid(dept.getId());
+                        if(deptList.size() != 0){
+                            list.addAll(getDeptChildren(depts));
+                        }
+                        list.add(dept.getId());
+                    }
+                }
+        );
+        return list;
+    }
+	
+	//通过父id查询用户信息
+	@Override
+	public List<SysDept> findByPid(Long id){
+		return sysDeptMapper.findByPid(id);
+	}
 }

@@ -26,10 +26,12 @@ import com.eshop.common.page.PageResult;
 import com.eshop.sys.dao.SysRoleMapper;
 import com.eshop.sys.dao.SysUserMapper;
 import com.eshop.sys.dao.SysUserRoleMapper;
+import com.eshop.sys.pojo.SysDept;
 import com.eshop.sys.pojo.SysMenu;
 import com.eshop.sys.pojo.SysRole;
 import com.eshop.sys.pojo.SysUser;
 import com.eshop.sys.pojo.SysUserRole;
+import com.eshop.sys.service.SysDeptService;
 import com.eshop.sys.service.SysMenuService;
 import com.eshop.sys.service.SysUserService;
 import com.github.pagehelper.PageHelper;
@@ -49,6 +51,8 @@ public class SysUserServiceImpl implements SysUserService {
 	private SysRoleMapper sysRoleMapper;
 	@Value("${file.avatar}")
     private String avatar;
+	@Autowired
+	private SysDeptService sysDeptService;
 	
 	@Transactional
 	@Override
@@ -120,37 +124,46 @@ public class SysUserServiceImpl implements SysUserService {
 	}
 	
 	
-	  @Override public PageResult findPage(PageRequest pageRequest) { 
-		  PageResult pageResult = null;
-		  Object name = pageRequest.getParamValue("name");
-		  Object email = pageRequest.getParamValue("email"); 
+	@Override 
+	public PageResult findPage(PageRequest pageRequest) { 
+		 PageResult pageResult = null;
+		 Map<String,Object> params =handlePageRequest(pageRequest);
+		 int pageNum = pageRequest.getPageNum();
+		 int pageSize = pageRequest.getPageSize();
+		 PageHelper.startPage(pageNum, pageSize);
+		 List<SysUser> result = sysUserMapper.findPageByParams(params);
+		 pageResult = MybatisPageHelper.getPageResult(pageRequest, new PageInfo((List) result));		  
+		 findUserRoles((List<SysUser>) pageResult.getContent()); 
+		 return pageResult; 
+	 }
+	  
+	  //PageRequest参数处理函数
+	  private Map<String,Object> handlePageRequest(PageRequest pageRequest){
 		  Map<String,Object> params = new HashMap<>();
 		  params = pageRequest.getObjectParam();
+		  
+		  //处理状态参数
 		  if(params.get("status") !=null && params.get("status")!="") {
 			  params.put("status", Byte.valueOf((String)params.get("status")));
 		  }else {
 			  params.put("status", Byte.valueOf("-1"));
 		  }
-		  System.out.println("status="+params.get("status"));
-		/*
-		 * if(name != null) { if(email != null) { pageResult =
-		 * MybatisPageHelper.findPage(pageRequest,
-		 * sysUserMapper,"findPageByNameAndEmail", name, email); } else { pageResult =
-		 * MybatisPageHelper.findPage(pageRequest, sysUserMapper,
-		 * "findPageByName",name); } } else { pageResult =
-		 * MybatisPageHelper.findPage(pageRequest,sysUserMapper); }
-		 */
-		 // pageResult = MybatisPageHelper.findPage(pageRequest,sysUserMapper,"findPageByParams", map);
-		//  pageResult =MybatisPageHelper.findPage(pageRequest,sysUserMapper,"findPageByParams",map);
-                //加载用户角色信息
-			int pageNum = pageRequest.getPageNum();
-			int pageSize = pageRequest.getPageSize();
-			PageHelper.startPage(pageNum, pageSize);
-			List<SysUser> result = sysUserMapper.findPageByParams(params);
-			pageResult = MybatisPageHelper.getPageResult(pageRequest, new PageInfo((List) result));		  
-		    findUserRoles((List<SysUser>) pageResult.getContent()); 
-		       return pageResult; 
-		       }
+		  
+		  //处理部门id参数
+		  if(params.get("deptId") !=null && !params.get("deptId").equals(0) ) {
+			  Long id = Long.parseLong(params.get("deptId").toString()) ;	 
+			if(sysDeptService.findById(id)!=null) {
+			  List<Long> deptIdList = new ArrayList<>();
+			  List<SysDept> deptList = sysDeptService.findByPid(id);
+			  if(deptList != null && deptList.size()>0) {
+				 deptIdList= sysDeptService.getDeptChildren(deptList);
+			  }
+			  deptIdList.add(id);
+			  params.put("deptIdList", deptIdList);
+		 }
+	}
+		  return params;
+}
 	 
 	
 	/**

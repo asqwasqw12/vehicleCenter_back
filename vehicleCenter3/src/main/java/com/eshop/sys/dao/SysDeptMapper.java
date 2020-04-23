@@ -19,7 +19,8 @@ public interface SysDeptMapper {
 
 	    int updateByPrimaryKey(SysDept record);
 	    
-	    
+	    List<SysDept> findByPid(Long id); 
+	    	    
 	    List<SysDept> findAll();
 
 }

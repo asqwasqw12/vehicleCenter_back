@@ -22,11 +22,6 @@ import com.eshop.common.SysConstants;
 import com.eshop.common.page.PageRequest;
 import com.eshop.sys.pojo.SysUser;
 import com.eshop.sys.service.SysUserService;
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
 
 import io.swagger.annotations.ApiOperation;
 
@@ -115,24 +110,10 @@ public class SysUserController {
 	  @PreAuthorize("hasAuthority('sys:user:view')")
 	  
 	  @PostMapping(value="/findPage") 
-	  public HttpResult findPage(@RequestBody PageRequest pageRequest) throws JsonParseException, JsonMappingException, IOException
+	  public HttpResult findPage(@RequestBody PageRequest pageRequest) 
 	  {
-		  Map<String,Object> params = new HashMap<>();
-		  params = pageRequest.getObjectParam();
-		  SysUser userInfo = null;
-		  if(params!=null) {
-			  
-			/*
-			 * System.out.println("pageRequest="+pageRequest);
-			 * System.out.println("objectUser="+objectUser); String str =(String)objectUser;
-			 * ObjectMapper mapper = new ObjectMapper(); // 设置输入时忽略在JSON字符串中存在但Java对象实际没有的属性
-			 * mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
-			 * mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false); userInfo =
-			 * mapper.readValue(str, SysUser.class); //String转换成UserInfo
-			 */		  }
-
 		  return HttpResult.ok(sysUserService.findPage(pageRequest));
-		  }
+	}
 	 
 	
 	/*
@@ -166,4 +147,5 @@ public class SysUserController {
         sysUserService.updateAvatar(file);
         return HttpResult.ok();
     }
+	
 }
