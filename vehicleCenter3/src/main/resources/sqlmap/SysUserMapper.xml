@@ -284,14 +284,14 @@
     	<if test="createBy != null and createBy !=''">
         	and u.create_by LIKE CONCAT(CONCAT('%',#{createBy}),'%')
     	</if>
-    	<if test="createTime != null and createTime !=''">
-        	and u.create_time LIKE CONCAT(CONCAT('%',#{createTime}),'%')
+    	<if test="endTime !=null and endTime!=''">
+    		and u.create_time <![CDATA[<=]]> #{endTime,jdbcType=TIMESTAMP}
+    	</if>
+    	<if test="startTime!=null and startTime!=''">
+    	    and u.create_time >= #{startTime,jdbcType=TIMESTAMP}
     	</if>
     	<if test="lastUpdateBy != null and lastUpdateBy !=''">
         	and u.last_update_by LIKE CONCAT(CONCAT('%',#{lastUpdateBy}),'%')
-    	</if>
-    	<if test="lastUpdateTime != null and lastUpdateTime !=''">
-        	and u.last_update_time LIKE CONCAT(CONCAT('%',#{lastUpdateTime}),'%')
     	</if>
     	<if test="delFlag != null and delFlag !=''">
         	and u.del_flag LIKE CONCAT(CONCAT('%',#{delFlag}),'%')

@@ -149,6 +149,18 @@ public class SysUserServiceImpl implements SysUserService {
 			  params.put("status", Byte.valueOf("-1"));
 		  }
 		  
+		  //处理注册时间参数
+		  if(params.get("createTime") !=null && params.get("createTime")!="") {
+			  List<String> strList = new ArrayList<>();
+			   strList=(ArrayList<String>)params.get("createTime");
+			   if(strList.size()>0) {
+					  String startTime=strList.get(0);
+					  String endTime=strList.get(1);
+					  params.put("startTime", startTime);
+					  params.put("endTime", endTime);
+			   }
+		  }
+		  
 		  //处理部门id参数
 		  if(params.get("deptId") !=null && !params.get("deptId").equals(0) ) {
 			  Long id = Long.parseLong(params.get("deptId").toString()) ;	 
