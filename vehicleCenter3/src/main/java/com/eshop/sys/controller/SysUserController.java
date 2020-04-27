@@ -1,9 +1,12 @@
 package com.eshop.sys.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.eshop.common.FileUtil;
 import com.eshop.common.HttpResult;
 import com.eshop.common.PasswordUtils;
 import com.eshop.common.SecurityUtils;
@@ -87,10 +91,10 @@ public class SysUserController {
 	
 	  @PreAuthorize("hasAuthority('sys:user:edit')")	  
 	  @GetMapping(value="/findByStatus") 
-	  public HttpResult findByStatus(@RequestParam String status) { 
-		  Byte userStatus = new Byte(status);
-		  //return HttpResult.ok(sysUserService.findByStatus((byte) '2'));
-		  return HttpResult.ok(sysUserService.findByStatus(userStatus));
+	  public HttpResult findByStatus(@RequestParam Byte status) { 
+		  //Byte userStatus = new Byte(status);
+		  //return HttpResult.ok(sysUserService.findByStatus(userStatus));
+		  return HttpResult.ok(sysUserService.findByStatus(status));
 		  }
 	 
    	
@@ -116,6 +120,7 @@ public class SysUserController {
 	}
 	 
 	
+	
 	/*
 	 * @PreAuthorize("hasAuthority('sys:user:view')")
 	 * 
@@ -123,6 +128,13 @@ public class SysUserController {
 	 * exportUserExcelFile(@RequestBody PageRequest pageRequest) { return
 	 * HttpResult.ok(sysUserService.createUserExcelFile(pageRequest)); }
 	 */
+	  @PreAuthorize("hasAuthority('sys:user:view')")
+	  @PostMapping(value="/exportUserExcelFile")
+		public void exportExcelUser(@RequestBody PageRequest pageRequest, HttpServletResponse res) {
+			File file = sysUserService.createUserExcelFile(pageRequest);
+			FileUtil.downloadFile(res, file, file.getName());
+		}
+	 
 	
 	@PreAuthorize("hasAuthority('sys:user:edit')")
 	@GetMapping(value="/updatePassword")

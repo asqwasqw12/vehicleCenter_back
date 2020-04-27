@@ -42,7 +42,7 @@ public interface SysUserService extends CurdService<SysUser> {
 	 * @param pageRequest 要导出的分页查询参数
 	 * @return
 	 */
-	//File createUserExcelFile(PageRequest pageRequest);
+	File createUserExcelFile(PageRequest pageRequest);
 	
 	//更新用户头像
 	void updateAvatar(MultipartFile file);
