@@ -1,13 +1,18 @@
 package com.eshop.sys.service.impl;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.ibatis.annotations.Param;
 import org.apache.poi.ss.usermodel.Row;
@@ -42,6 +47,7 @@ import com.eshop.sys.service.SysMenuService;
 import com.eshop.sys.service.SysUserService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+
 
 @Service
 public class SysUserServiceImpl implements SysUserService {
@@ -256,11 +262,10 @@ public class SysUserServiceImpl implements SysUserService {
 		  Sheet sheet = workbook.createSheet();
 		  Row row0 =sheet.createRow(0); 
 		  int columnIndex = 0;
-	  row0.createCell(columnIndex).setCellValue("No");
-	  row0.createCell(++columnIndex).setCellValue("ID");
+	  row0.createCell(columnIndex).setCellValue("ID");
 	  row0.createCell(++columnIndex).setCellValue("用户名");
 	  row0.createCell(++columnIndex).setCellValue("姓名");
-	  row0.createCell(++columnIndex).setCellValue("机构");
+	  row0.createCell(++columnIndex).setCellValue("部门");
 	  row0.createCell(++columnIndex).setCellValue("职务");
 	  row0.createCell(++columnIndex).setCellValue("角色");
 	  row0.createCell(++columnIndex).setCellValue("邮箱");
@@ -278,14 +283,14 @@ public class SysUserServiceImpl implements SysUserService {
 			  row.createCell(j); 
 			  } 
 		  columnIndex = 0;
-		  row.getCell(columnIndex).setCellValue(i + 1); 
-		  row.getCell(++columnIndex).setCellValue(user.getId());
+		  row.getCell(columnIndex).setCellValue(user.getId());
 		  row.getCell(++columnIndex).setCellValue(user.getName());
 		  row.getCell(++columnIndex).setCellValue(user.getRealName());
 		  row.getCell(++columnIndex).setCellValue(user.getDeptName());
 		  row.getCell(++columnIndex).setCellValue(user.getJob());
 		  row.getCell(++columnIndex).setCellValue(user.getRoleNames());
 		  row.getCell(++columnIndex).setCellValue(user.getEmail());
+		  row.getCell(++columnIndex).setCellValue(user.getMobile());		  
 		  row.getCell(++columnIndex).setCellValue(user.getStatus());
 		  row.getCell(++columnIndex).setCellValue(user.getAvatar());
 		  row.getCell(++columnIndex).setCellValue(user.getCreateBy());
@@ -295,5 +300,29 @@ public class SysUserServiceImpl implements SysUserService {
 		  }
 	  return PoiUtils.createExcelFile(workbook,"download_user"); 
 	  }
-	 
-}
+	  
+	  @Override
+	    public void downloadExcel(List<?> records, HttpServletResponse response) throws IOException {
+	        List<Map<String, Object>> list = new ArrayList<>();
+	        for (int i = 0; i <records.size(); i++) {
+	        	SysUser user = (SysUser) records.get(i);
+	        	Map<String,Object> map = new LinkedHashMap<>(); 
+	        	map.put("用户名", user.getName());
+	        			 map.put("姓名",user.getRealName()); 
+	        			 map.put("部门", user.getDeptName()); 
+	        			 map.put("职务",user.getJob()); 
+	        			 map.put("角色", user.getRoleNames()); 
+	        			 map.put("邮箱",user.getEmail()); 
+	        			 map.put("手机号码", user.getMobile()); 
+	        			 map.put("状态",user.getStatus()); 
+	        			 map.put("头像", user.getAvatar()); 
+	        			 map.put("创建人",user.getCreateBy()); 
+	        			 map.put("创建时间日期",DateTimeUtils.getDateTime(user.getCreateTime())); 
+	        			 map.put("最后更新人",user.getLastUpdateBy()); 
+	        			 map.put("最后更新时间",DateTimeUtils.getDateTime(user.getLastUpdateTime())); 
+	        			 list.add(map);
+	        	
+	        }
+	        FileUtil.downloadExcel(list, response);
+	    }
+	}

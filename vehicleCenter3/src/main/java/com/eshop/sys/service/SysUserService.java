@@ -1,9 +1,12 @@
 package com.eshop.sys.service;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.multipart.MultipartFile;
@@ -49,6 +52,9 @@ public interface SysUserService extends CurdService<SysUser> {
 	
 	//查询用户信息
 	public PageResult findPage(PageRequest pageRequest);
+	
+	//下载excel文件
+	void downloadExcel(List<?> userList, HttpServletResponse response) throws IOException;
 	
 
 }

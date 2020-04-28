@@ -27,6 +27,10 @@ public class DateTimeUtils {
 	 * @return
 	 */
 	public static String getDateTime(Date date) {
+		if(date!=null) {
 		return (new SimpleDateFormat(DATE_FORMAT)).format(date);
+		}else {
+			return null;
+		}
 	}
 }

@@ -298,7 +298,7 @@ public class FileUtil extends cn.hutool.core.io.FileUtil {
             if (fis != null) {
                 try {
                     fis.close();
-                    if(deleteOnExit){
+                    if(deleteOnExit){                        
                         file.deleteOnExit();
                     }
                 } catch (IOException e) {

@@ -26,6 +26,7 @@ public class PoiUtils {
 		File file = null;
 		try {
 			file = File.createTempFile(fileName, ".xlsx");
+			System.out.println("excel后台文件名称："+file.getAbsolutePath()+file.getName());
 			stream = new FileOutputStream(file.getAbsoluteFile());
 			workbook.write(stream);
 		} catch (FileNotFoundException e) {

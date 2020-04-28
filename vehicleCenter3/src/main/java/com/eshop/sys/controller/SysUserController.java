@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,7 @@ import com.eshop.common.PasswordUtils;
 import com.eshop.common.SecurityUtils;
 import com.eshop.common.SysConstants;
 import com.eshop.common.page.PageRequest;
+import com.eshop.common.page.PageResult;
 import com.eshop.sys.pojo.SysUser;
 import com.eshop.sys.service.SysUserService;
 
@@ -120,21 +122,32 @@ public class SysUserController {
 	}
 	 
 	
-	
 	/*
 	 * @PreAuthorize("hasAuthority('sys:user:view')")
 	 * 
-	 * @PostMapping(value="/exportUserExcelFile") public HttpResult
-	 * exportUserExcelFile(@RequestBody PageRequest pageRequest) { return
-	 * HttpResult.ok(sysUserService.createUserExcelFile(pageRequest)); }
+	 * @PostMapping(value="/exportUserExcelFile") public void
+	 * exportExcelUser(@RequestBody PageRequest pageRequest, HttpServletResponse
+	 * res) { File file = sysUserService.createUserExcelFile(pageRequest);
+	 * FileUtil.downloadFile(res, file, file.getName()); }
 	 */
-	  @PreAuthorize("hasAuthority('sys:user:view')")
-	  @PostMapping(value="/exportUserExcelFile")
-		public void exportExcelUser(@RequestBody PageRequest pageRequest, HttpServletResponse res) {
-			File file = sysUserService.createUserExcelFile(pageRequest);
-			FileUtil.downloadFile(res, file, file.getName());
-		}
 	 
+	 
+	/*
+	 * @PreAuthorize("hasAuthority('sys:user:view')")
+	 * 
+	 * @PostMapping(value="/exportUserExcelFile") public void
+	 * exportExcelUser(@RequestBody PageRequest pageRequest, HttpServletRequest
+	 * request, HttpServletResponse res) { File file =
+	 * sysUserService.createUserExcelFile(pageRequest); //FileUtil.downloadFile(res,
+	 * file, file.getName()); FileUtil.downloadFile(request,res,file,false); }
+	 */
+	  
+	  @PreAuthorize("hasAuthority('sys:user:view')")	  
+	  @PostMapping(value="/exportUserExcelFile") public void exportExcelUser(@RequestBody PageRequest pageRequest, 
+			 HttpServletResponse res) throws IOException  { 
+		  		PageResult pageResult = sysUserService.findPage(pageRequest);
+		  		sysUserService.downloadExcel(pageResult.getContent(), res);
+	     }
 	
 	@PreAuthorize("hasAuthority('sys:user:edit')")
 	@GetMapping(value="/updatePassword")
