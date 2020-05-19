@@ -150,6 +150,16 @@
     <include refid="Base_Column_List" />
     from sys_dept
   </select>
+  <select id="findByName" parameterType="java.lang.String" resultMap="BaseResultMap">
+  	select
+  	<include refid="Base_Column_List" />
+    from sys_dept d
+    <where>
+    	<if test="name !=null and name !=''">
+  			 d.name LIKE CONCAT(CONCAT('%',#{name}),'%')
+  		</if>
+    </where>
+  </select>
   <select id="findPage" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />

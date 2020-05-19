@@ -2,6 +2,8 @@ package com.eshop.sys.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.eshop.sys.pojo.SysDept;
 
 
@@ -20,6 +22,8 @@ public interface SysDeptMapper {
 	    int updateByPrimaryKey(SysDept record);
 	    
 	    List<SysDept> findByPid(Long id); 
+	    
+	    List<SysDept> findByName(@Param(value="name") String name);
 	    	    
 	    List<SysDept> findAll();
 

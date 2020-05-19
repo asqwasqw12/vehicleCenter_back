@@ -143,8 +143,8 @@ public class SysUserController {
 	 */
 	  
 	  @PreAuthorize("hasAuthority('sys:user:view')")	  
-	  @PostMapping(value="/exportUserExcelFile") public void exportExcelUser(@RequestBody PageRequest pageRequest, 
-			 HttpServletResponse res) throws IOException  { 
+	  @PostMapping(value="/exportUserExcelFile") 
+	  public void exportExcelUser(@RequestBody PageRequest pageRequest, HttpServletResponse res) throws IOException  { 
 		  		PageResult pageResult = sysUserService.findPage(pageRequest);
 		  		sysUserService.downloadExcel(pageResult.getContent(), res);
 	     }

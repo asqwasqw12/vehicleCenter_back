@@ -1,6 +1,9 @@
 package com.eshop.sys.controller;
 
+import java.io.IOException;
 import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -8,9 +11,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.eshop.common.HttpResult;
+import com.eshop.common.page.PageRequest;
+import com.eshop.common.page.PageResult;
 import com.eshop.sys.pojo.SysDept;
 import com.eshop.sys.service.SysDeptService;
 
@@ -36,8 +42,19 @@ public class SysDeptController {
 
 	@PreAuthorize("hasAuthority('sys:dept:view')")
 	@GetMapping(value="/findTree")
-	public HttpResult findTree() {
-		return HttpResult.ok(sysDeptService.findTree());
+	public HttpResult findTree(@RequestParam String name) {
+		if(name !=null && name !="") {
+			return HttpResult.ok(sysDeptService.findTree(name));
+		}else {
+			return HttpResult.ok(sysDeptService.findTree());
+		}
 	}
+	
+	 @PreAuthorize("hasAuthority('sys:dept:view')")	  
+	  @PostMapping(value="/exportDeptExcelFile") 
+	  public void exportExcelUser(@RequestBody PageRequest pageRequest, HttpServletResponse res) throws IOException  { 
+		  		List<SysDept> list= sysDeptService.findTree();
+		  		sysDeptService.downloadExcel(list, res);
+	     }
 
 }
