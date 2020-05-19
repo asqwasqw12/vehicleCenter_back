@@ -109,5 +109,43 @@ public class SysMenuServiceImpl implements SysMenuService {
 		}
 		return exist;
 	}
+	
+	@Override
+	public List<SysMenu> findTreebyName(String name){
+		List<SysMenu> sysMenus = new ArrayList<>();
+		List<SysMenu> menus = sysMenuMapper.findByName(name);
+		sysMenus =findMenuChildren(menus);
+		return sysMenus;
+	}
+	
+	
+	@Override
+	public List<SysMenu> findMenuChildren(List<SysMenu> menuList) {
+		List<SysMenu> list = new ArrayList<>();
+		menuList.forEach(menu -> {
+            if (menu!=null ){
+                List<SysMenu> menus = sysMenuMapper.findByPid(menu.getId());
+                if(menuList.size() != 0){
+                	menu.setChildren(menus);
+                	menus.sort((o1, o2) -> o1.getOrderNum().compareTo(o2.getOrderNum()));
+                    findMenuChildren(menus);
+                }
+                if(menu.getParentId()!=null && menu.getParentId()!=0){
+                		SysMenu temp=sysMenuMapper.selectByPrimaryKey(menu.getParentId());
+                			menu.setParentName(temp.getName());              		
+                }
+                list.add(menu);
+               
+            }
+        }
+	);
+        return list;
+	}
+	
+	//通过父id查询用户信息
+		@Override
+		public List<SysMenu> findByPid(Long id){
+			return sysMenuMapper.findByPid(id);
+		}
 
 }

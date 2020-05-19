@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.eshop.sys.pojo.SysDept;
 import com.eshop.sys.pojo.SysMenu;
 
 
@@ -24,7 +25,12 @@ public interface SysMenuMapper {
 	List<SysMenu> findAll();
 
 	List<SysMenu> findByUserName(@Param(value="userName") String userName);
+	
+	//根据菜单名查询
+	List<SysMenu> findByName(@Param(value="name") String name);
 
 	List<SysMenu> findRoleMenus(@Param(value="roleId") Long roleId);
+	
+	List<SysMenu> findByPid(Long id);
 
 }

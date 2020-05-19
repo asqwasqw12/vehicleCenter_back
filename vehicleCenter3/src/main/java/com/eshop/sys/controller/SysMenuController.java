@@ -45,7 +45,12 @@ public class SysMenuController {
 	
 	@PreAuthorize("hasAuthority('sys:menu:view')")
 	@GetMapping(value="/findMenuTree")
-	public HttpResult findMenuTree() {
-		return HttpResult.ok(sysMenuService.findTree(null, 0));
+	public HttpResult findMenuTree(@RequestParam String name) {
+		if(name !=null && name !="") {
+			return HttpResult.ok(sysMenuService.findTreebyName(name));
+		}else {
+			return HttpResult.ok(sysMenuService.findTree(null, 0));
+		}
+		
 	}
 }

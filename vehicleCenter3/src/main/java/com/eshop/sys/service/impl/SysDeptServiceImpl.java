@@ -171,7 +171,7 @@ public class SysDeptServiceImpl implements SysDeptService {
                 	dept.setChildren(depts);
                     findDeptChildren(depts);
                 }
-                if(dept.getParentId()!=null){
+                if(dept.getParentId()!=null && dept.getParentId()!=0 ){
                 		SysDept temp=sysDeptMapper.selectByPrimaryKey(dept.getParentId());
                 		dept.setParentName(temp.getName());
                 }

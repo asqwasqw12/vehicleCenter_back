@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
 import com.eshop.sys.pojo.SysDept;
+import com.eshop.sys.pojo.SysMenu;
 
 public interface SysDeptService extends CurdService<SysDept>{
 	
@@ -32,6 +33,7 @@ public interface SysDeptService extends CurdService<SysDept>{
 	
 	//通过父id查询用户信息
 	List<SysDept>findByPid(Long id);
+	
 
 
 }
