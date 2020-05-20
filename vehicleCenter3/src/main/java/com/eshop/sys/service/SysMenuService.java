@@ -1,6 +1,9 @@
 package com.eshop.sys.service;
 
+import java.io.IOException;
 import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
 
 import com.eshop.sys.pojo.SysMenu;
 
@@ -29,5 +32,8 @@ public interface SysMenuService extends CurdService<SysMenu>{
 	
 	//根据菜单名查询菜单树
 	List<SysMenu> findTreebyName(String name);
+	
+	//导出
+	void downloadExcel(List<?> records, HttpServletResponse response) throws IOException;
 
 }

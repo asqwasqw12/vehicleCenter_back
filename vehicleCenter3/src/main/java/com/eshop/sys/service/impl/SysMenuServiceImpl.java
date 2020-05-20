@@ -1,11 +1,18 @@
 package com.eshop.sys.service.impl;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.eshop.common.DateTimeUtils;
+import com.eshop.common.FileUtil;
 import com.eshop.common.SysConstants;
 import com.eshop.sys.dao.SysMenuMapper;
 import com.eshop.sys.pojo.SysDept;
@@ -126,16 +133,16 @@ public class SysMenuServiceImpl implements SysMenuService {
             if (menu!=null ){
                 List<SysMenu> menus = sysMenuMapper.findByPid(menu.getId());
                 if(menuList.size() != 0){
-                	menu.setChildren(menus);
+                	
                 	menus.sort((o1, o2) -> o1.getOrderNum().compareTo(o2.getOrderNum()));
-                    findMenuChildren(menus);
+                	menu.setChildren(findMenuChildren(menus));
+                    //findMenuChildren(menus);
                 }
                 if(menu.getParentId()!=null && menu.getParentId()!=0){
                 		SysMenu temp=sysMenuMapper.selectByPrimaryKey(menu.getParentId());
                 			menu.setParentName(temp.getName());              		
                 }
-                list.add(menu);
-               
+                list.add(menu);               
             }
         }
 	);
@@ -147,5 +154,38 @@ public class SysMenuServiceImpl implements SysMenuService {
 		public List<SysMenu> findByPid(Long id){
 			return sysMenuMapper.findByPid(id);
 		}
+		
+		@Override
+		 public void downloadExcel(List<?> records, HttpServletResponse response) throws IOException {
+		        List<Map<String, Object>> list = new ArrayList<>();
+		        list = getChildren(records);
+		        FileUtil.downloadExcel(list, response);
+		    }
+		
+		 private List<Map<String, Object>> getChildren(List<?> records) {
+			 List<Map<String, Object>> list = new ArrayList<>();
+			 for(int i=0;i<records.size();i++) {
+				 SysMenu menu = (SysMenu) records.get(i);
+		        	Map<String,Object> map = new LinkedHashMap<>(); 
+		        	         map.put("ID", menu.getId());
+		        			 map.put("名称",menu.getName()); 
+		        			 map.put("类型", menu.getType()); 
+		        			 map.put("上级菜单Id",menu.getParentId());
+		        			 map.put("上级菜单名",menu.getParentName());
+		        			 map.put("URL地址",menu.getUrl());
+		        			 map.put("权限标识",menu.getPerms());
+		        			 map.put("顺序编号",menu.getOrderNum());
+		        			 map.put("创建人",menu.getCreateBy()); 
+		        			 map.put("创建时间日期",DateTimeUtils.getDateTime(menu.getCreateTime())); 
+		        			 map.put("最后更新人",menu.getLastUpdateBy()); 
+		        			 map.put("最后更新时间",DateTimeUtils.getDateTime(menu.getLastUpdateTime()));
+		        			 list.add(map);
+		        			 if(menu.getChildren().size()>0) {
+		        				 list.addAll(getChildren(menu.getChildren()));
+		        			 }
+		        			 
+			 }
+			 return list;
+		 }
 
 }

@@ -1,6 +1,9 @@
 package com.eshop.sys.controller;
 
+import java.io.IOException;
 import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -12,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.eshop.common.HttpResult;
+import com.eshop.common.page.PageRequest;
+import com.eshop.sys.pojo.SysDept;
 import com.eshop.sys.pojo.SysMenu;
 import com.eshop.sys.service.SysMenuService;
 
@@ -53,4 +58,11 @@ public class SysMenuController {
 		}
 		
 	}
+	
+	 @PreAuthorize("hasAuthority('sys:menu:view')")	  
+	  @PostMapping(value="/exportMenuExcelFile") 
+	  public void exportExcelUser(@RequestBody PageRequest pageRequest, HttpServletResponse res) throws IOException  { 
+		  		List<SysMenu> list= sysMenuService.findTree(null,0);
+		  		sysMenuService.downloadExcel(list, res);
+	     }
 }

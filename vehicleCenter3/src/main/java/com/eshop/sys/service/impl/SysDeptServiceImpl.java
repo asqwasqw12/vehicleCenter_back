@@ -168,8 +168,8 @@ public class SysDeptServiceImpl implements SysDeptService {
             if (dept!=null ){
                 List<SysDept> depts = sysDeptMapper.findByPid(dept.getId());
                 if(deptList.size() != 0){
-                	dept.setChildren(depts);
-                    findDeptChildren(depts);
+                	dept.setChildren(findDeptChildren(depts));
+                    //findDeptChildren(depts);
                 }
                 if(dept.getParentId()!=null && dept.getParentId()!=0 ){
                 		SysDept temp=sysDeptMapper.selectByPrimaryKey(dept.getParentId());
