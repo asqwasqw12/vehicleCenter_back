@@ -1,10 +1,12 @@
 package com.eshop.sys.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
 import com.eshop.sys.pojo.SysDict;
+import com.eshop.sys.pojo.SysUser;
 
 
 
@@ -25,5 +27,7 @@ public interface SysDictMapper {
     //List<SysDict> findPageByLabel(@Param(value="label") String label);
 
    // List<SysDict> findByLable(@Param(value="label") String label);
+    
+    List<SysDict> findPageByParams(Map<String,Object> params);
 
 }

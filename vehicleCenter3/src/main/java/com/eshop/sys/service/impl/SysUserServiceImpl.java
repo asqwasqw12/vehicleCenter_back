@@ -142,7 +142,7 @@ public class SysUserServiceImpl implements SysUserService {
 		int pageSize = pageRequest.getPageSize();
 		PageHelper.startPage(pageNum, pageSize);
 		List<SysUser> result = sysUserMapper.findPageByParams(params);
-		pageResult = MybatisPageHelper.getPageResult(pageRequest, new PageInfo((List) result));
+		pageResult = MybatisPageHelper.getPageResult(pageRequest, new PageInfo<SysUser>((List<SysUser>) result));
 		findUserRoles((List<SysUser>) pageResult.getContent());
 		return pageResult;
 	}

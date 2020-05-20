@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.eshop.common.HttpResult;
+import com.eshop.common.page.PageRequest;
 import com.eshop.sys.pojo.SysDict;
 import com.eshop.sys.service.SysDictService;
 
@@ -35,13 +36,13 @@ public class SysDictController {
 		return HttpResult.ok(sysDictService.delete(records));
 	}
 
-	/*
-	 * @PreAuthorize("hasAuthority('sys:dict:view')")
-	 * 
-	 * @PostMapping(value="/findPage") public HttpResult findPage(@RequestBody
-	 * PageRequest pageRequest) { return
-	 * HttpResult.ok(sysDictService.findPage(pageRequest)); }
-	 */
+	
+	  @PreAuthorize("hasAuthority('sys:dict:view')")	  
+	  @PostMapping(value="/findPage") 
+	  public HttpResult findPage(@RequestBody PageRequest pageRequest) {
+		  return HttpResult.ok(sysDictService.findPage(pageRequest));
+		  }
+	 
 	
 	/*
 	 * @PreAuthorize("hasAuthority('sys:dict:view')")

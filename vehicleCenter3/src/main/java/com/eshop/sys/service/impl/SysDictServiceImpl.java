@@ -1,13 +1,20 @@
 package com.eshop.sys.service.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.eshop.common.page.MybatisPageHelper;
+import com.eshop.common.page.PageRequest;
+import com.eshop.common.page.PageResult;
 import com.eshop.sys.dao.SysDictMapper;
 import com.eshop.sys.pojo.SysDict;
+import com.eshop.sys.pojo.SysUser;
 import com.eshop.sys.service.SysDictService;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 
 @Service
 public class SysDictServiceImpl implements SysDictService {
@@ -41,12 +48,19 @@ public class SysDictServiceImpl implements SysDictService {
 		return sysDictMapper.selectByPrimaryKey(id);
 	}
 
-	/*
-	 * @Override public PageResult findPage(PageRequest pageRequest) { Object label
-	 * = pageRequest.getParamValue("label"); if(label != null) { return
-	 * MybatisPageHelper.findPage(pageRequest, sysDictMapper, "findPageByLabel",
-	 * label); } return MybatisPageHelper.findPage(pageRequest, sysDictMapper); }
-	 */
+	
+	  @Override 
+	  public PageResult findPage(PageRequest pageRequest) { 
+		  	PageResult pageResult = null;
+			Map<String, Object> params = pageRequest.getObjectParam();
+			int pageNum = pageRequest.getPageNum();
+			int pageSize = pageRequest.getPageSize();
+			PageHelper.startPage(pageNum, pageSize);
+			List<SysDict> result = sysDictMapper.findPageByParams(params);
+			pageResult = MybatisPageHelper.getPageResult(pageRequest, new PageInfo<SysDict>((List<SysDict>) result));
+			return pageResult;
+	  }
+	 
 
 	/*
 	 * @Override public List<SysDict> findByLable(String lable) { return
