@@ -1,9 +1,11 @@
 package com.eshop.sys.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.eshop.sys.pojo.SysDict;
 import com.eshop.sys.pojo.SysRole;
 
 
@@ -28,6 +30,8 @@ public interface SysRoleMapper {
     //List<SysRole> findPageByName(@Param(value="name") String name);
 	
 	List<SysRole> findByName(@Param(value="name") String name);
+	
+	List<SysRole> findPageByParams(Map<String,Object> params);
     
 
 }

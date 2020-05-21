@@ -27,9 +27,9 @@ CREATE TABLE `sys_config` (
   `description` varchar(100) NOT null COMMENT '描述',
   `sort` decimal(10,0) NOT null COMMENT '排序（升序）',
   `create_by` varchar(50) DEFAULT null COMMENT '创建人',
-  `create_time` datetime DEFAULT null COMMENT '创建时间',
+  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `last_update_by` varchar(50) DEFAULT null COMMENT '更新人',
-  `last_update_time` datetime DEFAULT null COMMENT '更新时间',
+  `last_update_time` datetime DEFAULT  CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   `remarks` varchar(255) DEFAULT null COMMENT '备注信息',
   `del_flag` tinyint(4) DEFAULT '0' COMMENT '是否删除  -1：已删除  0：正常',
   PRIMARY KEY (`id`)
@@ -50,9 +50,9 @@ CREATE TABLE `sys_dept` (
   `parent_id` bigint(20) DEFAULT null COMMENT '上级机构ID，一级机构为0',
   `order_num` int(11) DEFAULT null COMMENT '排序',
   `create_by` varchar(50) DEFAULT null COMMENT '创建人',
-  `create_time` datetime DEFAULT null COMMENT '创建时间',
+  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `last_update_by` varchar(50) DEFAULT null COMMENT '更新人',
-  `last_update_time` datetime DEFAULT null COMMENT '更新时间',
+  `last_update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT COMMENT '更新时间',
   `del_flag` tinyint(4) DEFAULT '0' COMMENT '是否删除  -1：已删除  0：正常',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8 COMMENT='机构管理';
@@ -87,9 +87,9 @@ CREATE TABLE `sys_dict` (
   `description` varchar(100) NOT null COMMENT '描述',
   `sort` decimal(10,0) NOT null COMMENT '排序（升序）',
   `create_by` varchar(50) DEFAULT null COMMENT '创建人',
-  `create_time` datetime DEFAULT null COMMENT '创建时间',
+  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `last_update_by` varchar(50) DEFAULT null COMMENT '更新人',
-  `last_update_time` datetime DEFAULT null COMMENT '更新时间',
+  `last_update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT COMMENT '更新时间',
   `remarks` varchar(255) DEFAULT null COMMENT '备注信息',
   `del_flag` tinyint(4) DEFAULT '0' COMMENT '是否删除  -1：已删除  0：正常',
   PRIMARY KEY (`id`)
@@ -114,9 +114,9 @@ CREATE TABLE `sys_log` (
   `time` bigint(20) NOT null COMMENT '执行时长(毫秒)',
   `ip` varchar(64) DEFAULT null COMMENT 'IP地址',
   `create_by` varchar(50) DEFAULT null COMMENT '创建人',
-  `create_time` datetime DEFAULT null COMMENT '创建时间',
+  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `last_update_by` varchar(50) DEFAULT null COMMENT '更新人',
-  `last_update_time` datetime DEFAULT null COMMENT '更新时间',
+  `last_update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT COMMENT '更新时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2897 DEFAULT CHARSET=utf8 COMMENT='系统操作日志';
 
@@ -175,9 +175,9 @@ CREATE TABLE `sys_login_log` (
   `status` varchar(50) DEFAULT null COMMENT '登录状态（online:在线，登录初始状态，方便统计在线人数；login:退出登录后将online置为login；logout:退出登录）',
   `ip` varchar(64) DEFAULT null COMMENT 'IP地址',
   `create_by` varchar(50) DEFAULT null COMMENT '创建人',
-  `create_time` datetime DEFAULT null COMMENT '创建时间',
+  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `last_update_by` varchar(50) DEFAULT null COMMENT '更新人',
-  `last_update_time` datetime DEFAULT null COMMENT '更新时间',
+  `last_update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT COMMENT '更新时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2804 DEFAULT CHARSET=utf8 COMMENT='系统登录日志';
 
@@ -214,9 +214,9 @@ CREATE TABLE `sys_menu` (
   `icon` varchar(50) DEFAULT null COMMENT '菜单图标',
   `order_num` int(11) DEFAULT null COMMENT '排序',
   `create_by` varchar(50) DEFAULT null COMMENT '创建人',
-  `create_time` datetime DEFAULT null COMMENT '创建时间',
+  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `last_update_by` varchar(50) DEFAULT null COMMENT '更新人',
-  `last_update_time` datetime DEFAULT null COMMENT '更新时间',
+  `last_update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT COMMENT '更新时间',
   `del_flag` tinyint(4) DEFAULT '0' COMMENT '是否删除  -1：已删除  0：正常',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=utf8 COMMENT='菜单管理';
@@ -275,9 +275,9 @@ CREATE TABLE `sys_role` (
   `name` varchar(100) DEFAULT null COMMENT '角色名称',
   `remark` varchar(100) DEFAULT null COMMENT '备注',
   `create_by` varchar(50) DEFAULT null COMMENT '创建人',
-  `create_time` datetime DEFAULT null COMMENT '创建时间',
+  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `last_update_by` varchar(50) DEFAULT null COMMENT '更新人',
-  `last_update_time` datetime DEFAULT null COMMENT '更新时间',
+  `last_update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT COMMENT '更新时间',
   `del_flag` tinyint(4) DEFAULT '0' COMMENT '是否删除  -1：已删除  0：正常',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COMMENT='角色管理';
@@ -299,9 +299,9 @@ CREATE TABLE `sys_role_dept` (
   `role_id` bigint(20) DEFAULT null COMMENT '角色ID',
   `dept_id` bigint(20) DEFAULT null COMMENT '机构ID',
   `create_by` varchar(50) DEFAULT null COMMENT '创建人',
-  `create_time` datetime DEFAULT null COMMENT '创建时间',
+  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `last_update_by` varchar(50) DEFAULT null COMMENT '更新人',
-  `last_update_time` datetime DEFAULT null COMMENT '更新时间',
+  `last_update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT COMMENT '更新时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='角色机构';
 
@@ -321,9 +321,9 @@ CREATE TABLE `sys_role_menu` (
   `role_id` bigint(20) DEFAULT null COMMENT '角色ID',
   `menu_id` bigint(20) DEFAULT null COMMENT '菜单ID',
   `create_by` varchar(50) DEFAULT null COMMENT '创建人',
-  `create_time` datetime DEFAULT null COMMENT '创建时间',
+  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `last_update_by` varchar(50) DEFAULT null COMMENT '更新人',
-  `last_update_time` datetime DEFAULT null COMMENT '更新时间',
+  `last_update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT COMMENT '更新时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=623 DEFAULT CHARSET=utf8 COMMENT='角色菜单';
 
@@ -470,9 +470,9 @@ CREATE TABLE `sys_user` (
   `status` tinyint(4) DEFAULT null COMMENT '状态  0：禁用   1：正常',
   `dept_id` bigint(20) DEFAULT null COMMENT '机构ID',
   `create_by` varchar(50) DEFAULT null COMMENT '创建人',
-  `create_time` datetime DEFAULT null COMMENT '创建时间',
+  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `last_update_by` varchar(50) DEFAULT null COMMENT '更新人',
-  `last_update_time` datetime DEFAULT null COMMENT '更新时间',
+  `last_update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT COMMENT '更新时间',
   `del_flag` tinyint(4) DEFAULT '0' COMMENT '是否删除  -1：已删除  0：正常',
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
@@ -503,9 +503,9 @@ CREATE TABLE `sys_user_role` (
   `user_id` bigint(20) DEFAULT null COMMENT '用户ID',
   `role_id` bigint(20) DEFAULT null COMMENT '角色ID',
   `create_by` varchar(50) DEFAULT null COMMENT '创建人',
-  `create_time` datetime DEFAULT null COMMENT '创建时间',
+  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `last_update_by` varchar(50) DEFAULT null COMMENT '更新人',
-  `last_update_time` datetime DEFAULT null COMMENT '更新时间',
+  `last_update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT COMMENT '更新时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=88 DEFAULT CHARSET=utf8 COMMENT='用户角色';
 

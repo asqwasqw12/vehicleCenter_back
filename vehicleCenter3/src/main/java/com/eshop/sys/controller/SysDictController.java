@@ -1,6 +1,9 @@
 package com.eshop.sys.controller;
 
+import java.io.IOException;
 import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.eshop.common.HttpResult;
 import com.eshop.common.page.PageRequest;
+import com.eshop.common.page.PageResult;
 import com.eshop.sys.pojo.SysDict;
 import com.eshop.sys.service.SysDictService;
 
@@ -42,6 +46,13 @@ public class SysDictController {
 	  public HttpResult findPage(@RequestBody PageRequest pageRequest) {
 		  return HttpResult.ok(sysDictService.findPage(pageRequest));
 		  }
+	  
+	  @PreAuthorize("hasAuthority('sys:dict:view')")	  
+	  @PostMapping(value="/exportDictExcelFile") 
+	  public void exportExcelUser(@RequestBody PageRequest pageRequest, HttpServletResponse res) throws IOException  { 
+		  		PageResult pageResult = sysDictService.findPage(pageRequest);
+		  		sysDictService.downloadExcel(pageResult.getContent(), res);
+	     }
 	 
 	
 	/*

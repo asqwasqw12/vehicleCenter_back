@@ -29,5 +29,7 @@ public interface SysDictMapper {
    // List<SysDict> findByLable(@Param(value="label") String label);
     
     List<SysDict> findPageByParams(Map<String,Object> params);
+    
+    
 
 }

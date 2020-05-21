@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.eshop.common.HttpResult;
 import com.eshop.common.SysConstants;
+import com.eshop.common.page.PageRequest;
 import com.eshop.sys.dao.SysRoleMapper;
 import com.eshop.sys.pojo.SysRole;
 import com.eshop.sys.pojo.SysRoleMenu;
@@ -51,13 +52,13 @@ public class SysRoleController {
 		return HttpResult.ok(sysRoleService.delete(records));
 	}
 
-	/*
-	 * @PreAuthorize("hasAuthority('sys:role:view')")
-	 * 
-	 * @PostMapping(value="/findPage") public HttpResult findPage(@RequestBody
-	 * PageRequest pageRequest) { return
-	 * HttpResult.ok(sysRoleService.findPage(pageRequest)); }
-	 */
+	
+	  @PreAuthorize("hasAuthority('sys:role:view')")	  
+	  @PostMapping(value="/findPage") 
+	  public HttpResult findPage(@RequestBody PageRequest pageRequest) { 
+		  return HttpResult.ok(sysRoleService.findPage(pageRequest)); 
+		  }
+	 
 	
 	@PreAuthorize("hasAuthority('sys:role:view')")
 	@GetMapping(value="/findAll")

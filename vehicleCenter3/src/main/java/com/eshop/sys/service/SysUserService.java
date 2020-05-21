@@ -54,7 +54,7 @@ public interface SysUserService extends CurdService<SysUser> {
 	public PageResult findPage(PageRequest pageRequest);
 	
 	//下载excel文件
-	void downloadExcel(List<?> userList, HttpServletResponse response) throws IOException;
+	void downloadExcel(List<?> records, HttpServletResponse response) throws IOException;
 	
 
 }

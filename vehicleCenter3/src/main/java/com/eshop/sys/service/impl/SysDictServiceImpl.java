@@ -1,11 +1,18 @@
 package com.eshop.sys.service.impl;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.eshop.common.DateTimeUtils;
+import com.eshop.common.FileUtil;
 import com.eshop.common.page.MybatisPageHelper;
 import com.eshop.common.page.PageRequest;
 import com.eshop.common.page.PageResult;
@@ -61,6 +68,28 @@ public class SysDictServiceImpl implements SysDictService {
 			return pageResult;
 	  }
 	 
+	  @Override
+	  public void downloadExcel(List<?> records, HttpServletResponse response) throws IOException{
+		  List<Map<String, Object>> list = new ArrayList<>();
+	        for (int i = 0; i <records.size(); i++) {
+	        	SysDict dict = (SysDict) records.get(i);
+	        	Map<String,Object> map = new LinkedHashMap<>(); 
+	        	map.put("ID", dict.getId());
+	        			 map.put("名称",dict.getLabel()); 
+	        			 map.put("值", dict.getValue()); 
+	        			 map.put("类型",dict.getType()); 
+	        			 map.put("排序", dict.getSort()); 
+	        			 map.put("描述",dict.getDescription()); 
+	        			 map.put("备注", dict.getRemarks()); 
+	        			 map.put("创建人",dict.getCreateBy()); 
+	        			 map.put("创建时间日期",DateTimeUtils.getDateTime(dict.getCreateTime())); 
+	        			 map.put("最后更新人",dict.getLastUpdateBy()); 
+	        			 map.put("最后更新时间",DateTimeUtils.getDateTime(dict.getLastUpdateTime())); 
+	        			 list.add(map);
+	        	
+	        }
+	        FileUtil.downloadExcel(list, response);
+	  }
 
 	/*
 	 * @Override public List<SysDict> findByLable(String lable) { return

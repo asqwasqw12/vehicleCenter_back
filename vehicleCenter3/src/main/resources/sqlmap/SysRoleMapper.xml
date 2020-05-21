@@ -135,6 +135,34 @@
     <include refid="Base_Column_List" />
     from sys_role
   </select>
+    <select id="findPageByParams" parameterType="java.util.Map" resultMap="BaseResultMap">
+ 	select 
+    <include refid="Base_Column_List" />
+    from sys_role r
+    <where>
+  		<if test="name !=null and name !=''">
+  			 r.name LIKE CONCAT(CONCAT('%',#{name}),'%')
+  		</if>
+  		<if test="remark !=null and remark !=''">
+  			and r.remark LIKE CONCAT(CONCAT('%',#{remark}),'%')
+  		</if>
+    	<if test="createBy != null and createBy !=''">
+        	and r.create_by LIKE CONCAT(CONCAT('%',#{createBy}),'%')
+    	</if>
+    	<if test="endTime !=null and endTime!=''">
+    		and r.create_time <![CDATA[<=]]> #{endTime,jdbcType=TIMESTAMP}
+    	</if>
+    	<if test="startTime!=null and startTime!=''">
+    	    and r.create_time >= #{startTime,jdbcType=TIMESTAMP}
+    	</if>
+    	<if test="lastUpdateBy != null and lastUpdateBy !=''">
+        	and r.last_update_by LIKE CONCAT(CONCAT('%',#{lastUpdateBy}),'%')
+    	</if>
+    	<if test="delFlag != null and delFlag !=''">
+        	and r.del_flag LIKE CONCAT(CONCAT('%',#{delFlag}),'%')
+    	</if>
+    </where>
+  </select>
   <select id="findPageByName" parameterType="java.lang.String" resultMap="BaseResultMap">
   	<bind name="pattern" value="'%' + _parameter.name + '%'" />
   	select 

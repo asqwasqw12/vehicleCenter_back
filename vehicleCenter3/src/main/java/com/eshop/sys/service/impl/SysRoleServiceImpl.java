@@ -1,19 +1,26 @@
 package com.eshop.sys.service.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.eshop.common.SysConstants;
+import com.eshop.common.page.MybatisPageHelper;
+import com.eshop.common.page.PageRequest;
+import com.eshop.common.page.PageResult;
 import com.eshop.sys.dao.SysMenuMapper;
 import com.eshop.sys.dao.SysRoleMapper;
 import com.eshop.sys.dao.SysRoleMenuMapper;
+import com.eshop.sys.pojo.SysDict;
 import com.eshop.sys.pojo.SysMenu;
 import com.eshop.sys.pojo.SysRole;
 import com.eshop.sys.pojo.SysRoleMenu;
 import com.eshop.sys.service.SysRoleService;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 
 @Service
 public class SysRoleServiceImpl implements SysRoleService {
@@ -58,6 +65,18 @@ public class SysRoleServiceImpl implements SysRoleService {
 	 * label); } return MybatisPageHelper.findPage(pageRequest, sysRoleMapper); }
 	 */
 
+	@Override 
+	  public PageResult findPage(PageRequest pageRequest) { 
+		  	PageResult pageResult = null;
+			Map<String, Object> params = pageRequest.getObjectParam();
+			int pageNum = pageRequest.getPageNum();
+			int pageSize = pageRequest.getPageSize();
+			PageHelper.startPage(pageNum, pageSize);
+			List<SysRole> result = sysRoleMapper.findPageByParams(params);
+			pageResult = MybatisPageHelper.getPageResult(pageRequest, new PageInfo<SysRole>((List<SysRole>) result));
+			return pageResult;
+	  }
+	
 	@Override
 	public List<SysRole> findAll() {
 		return sysRoleMapper.findAll();
