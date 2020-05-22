@@ -106,7 +106,7 @@ public class SysRoleServiceImpl implements SysRoleService {
 		if(records == null || records.isEmpty()) {
 			return 1;
 		}
-		Long roleId = records.get(0).getRoleId(); 
+		Long roleId = records.get(0).getRoleId(); //此段代码可以改进成先更新再新增再删除
 		sysRoleMenuMapper.deleteByRoleId(roleId);
 		for(SysRoleMenu record:records) {
 			sysRoleMenuMapper.insertSelective(record);
