@@ -1,6 +1,9 @@
 package com.eshop.sys.controller;
 
+import java.io.IOException;
 import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.eshop.common.HttpResult;
 import com.eshop.common.SysConstants;
 import com.eshop.common.page.PageRequest;
+import com.eshop.common.page.PageResult;
 import com.eshop.sys.dao.SysRoleMapper;
 import com.eshop.sys.pojo.SysRole;
 import com.eshop.sys.pojo.SysRoleMenu;
@@ -84,4 +88,11 @@ public class SysRoleController {
 		}
 		return HttpResult.ok(sysRoleService.saveRoleMenus(records));
 	}
+	
+	 @PreAuthorize("hasAuthority('sys:role:view')")	  
+	  @PostMapping(value="/exportRoleExcelFile") 
+	  public void exportExcelUser(@RequestBody PageRequest pageRequest, HttpServletResponse res) throws IOException  { 
+		  		PageResult pageResult = sysRoleService.findPage(pageRequest);
+		  		sysRoleService.downloadExcel(pageResult.getContent(), res);
+	     }
 }

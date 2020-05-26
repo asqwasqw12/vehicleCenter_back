@@ -54,7 +54,7 @@ CREATE TABLE `sys_dept` (
   `last_update_by` varchar(50) DEFAULT null COMMENT '更新人',
   `last_update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT COMMENT '更新时间',
   `del_flag` tinyint(4) DEFAULT '0' COMMENT '是否删除  -1：已删除  0：正常',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8 COMMENT='机构管理';
 
 -- ----------------------------
@@ -92,7 +92,7 @@ CREATE TABLE `sys_dict` (
   `last_update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT COMMENT '更新时间',
   `remarks` varchar(255) DEFAULT null COMMENT '备注信息',
   `del_flag` tinyint(4) DEFAULT '0' COMMENT '是否删除  -1：已删除  0：正常',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='字典表';
 
 -- ----------------------------
@@ -218,7 +218,8 @@ CREATE TABLE `sys_menu` (
   `last_update_by` varchar(50) DEFAULT null COMMENT '更新人',
   `last_update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT COMMENT '更新时间',
   `del_flag` tinyint(4) DEFAULT '0' COMMENT '是否删除  -1：已删除  0：正常',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `parent_id` (`parent_id`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=utf8 COMMENT='菜单管理';
 
 -- ----------------------------
@@ -259,7 +260,6 @@ INSERT INTO `sys_menu` VALUES ('37', '删除', 35, null, null, 'sys:log:delete',
 INSERT INTO `sys_menu` VALUES ('38', '系统监控', 0, '/monitor', null, '', 0, 'el-icon-info', 1, 'admin', '2018-12-27 10:57:29', 'admin', '2019-01-10 17:31:04', 0);
 INSERT INTO `sys_menu` VALUES ('39', '数据监控', 38, '/druid', 'monitor/sql', null, 1, 'el-icon-warning', 3, null, null, 'admin', '2018-12-27 11:03:45', 0);
 INSERT INTO `sys_menu` VALUES ('40', '查看', 39, null, null, 'sys:druid:view', 2, null, 0, null, null, null, null, 0);
-INSERT INTO `sys_menu` VALUES ('42', '查看', 41, null, null, 'sys:monitor:view', 2, null, 0, null, null, null, null, 0);
 INSERT INTO `sys_menu` VALUES ('46', '接口文档', 38, '/swagger', 'monitor/swagger', null, 1, 'el-icon-document', 4, null, null, 'admin', '2018-12-27 11:04:18', 0);
 INSERT INTO `sys_menu` VALUES ('47', '查看', 46, null, null, 'sys:swagger:view', 2, null, 0, null, null, null, null, 0);
 INSERT INTO `sys_menu` VALUES ('50', '车辆监管', 0, '/car', null, '', 0, 'el-icon-view', 2, 'admin', '2018-11-15 14:39:30', 'admin', '2018-11-15 14:56:18', 0);
@@ -279,7 +279,7 @@ CREATE TABLE `sys_role` (
   `last_update_by` varchar(50) DEFAULT null COMMENT '更新人',
   `last_update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT COMMENT '更新时间',
   `del_flag` tinyint(4) DEFAULT '0' COMMENT '是否删除  -1：已删除  0：正常',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COMMENT='角色管理';
 
 -- ----------------------------
@@ -302,7 +302,11 @@ CREATE TABLE `sys_role_dept` (
   `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `last_update_by` varchar(50) DEFAULT null COMMENT '更新人',
   `last_update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT COMMENT '更新时间',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `role_id` (`role_id`) USING BTREE,
+  INDEX `dept_id` (`dept_id`) USING BTREE,
+  CONSTRAINT `FK_sys_role_dept_sys_dept` FOREIGN KEY (`dept_id`) REFERENCES `sys_dept` (`id`) ON UPDATE CASCADE ON DELETE CASCADE,
+  CONSTRAINT `FK_sys_role_dept_sys_role` FOREIGN KEY (`role_id`) REFERENCES `sys_role` (`id`) ON UPDATE CASCADE ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='角色机构';
 
 -- ----------------------------
@@ -324,7 +328,11 @@ CREATE TABLE `sys_role_menu` (
   `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `last_update_by` varchar(50) DEFAULT null COMMENT '更新人',
   `last_update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT COMMENT '更新时间',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `role_id` (`role_id`) USING BTREE,
+  INDEX `menu_id` (`menu_id`) USING BTREE,
+  CONSTRAINT `FK_sys_role_menu_sys_menu` FOREIGN KEY (`menu_id`) REFERENCES `sys_menu` (`id`) ON UPDATE CASCADE ON DELETE CASCADE,
+  CONSTRAINT `FK_sys_role_menu_sys_role` FOREIGN KEY (`role_id`) REFERENCES `sys_role` (`id`) ON UPDATE CASCADE ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=623 DEFAULT CHARSET=utf8 COMMENT='角色菜单';
 
 -- ----------------------------
@@ -417,11 +425,6 @@ INSERT INTO `sys_role_menu` VALUES ('585', '3', '23', 'admin', '2019-01-22 14:45
 INSERT INTO `sys_role_menu` VALUES ('586', '3', '24', 'admin', '2019-01-22 14:45:28', null, null);
 INSERT INTO `sys_role_menu` VALUES ('587', '3', '25', 'admin', '2019-01-22 14:45:28', null, null);
 INSERT INTO `sys_role_menu` VALUES ('588', '3', '26', 'admin', '2019-01-22 14:45:28', null, null);
-INSERT INTO `sys_role_menu` VALUES ('589', '3', '27', 'admin', '2019-01-22 14:45:28', null, null);
-INSERT INTO `sys_role_menu` VALUES ('590', '3', '28', 'admin', '2019-01-22 14:45:28', null, null);
-INSERT INTO `sys_role_menu` VALUES ('591', '3', '29', 'admin', '2019-01-22 14:45:28', null, null);
-INSERT INTO `sys_role_menu` VALUES ('592', '3', '30', 'admin', '2019-01-22 14:45:28', null, null);
-INSERT INTO `sys_role_menu` VALUES ('593', '3', '31', 'admin', '2019-01-22 14:45:28', null, null);
 INSERT INTO `sys_role_menu` VALUES ('594', '3', '32', 'admin', '2019-01-22 14:45:28', null, null);
 INSERT INTO `sys_role_menu` VALUES ('595', '3', '33', 'admin', '2019-01-22 14:45:28', null, null);
 INSERT INTO `sys_role_menu` VALUES ('596', '3', '35', 'admin', '2019-01-22 14:45:28', null, null);
@@ -432,8 +435,6 @@ INSERT INTO `sys_role_menu` VALUES ('600', '3', '45', 'admin', '2019-01-22 14:45
 INSERT INTO `sys_role_menu` VALUES ('601', '3', '38', 'admin', '2019-01-22 14:45:28', null, null);
 INSERT INTO `sys_role_menu` VALUES ('602', '3', '39', 'admin', '2019-01-22 14:45:28', null, null);
 INSERT INTO `sys_role_menu` VALUES ('603', '3', '40', 'admin', '2019-01-22 14:45:28', null, null);
-INSERT INTO `sys_role_menu` VALUES ('604', '3', '41', 'admin', '2019-01-22 14:45:28', null, null);
-INSERT INTO `sys_role_menu` VALUES ('605', '3', '42', 'admin', '2019-01-22 14:45:28', null, null);
 INSERT INTO `sys_role_menu` VALUES ('606', '3', '50', 'admin', '2019-01-22 14:45:28', null, null);
 INSERT INTO `sys_role_menu` VALUES ('607', '3', '51', 'admin', '2019-01-22 14:45:28', null, null);
 INSERT INTO `sys_role_menu` VALUES ('608', '4', '1', 'admin', '2019-01-22 14:46:44', null, null);
@@ -474,8 +475,11 @@ CREATE TABLE `sys_user` (
   `last_update_by` varchar(50) DEFAULT null COMMENT '更新人',
   `last_update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT COMMENT '更新时间',
   `del_flag` tinyint(4) DEFAULT '0' COMMENT '是否删除  -1：已删除  0：正常',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `name` (`name`)
+  PRIMARY KEY (`id`) USING BTREE,
+  UNIQUE INDEX `name` (`name`) USING BTREE,
+  INDEX `real_name` (`real_name`) USING BTREE,
+  INDEX `dept_id` (`dept_id`) USING BTREE,
+  CONSTRAINT `FK_sys_user_sys_dept` FOREIGN KEY (`dept_id`) REFERENCES `sys_dept` (`id`) ON UPDATE CASCADE ON DELETE SET NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8 COMMENT='用户管理';
 
 -- ----------------------------
@@ -506,33 +510,20 @@ CREATE TABLE `sys_user_role` (
   `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `last_update_by` varchar(50) DEFAULT null COMMENT '更新人',
   `last_update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT COMMENT '更新时间',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `user_id` (`user_id`) USING BTREE,
+  INDEX `role_id` (`role_id`) USING BTREE,
+  CONSTRAINT `FK_sys_user_role_sys_role` FOREIGN KEY (`role_id`) REFERENCES `sys_role` (`id`) ON UPDATE CASCADE ON DELETE CASCADE,
+  CONSTRAINT `FK_sys_user_role_sys_user` FOREIGN KEY (`user_id`) REFERENCES `sys_user` (`id`) ON UPDATE CASCADE ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=88 DEFAULT CHARSET=utf8 COMMENT='用户角色';
 
 -- ----------------------------
 -- Records of sys_user_role
 -- ----------------------------
 INSERT INTO `sys_user_role` VALUES ('1', '1', '1', null, null, null, null);
-INSERT INTO `sys_user_role` VALUES ('2', '2', '1', null, null, null, null);
-INSERT INTO `sys_user_role` VALUES ('26', '5', '3', null, null, null, null);
-INSERT INTO `sys_user_role` VALUES ('33', '6', '2', null, null, null, null);
-INSERT INTO `sys_user_role` VALUES ('34', '4', '2', null, null, null, null);
-INSERT INTO `sys_user_role` VALUES ('35', '9', '2', null, null, null, null);
-INSERT INTO `sys_user_role` VALUES ('36', '10', '3', null, null, null, null);
-INSERT INTO `sys_user_role` VALUES ('37', '11', '2', null, null, null, null);
-INSERT INTO `sys_user_role` VALUES ('38', '12', '3', null, null, null, null);
-INSERT INTO `sys_user_role` VALUES ('39', '15', '2', null, null, null, null);
-INSERT INTO `sys_user_role` VALUES ('41', '16', '3', null, null, null, null);
-INSERT INTO `sys_user_role` VALUES ('42', '8', '2', null, null, null, null);
-INSERT INTO `sys_user_role` VALUES ('43', '7', '4', null, null, null, null);
-INSERT INTO `sys_user_role` VALUES ('45', '18', '2', null, null, null, null);
-INSERT INTO `sys_user_role` VALUES ('46', '17', '3', null, null, null, null);
-INSERT INTO `sys_user_role` VALUES ('47', '3', '4', null, null, null, null);
-INSERT INTO `sys_user_role` VALUES ('48', '21', '2', null, null, null, null);
 INSERT INTO `sys_user_role` VALUES ('57', '31', '2', null, null, null, null);
 INSERT INTO `sys_user_role` VALUES ('58', '30', '2', null, null, null, null);
 INSERT INTO `sys_user_role` VALUES ('59', '32', '3', null, null, null, null);
-INSERT INTO `sys_user_role` VALUES ('73', '33', '8', null, null, null, null);
 INSERT INTO `sys_user_role` VALUES ('74', '25', '8', null, null, null, null);
 INSERT INTO `sys_user_role` VALUES ('75', '25', '2', null, null, null, null);
 INSERT INTO `sys_user_role` VALUES ('80', '22', '2', null, null, null, null);

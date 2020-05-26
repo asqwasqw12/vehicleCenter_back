@@ -1,12 +1,19 @@
 package com.eshop.sys.service.impl;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.eshop.common.DateTimeUtils;
+import com.eshop.common.FileUtil;
 import com.eshop.common.SysConstants;
 import com.eshop.common.page.MybatisPageHelper;
 import com.eshop.common.page.PageRequest;
@@ -118,4 +125,23 @@ public class SysRoleServiceImpl implements SysRoleService {
 	public List<SysRole> findByName(String name) {
 		return sysRoleMapper.findByName(name);
 	}
+	
+	 @Override
+	  public void downloadExcel(List<?> records, HttpServletResponse response) throws IOException{
+		  List<Map<String, Object>> list = new ArrayList<>();
+	        for (int i = 0; i <records.size(); i++) {
+	        	SysRole role = (SysRole) records.get(i);
+	        	Map<String,Object> map = new LinkedHashMap<>(); 
+	        	map.put("ID", role.getId());
+	        			 map.put("名称",role.getName()); 
+	        			 map.put("备注", role.getRemark()); 
+	        			 map.put("创建人",role.getCreateBy()); 
+	        			 map.put("创建时间日期",DateTimeUtils.getDateTime(role.getCreateTime())); 
+	        			 map.put("最后更新人",role.getLastUpdateBy()); 
+	        			 map.put("最后更新时间",DateTimeUtils.getDateTime(role.getLastUpdateTime())); 
+	        			 list.add(map);
+	        	
+	        }
+	        FileUtil.downloadExcel(list, response);
+	  }
 }

@@ -1,6 +1,9 @@
 package com.eshop.sys.service;
 
+import java.io.IOException;
 import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
 
 import com.eshop.common.page.PageRequest;
 import com.eshop.common.page.PageResult;
@@ -38,5 +41,7 @@ public interface SysRoleService extends CurdService<SysRole>{
 	
 	//查询角色表
 	PageResult findPage(PageRequest pageRequest);
+	
+	void downloadExcel(List<?> records, HttpServletResponse response) throws IOException;
 
 }
