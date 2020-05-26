@@ -17,6 +17,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import com.eshop.common.SecurityUtils;
 import com.eshop.common.StringUtils;
 
+/*对所有的创建和新增操作，保存创建人，创建时间，最后更新时间，最后更新人*/
 
 @Aspect
 @Component
@@ -27,11 +28,11 @@ public class DaoAspect {
 	private static final String lastUpdateBy = "lastUpdateBy";
 	private static final String lastUpdateTime = "lastUpdateTime";
 
-	@Pointcut("execution(* com.louis.mango.*.dao.*.update*(..))")
+	@Pointcut("execution(* com.eshop.*.dao.*.update*(..))")
 	public void daoUpdate() {
 	}
 
-	@Pointcut("execution(* com.louis.mango.*.dao.*.insert*(..))")
+	@Pointcut("execution(* com.eshop.*.dao.*.insert*(..))")
 	public void daoCreate() {
 	}
 
@@ -49,7 +50,7 @@ public class DaoAspect {
 			if (objects != null && objects.length > 0) {
 				for (Object arg : objects) {
 					BeanUtils.setProperty(arg, lastUpdateBy, username);
-					BeanUtils.setProperty(arg, lastUpdateTime, new Date());
+					//BeanUtils.setProperty(arg, lastUpdateTime, new Date());  //由于使用了mysql自带更新时间，所以该行可以不要
 				}
 			}
 		}
@@ -73,7 +74,7 @@ public class DaoAspect {
 						BeanUtils.setProperty(arg, createBy, username);
 					}
 					if (StringUtils.isBlank(BeanUtils.getProperty(arg, createTime))) {
-						BeanUtils.setProperty(arg, createTime, new Date());
+						//BeanUtils.setProperty(arg, createTime, new Date());  //由于使用了mysql自带更新时间，所以该行可以不要
 					}
 				}
 			}

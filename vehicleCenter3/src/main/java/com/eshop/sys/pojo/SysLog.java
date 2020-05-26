@@ -9,11 +9,13 @@ public class SysLog extends BaseModel {
 
     private String method;
 
-    private String params;
+    private String browser;
 
     private Long time;
 
     private String ip;
+    
+    private String address;
 
 	public String getUserName() {
 		return userName;
@@ -39,12 +41,12 @@ public class SysLog extends BaseModel {
 		this.method = method;
 	}
 
-	public String getParams() {
-		return params;
+	public String getBrowser() {
+		return browser;
 	}
 
-	public void setParams(String params) {
-		this.params = params;
+	public void setBrowser(String browser) {
+		this.browser = browser;
 	}
 
 	public Long getTime() {
@@ -61,6 +63,14 @@ public class SysLog extends BaseModel {
 
 	public void setIp(String ip) {
 		this.ip = ip;
+	}
+	
+	public String getAddress() {
+		return address;
+	}
+	
+	public void setAddress(String address) {
+		this.address = address;
 	}
 
 }

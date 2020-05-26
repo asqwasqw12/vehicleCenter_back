@@ -6,16 +6,17 @@
     <result column="user_name" jdbcType="VARCHAR" property="userName" />
     <result column="operation" jdbcType="VARCHAR" property="operation" />
     <result column="method" jdbcType="VARCHAR" property="method" />
-    <result column="params" jdbcType="VARCHAR" property="params" />
+    <result column="browser" jdbcType="VARCHAR" property="browser" />
     <result column="time" jdbcType="BIGINT" property="time" />
     <result column="ip" jdbcType="VARCHAR" property="ip" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
     <result column="create_by" jdbcType="VARCHAR" property="createBy" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="last_update_by" jdbcType="VARCHAR" property="lastUpdateBy" />
     <result column="last_update_time" jdbcType="TIMESTAMP" property="lastUpdateTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, user_name, operation, method, params, time, ip, create_by, create_time, last_update_by, 
+    id, user_name, operation, method, browser, time, ip, address,create_by, create_time, last_update_by, 
     last_update_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
@@ -30,12 +31,12 @@
   </delete>
   <insert id="insert" parameterType="com.eshop.sys.pojo.SysLog">
     insert into sys_log (id, user_name, operation, 
-      method, params, time, 
-      ip, create_by, create_time, 
+      method, browser, time, 
+      ip,address, create_by, create_time, 
       last_update_by, last_update_time)
     values (#{id,jdbcType=BIGINT}, #{userName,jdbcType=VARCHAR}, #{operation,jdbcType=VARCHAR}, 
-      #{method,jdbcType=VARCHAR}, #{params,jdbcType=VARCHAR}, #{time,jdbcType=BIGINT}, 
-      #{ip,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{method,jdbcType=VARCHAR}, #{browser,jdbcType=VARCHAR}, #{time,jdbcType=BIGINT}, 
+      #{ip,jdbcType=VARCHAR},#{address,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
       #{lastUpdateBy,jdbcType=VARCHAR}, #{lastUpdateTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.eshop.sys.pojo.SysLog">
@@ -53,14 +54,17 @@
       <if test="method != null">
         method,
       </if>
-      <if test="params != null">
-        params,
+      <if test="browser != null">
+        browser,
       </if>
       <if test="time != null">
         time,
       </if>
       <if test="ip != null">
         ip,
+      </if>
+      <if test="address != null">
+        address,
       </if>
       <if test="createBy != null">
         create_by,
@@ -88,14 +92,17 @@
       <if test="method != null">
         #{method,jdbcType=VARCHAR},
       </if>
-      <if test="params != null">
-        #{params,jdbcType=VARCHAR},
+      <if test="browser != null">
+        #{browser,jdbcType=VARCHAR},
       </if>
       <if test="time != null">
         #{time,jdbcType=BIGINT},
       </if>
       <if test="ip != null">
         #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
       </if>
       <if test="createBy != null">
         #{createBy,jdbcType=VARCHAR},
@@ -123,14 +130,17 @@
       <if test="method != null">
         method = #{method,jdbcType=VARCHAR},
       </if>
-      <if test="params != null">
-        params = #{params,jdbcType=VARCHAR},
+      <if test="browser != null">
+        browser = #{browser,jdbcType=VARCHAR},
       </if>
       <if test="time != null">
         time = #{time,jdbcType=BIGINT},
       </if>
       <if test="ip != null">
         ip = #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
       </if>
       <if test="createBy != null">
         create_by = #{createBy,jdbcType=VARCHAR},
@@ -152,9 +162,10 @@
     set user_name = #{userName,jdbcType=VARCHAR},
       operation = #{operation,jdbcType=VARCHAR},
       method = #{method,jdbcType=VARCHAR},
-      params = #{params,jdbcType=VARCHAR},
+      browser = #{browser,jdbcType=VARCHAR},
       time = #{time,jdbcType=BIGINT},
       ip = #{ip,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
       create_by = #{createBy,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       last_update_by = #{lastUpdateBy,jdbcType=VARCHAR},
@@ -165,6 +176,46 @@
     select 
     <include refid="Base_Column_List" />
     from sys_log
+  </select>
+  <select id="findPageByParams" parameterType="java.util.Map" resultMap="BaseResultMap">
+  	select 
+    <include refid="Base_Column_List" />
+    from sys_log l
+  	<where>
+  		<if test="userName !=null and userName !=''">
+  			 l.user_name LIKE CONCAT(CONCAT('%',#{userName}),'%')
+  		</if>
+  		<if test="operation !=null and operation !=''">
+  			and l.operation LIKE CONCAT(CONCAT('%',#{operation}),'%')
+  		</if>
+  		<if test="method != null and method !=''">
+        	and l.method LIKE CONCAT(CONCAT('%',#{method}),'%')
+   		</if>
+    	<if test="browser != null and browser !=''">
+       		 and l.browser LIKE CONCAT(CONCAT('%',#{browser}),'%')
+    	</if>
+    	<if test="ip != null and ip !=''">
+        	and l.ip LIKE CONCAT(CONCAT('%',#{ ip }),'%')
+    	</if>
+    	<if test="address != null and address !=''">
+        	and l.address LIKE CONCAT(CONCAT('%',#{ address }),'%')
+    	</if>
+    	<if test="createBy != null and createBy !=''">
+        	and l.create_by LIKE CONCAT(CONCAT('%',#{createBy}),'%')
+    	</if>
+    	<if test="endTime !=null and endTime!=''">
+    		and l.create_time <![CDATA[<=]]> #{endTime,jdbcType=TIMESTAMP}
+    	</if>
+    	<if test="startTime!=null and startTime!=''">
+    	    and l.create_time >= #{startTime,jdbcType=TIMESTAMP}
+    	</if>
+    	<if test="lastUpdateBy != null and lastUpdateBy !=''">
+        	and l.last_update_by LIKE CONCAT(CONCAT('%',#{lastUpdateBy}),'%')
+    	</if>
+    </where>
+        <if test="createTimeSort != null and createTimeSort !=''">
+    	    order by l.create_Time ${createTimeSort}
+    	</if>
   </select>
   <select id="findPageByUserName" parameterType="java.lang.String" resultMap="BaseResultMap">
   	<bind name="pattern" value="'%' + _parameter.userName + '%'" />
