@@ -26,6 +26,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.eshop.aop.Log;
 import com.eshop.common.DateTimeUtils;
 import com.eshop.common.FileUtil;
 import com.eshop.common.PoiUtils;
@@ -114,6 +115,7 @@ public class SysUserServiceImpl implements SysUserService {
 		return sysUserMapper.selectByPrimaryKey(id);
 	}
 
+	@Log("根据用户名查找用户")
 	@Override
 	public SysUser findByName(String name) {
 		SysUser sysUser = sysUserMapper.findByName(name);

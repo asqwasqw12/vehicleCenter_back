@@ -1,5 +1,7 @@
 package com.eshop.sys.aspect;
 
+import java.lang.reflect.Method;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -26,7 +28,9 @@ public class SysLogAspect {
 	@Autowired
 	private SysLogService sysLogService;
 	
-	@Pointcut("execution(* com.eshop.*.service.*.*(..))")
+	
+	//@Pointcut("execution(* com.eshop.*.service.*.*(..))")	
+	@Pointcut("@annotation(com.eshop.aop.Log)")	
 	public void logPointCut() { 
 		
 	}
@@ -49,13 +53,30 @@ public class SysLogAspect {
 			return ;
 		}
 		MethodSignature signature = (MethodSignature) joinPoint.getSignature();
-		SysLog sysLog = new SysLog();		
+		SysLog sysLog = new SysLog();	
+		
+		Method method = signature.getMethod();
+		com.eshop.aop.Log aopLog = method.getAnnotation(com.eshop.aop.Log.class);
+		if(aopLog != null){
+		//注解上的描述
+			sysLog.setOperation(aopLog.value());
+		}
 
 		// 请求的方法名
 		String className = joinPoint.getTarget().getClass().getName();
 		String methodName = signature.getName();
 		sysLog.setMethod(className + "." + methodName + "()");
        
+		// 请求的参数
+				//Object[] args = joinPoint.getArgs();
+				//try{
+				//	String params = JSONObject.toJSONString(args[0]);
+				//	if(params.length() > 200) {
+				//		params = params.substring(0, 200) + "...";
+				//	}
+				//	sysLog.setParams(params);
+				//} catch (Exception e){
+				//}
 
 		// 获取request
 		HttpServletRequest request = HttpUtils.getHttpServletRequest();

@@ -16,6 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.HttpStatusReturningLogoutSuccessHandler;
 
+import com.eshop.sys.security.CustomLogoutHandler;
 import com.eshop.sys.security.JwtAuthenticationFilter;
 import com.eshop.sys.security.JwtAuthenticationProvider;
 
@@ -27,6 +28,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private UserDetailsService userDetailsService;
+    
+    @Autowired
+    CustomLogoutHandler customLogoutHandler;
     
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -87,7 +91,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         //// 防止iframe 造成跨域
         http.headers().frameOptions().disable();
         // 退出登录处理器
-        http.logout().logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler());
+        http.logout().logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler());  
+        http.logout().addLogoutHandler(customLogoutHandler);
         // token验证过滤器
         http.addFilterBefore(new JwtAuthenticationFilter(authenticationManager()), UsernamePasswordAuthenticationFilter.class);
     }

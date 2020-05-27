@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.eshop.aop.Log;
 import com.eshop.common.HttpResult;
 import com.eshop.common.page.PageRequest;
 import com.eshop.sys.pojo.SysLog;
@@ -29,6 +30,7 @@ public class SysLogController {
 		return HttpResult.ok(sysLogService.findPage(pageRequest));
 	}
 	
+	@Log("删除日志")
 	@PreAuthorize("hasAuthority('sys:log:delete')")
 	@PostMapping(value="/delete")
 	public HttpResult delete(@RequestBody List<SysLog> records) {

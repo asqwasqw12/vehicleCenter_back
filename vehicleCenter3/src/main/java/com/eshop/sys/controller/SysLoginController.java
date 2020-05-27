@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.eshop.aop.Log;
 import com.eshop.common.HttpResult;
 import com.eshop.common.PasswordUtils;
 import com.eshop.common.SecurityUtils;
@@ -36,6 +37,7 @@ public class SysLoginController {
 	@Autowired
 	private AuthenticationManager authenticationManager;
 	
+	@Log("用户登录")
 	@PostMapping(value = "/login")
 	public HttpResult login(@RequestBody LoginBean loginBean, HttpServletRequest request) throws IOException {
 		String username = loginBean.getAccount();
@@ -62,6 +64,7 @@ public class SysLoginController {
 		return HttpResult.ok(token);
 	}
 
+	@Log("获取个人信息")
 	@GetMapping("/getInfo")
 	public HttpResult getInfo() {
 		String userName = SecurityUtils.getUsername();
@@ -75,6 +78,7 @@ public class SysLoginController {
 		}
 	}
 	
+	@Log("用户注册")
 	@PostMapping(value = "/register")
 	public HttpResult saveRegisterInfo(@RequestBody SysUser record) {
 		System.out.println("user:"+record);

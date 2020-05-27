@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.eshop.aop.Log;
 import com.eshop.common.FileUtil;
 import com.eshop.common.HttpResult;
 import com.eshop.common.PasswordUtils;
@@ -40,6 +41,7 @@ public class SysUserController {
 	@Autowired
 	private SysUserService sysUserService;
 	
+	@Log("保存用户")
 	@PreAuthorize("hasAuthority('sys:user:add') AND hasAuthority('sys:user:edit')")
 	@PostMapping(value="/save")
 	public HttpResult save(@RequestBody SysUser record) {
@@ -72,6 +74,7 @@ public class SysUserController {
 		return HttpResult.ok(sysUserService.save(record));
 	}
 
+	@Log("删除用户")
 	@PreAuthorize("hasAuthority('sys:user:delete')")
 	@PostMapping(value="/delete")
 	public HttpResult delete(@RequestBody List<SysUser> records) {
@@ -84,13 +87,14 @@ public class SysUserController {
 		return HttpResult.ok(sysUserService.delete(records));
 	}
 	
+	@Log("查找用户")
 	@PreAuthorize("hasAuthority('sys:user:view')")
 	@GetMapping(value="/findByName")
 	public HttpResult findByUserName(@RequestParam String name) {
 		return HttpResult.ok(sysUserService.findByName(name));
 	}
 	
-	
+	  @Log("查找用户")
 	  @PreAuthorize("hasAuthority('sys:user:edit')")	  
 	  @GetMapping(value="/findByStatus") 
 	  public HttpResult findByStatus(@RequestParam Byte status) { 
@@ -99,22 +103,22 @@ public class SysUserController {
 		  return HttpResult.ok(sysUserService.findByStatus(status));
 		  }
 	 
-   	
+	@Log("查找用户权限")
 	@PreAuthorize("hasAuthority('sys:user:view')")
 	@GetMapping(value="/findPermissions")
 	public HttpResult findPermissions(@RequestParam String name) {
 		return HttpResult.ok(sysUserService.findPermissions(name));
 	}
 	
+	@Log("查找用户角色")
 	@PreAuthorize("hasAuthority('sys:user:view')")
 	@GetMapping(value="/findUserRoles")
 	public HttpResult findUserRoles(@RequestParam Long userId) {
 		return HttpResult.ok(sysUserService.findUserRoles(userId));
 	}
 
-	
-	  @PreAuthorize("hasAuthority('sys:user:view')")
-	  
+	  @Log("查找用户")
+	  @PreAuthorize("hasAuthority('sys:user:view')")	  
 	  @PostMapping(value="/findPage") 
 	  public HttpResult findPage(@RequestBody PageRequest pageRequest) 
 	  {
@@ -142,6 +146,7 @@ public class SysUserController {
 	 * file, file.getName()); FileUtil.downloadFile(request,res,file,false); }
 	 */
 	  
+	  @Log("导出用户数据")
 	  @PreAuthorize("hasAuthority('sys:user:view')")	  
 	  @PostMapping(value="/exportUserExcelFile") 
 	  public void exportExcelUser(@RequestBody PageRequest pageRequest, HttpServletResponse res) throws IOException  { 
@@ -149,6 +154,7 @@ public class SysUserController {
 		  		sysUserService.downloadExcel(pageResult.getContent(), res);
 	     }
 	
+	@Log("更新用户密码")
 	@PreAuthorize("hasAuthority('sys:user:edit')")
 	@GetMapping(value="/updatePassword")
 	public HttpResult updatePassword(@RequestParam String password, @RequestParam String newPassword) {
@@ -166,6 +172,7 @@ public class SysUserController {
 		return HttpResult.ok(sysUserService.save(user));
 	}
 	
+	@Log("更新用户头像")
 	@ApiOperation("修改头像")
     @PostMapping(value = "/updateAvatar")
     public HttpResult updateAvatar(@RequestParam MultipartFile file){

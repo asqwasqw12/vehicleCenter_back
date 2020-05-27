@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.eshop.aop.Log;
 import com.eshop.common.HttpResult;
 import com.eshop.common.SysConstants;
 import com.eshop.common.page.PageRequest;
@@ -34,6 +35,7 @@ public class SysRoleController {
 	@Autowired
 	private SysRoleMapper sysRoleMapper;
 	
+	@Log("保存角色")
 	@PreAuthorize("hasAuthority('sys:role:add') AND hasAuthority('sys:role:edit')")
 	@PostMapping(value="/save")
 	public HttpResult save(@RequestBody SysRole record) {
@@ -49,33 +51,36 @@ public class SysRoleController {
 		}
 		return HttpResult.ok(sysRoleService.save(record));
 	}
-
+	
+	@Log("删除角色")
 	@PreAuthorize("hasAuthority('sys:role:delete')")
 	@PostMapping(value="/delete")
 	public HttpResult delete(@RequestBody List<SysRole> records) {
 		return HttpResult.ok(sysRoleService.delete(records));
 	}
 
-	
+	  @Log("查找角色")
 	  @PreAuthorize("hasAuthority('sys:role:view')")	  
 	  @PostMapping(value="/findPage") 
 	  public HttpResult findPage(@RequestBody PageRequest pageRequest) { 
 		  return HttpResult.ok(sysRoleService.findPage(pageRequest)); 
 		  }
 	 
-	
+	@Log("查找所有角色")
 	@PreAuthorize("hasAuthority('sys:role:view')")
 	@GetMapping(value="/findAll")
 	public HttpResult findAll() {
 		return HttpResult.ok(sysRoleService.findAll());
 	}
 	
+	@Log("查找角色菜单")
 	@PreAuthorize("hasAuthority('sys:role:view')")
 	@GetMapping(value="/findRoleMenus")
 	public HttpResult findRoleMenus(@RequestParam Long roleId) {
 		return HttpResult.ok(sysRoleService.findRoleMenus(roleId));
 	}
 	
+	@Log("保存角色菜单")
 	@PreAuthorize("hasAuthority('sys:role:view')")
 	@PostMapping(value="/saveRoleMenus")
 	public HttpResult saveRoleMenus(@RequestBody List<SysRoleMenu> records) {
@@ -89,7 +94,8 @@ public class SysRoleController {
 		return HttpResult.ok(sysRoleService.saveRoleMenus(records));
 	}
 	
-	 @PreAuthorize("hasAuthority('sys:role:view')")	  
+	  @Log("导出角色数据")
+	  @PreAuthorize("hasAuthority('sys:role:view')")	  
 	  @PostMapping(value="/exportRoleExcelFile") 
 	  public void exportExcelUser(@RequestBody PageRequest pageRequest, HttpServletResponse res) throws IOException  { 
 		  		PageResult pageResult = sysRoleService.findPage(pageRequest);
