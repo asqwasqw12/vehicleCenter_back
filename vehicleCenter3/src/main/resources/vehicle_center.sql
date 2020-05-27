@@ -110,6 +110,7 @@ CREATE TABLE `sys_log` (
 	`user_name` VARCHAR(50) NULL DEFAULT NULL COMMENT '用户名',
 	`operation` VARCHAR(100) NULL DEFAULT NULL COMMENT '用户操作',
 	`method` VARCHAR(200) NULL DEFAULT NULL COMMENT '请求方法',
+	`params` VARCHAR(500) NULL DEFAULT NULL COMMENT '请求参数',
 	`browser` VARCHAR(200) NULL DEFAULT NULL COMMENT '浏览器',
 	`time` BIGINT(20) NOT NULL COMMENT '执行时长(毫秒)',
 	`ip` VARCHAR(64) NULL DEFAULT NULL COMMENT 'IP地址',
@@ -124,47 +125,47 @@ CREATE TABLE `sys_log` (
 -- ----------------------------
 -- Records of sys_log
 -- ----------------------------
-INSERT INTO `sys_log` VALUES ('1', 'admin', null, 'com.louis.kitty.admin.sevice.impl.SysDictServiceImpl.findPage()', null, '4', '0:0:0:0:0:0:0:1', null,'admin', '2018-09-23 19:54:16', null, null);
-INSERT INTO `sys_log` VALUES ('2', 'admin', null, 'com.louis.kitty.admin.sevice.impl.SysRoleServiceImpl.findPage()', null, '4', '0:0:0:0:0:0:0:1',null, 'admin', '2018-09-23 19:54:17', null, null);
-INSERT INTO `sys_log` VALUES ('3', 'admin', null, 'com.louis.kitty.admin.sevice.impl.SysUserServiceImpl.findPage()', null, '36', '0:0:0:0:0:0:0:1',null, 'admin', '2018-09-23 19:54:18', null, null);
-INSERT INTO `sys_log` VALUES ('4', 'admin', null, 'com.louis.kitty.admin.sevice.impl.SysDictServiceImpl.findPage()', null, '4', '0:0:0:0:0:0:0:1',null, 'admin', '2018-09-23 19:54:20', null, null);
-INSERT INTO `sys_log` VALUES ('5', 'admin', null, 'com.louis.kitty.admin.sevice.impl.SysRoleServiceImpl.findPage()', null, '4', '0:0:0:0:0:0:0:1', null,'admin', '2018-09-23 19:54:20', null, null);
-INSERT INTO `sys_log` VALUES ('6', 'admin', null, 'com.louis.kitty.admin.sevice.impl.SysUserServiceImpl.findPage()', null, '27', '0:0:0:0:0:0:0:1',null, 'admin', '2018-09-23 19:54:21', null, null);
-INSERT INTO `sys_log` VALUES ('7', 'admin', null, 'com.louis.kitty.admin.sevice.impl.SysRoleServiceImpl.findPage()', null, '4', '0:0:0:0:0:0:0:1', null,'admin', '2018-09-23 19:54:22', null, null);
-INSERT INTO `sys_log` VALUES ('8', 'admin', null, 'com.louis.kitty.admin.sevice.impl.SysDictServiceImpl.findPage()', null, '4', '0:0:0:0:0:0:0:1', null,'admin', '2018-09-23 19:54:23', null, null);
-INSERT INTO `sys_log` VALUES ('2798', null, null, 'com.louis.mango.admin.service.impl.SysUserServiceImpl.findByName()', null, '361', '0:0:0:0:0:0:0:1',null, null, null, null, null);
-INSERT INTO `sys_log` VALUES ('2799', null, null, 'com.louis.mango.admin.service.impl.SysUserServiceImpl.findByName()', null, '4', '0:0:0:0:0:0:0:1', null,null, null, null, null);
-INSERT INTO `sys_log` VALUES ('2800', null, null, 'com.louis.mango.admin.service.impl.SysMenuServiceImpl.findByUser()', null, '43', '0:0:0:0:0:0:0:1',null, null, null, null, null);
-INSERT INTO `sys_log` VALUES ('2801', null, null, 'com.louis.mango.admin.service.impl.SysUserServiceImpl.findPermissions()', null, '49', '0:0:0:0:0:0:0:1',null, null, null, null, null);
-INSERT INTO `sys_log` VALUES ('2802', null, null, 'com.louis.mango.admin.service.impl.SysUserServiceImpl.findByName()', null, '221', '0:0:0:0:0:0:0:1', null,null, null, null, null);
-INSERT INTO `sys_log` VALUES ('2803', null, null, 'com.louis.mango.admin.service.impl.SysUserServiceImpl.findByName()', null, '3', '0:0:0:0:0:0:0:1', null,null, null, null, null);
-INSERT INTO `sys_log` VALUES ('2804', null, null, 'com.louis.mango.admin.service.impl.SysMenuServiceImpl.findByUser()', null, '37', '0:0:0:0:0:0:0:1',null, null, null, null, null);
-INSERT INTO `sys_log` VALUES ('2805', null, null, 'com.louis.mango.admin.service.impl.SysUserServiceImpl.findPermissions()', null, '43', '0:0:0:0:0:0:0:1',null, null, null, null, null);
-INSERT INTO `sys_log` VALUES ('2806', 'admin', null, 'com.louis.mango.admin.service.impl.SysLoginLogServiceImpl.writeLoginLog()', null, '138', '0:0:0:0:0:0:0:1',null, 'admin', '2019-01-21 10:15:43', null, null);
-INSERT INTO `sys_log` VALUES ('2807', 'admin', null, 'com.louis.mango.admin.service.impl.SysMenuServiceImpl.findTree()', null, '15', '0:0:0:0:0:0:0:1', 'admin',null, '2019-01-21 10:15:44', null, null);
-INSERT INTO `sys_log` VALUES ('2808', 'admin', null, 'com.louis.mango.admin.service.impl.SysMenuServiceImpl.findByUser()', null, '16', '0:0:0:0:0:0:0:1', 'admin',null, '2019-01-21 10:15:44', null, null);
-INSERT INTO `sys_log` VALUES ('2809', 'admin', null, 'com.louis.mango.admin.service.impl.SysUserServiceImpl.findPermissions()', null, '22', '0:0:0:0:0:0:0:1', null,'admin', '2019-01-21 10:15:44', null, null);
-INSERT INTO `sys_log` VALUES ('2876', 'admin', null, 'com.louis.mango.admin.service.impl.SysLoginLogServiceImpl.findPage()', null, '13', '0:0:0:0:0:0:0:1', null,'admin', '2019-01-22 14:48:10', null, null);
-INSERT INTO `sys_log` VALUES ('2877', 'admin', null, 'com.louis.mango.admin.service.impl.SysRoleServiceImpl.findPage()', null, '15', '0:0:0:0:0:0:0:1', null,'admin', '2019-01-22 14:48:13', null, null);
-INSERT INTO `sys_log` VALUES ('2878', 'admin', null, 'com.louis.mango.admin.service.impl.SysMenuServiceImpl.findTree()', 'null', '10', '0:0:0:0:0:0:0:1', null,'admin', '2019-01-22 14:48:13', null, null);
-INSERT INTO `sys_log` VALUES ('2879', 'admin', null, 'com.louis.mango.admin.service.impl.SysDeptServiceImpl.findTree()', null, '3', '0:0:0:0:0:0:0:1',null, 'admin', '2019-01-22 14:48:14', null, null);
-INSERT INTO `sys_log` VALUES ('2880', 'admin', null, 'com.louis.mango.admin.service.impl.SysDeptServiceImpl.findTree()', null, '2', '0:0:0:0:0:0:0:1',null, 'admin', '2019-01-22 14:48:14', null, null);
-INSERT INTO `sys_log` VALUES ('2881', 'admin', null, 'com.louis.mango.admin.service.impl.SysUserServiceImpl.findPage()', null, '49', '0:0:0:0:0:0:0:1',null, 'admin', '2019-01-22 14:48:14', null, null);
-INSERT INTO `sys_log` VALUES ('2882', 'admin', null, 'com.louis.mango.admin.service.impl.SysRoleServiceImpl.findAll()', null, '1', '0:0:0:0:0:0:0:1',null, 'admin', '2019-01-22 14:48:14', null, null);
-INSERT INTO `sys_log` VALUES ('2883', 'admin', null, 'com.louis.mango.admin.service.impl.SysMenuServiceImpl.findTree()', 'null', '3', '0:0:0:0:0:0:0:1',null, 'admin', '2019-01-22 14:48:15', null, null);
-INSERT INTO `sys_log` VALUES ('2884', 'admin', null, 'com.louis.mango.admin.service.impl.SysConfigServiceImpl.findPage()', null, '8', '0:0:0:0:0:0:0:1', null,'admin', '2019-01-22 14:48:15', null, null);
-INSERT INTO `sys_log` VALUES ('2885', 'admin', null, 'com.louis.mango.admin.service.impl.SysLoginLogServiceImpl.findPage()', null, '7', '0:0:0:0:0:0:0:1',null, 'admin', '2019-01-22 14:48:16', null, null);
-INSERT INTO `sys_log` VALUES ('2886', 'admin', null, 'com.louis.mango.admin.service.impl.SysDeptServiceImpl.findTree()', null, '2', '0:0:0:0:0:0:0:1', null,'admin', '2019-01-22 14:48:22', null, null);
-INSERT INTO `sys_log` VALUES ('2887', 'admin', null, 'com.louis.mango.admin.service.impl.SysUserServiceImpl.findPage()', null, '61', '0:0:0:0:0:0:0:1',null, 'admin', '2019-01-22 14:48:22', null, null);
-INSERT INTO `sys_log` VALUES ('2888', 'admin', null, 'com.louis.mango.admin.service.impl.SysRoleServiceImpl.findAll()', null, '1', '0:0:0:0:0:0:0:1',null, 'admin', '2019-01-22 14:48:22', null, null);
-INSERT INTO `sys_log` VALUES ('2889', 'admin', null, 'com.louis.mango.admin.service.impl.SysUserServiceImpl.findPage()', null, '18', '0:0:0:0:0:0:0:1', null,'admin', '2019-01-22 14:48:25', null, null);
-INSERT INTO `sys_log` VALUES ('2890', 'admin', null, 'com.louis.mango.admin.service.impl.SysRoleServiceImpl.findAll()', null, '2', '0:0:0:0:0:0:0:1',null, 'admin', '2019-01-22 14:48:25', null, null);
-INSERT INTO `sys_log` VALUES ('2891', 'admin', null, 'com.louis.mango.admin.service.impl.SysUserServiceImpl.findPage()', null, '43', '0:0:0:0:0:0:0:1',null, 'admin', '2019-01-22 14:48:27', null, null);
-INSERT INTO `sys_log` VALUES ('2892', 'admin', null, 'com.louis.mango.admin.service.impl.SysRoleServiceImpl.findAll()', null, '1', '0:0:0:0:0:0:0:1',null, 'admin', '2019-01-22 14:48:27', null, null);
-INSERT INTO `sys_log` VALUES ('2893', 'admin', null, 'com.louis.mango.admin.service.impl.SysUserServiceImpl.createUserExcelFile()', null, '1577', '0:0:0:0:0:0:0:1',null, 'admin', '2019-01-22 14:48:38', null, null);
-INSERT INTO `sys_log` VALUES ('2894', 'admin', null, 'com.louis.mango.admin.service.impl.SysDeptServiceImpl.findTree()', null, '1', '0:0:0:0:0:0:0:1', null,'admin', '2019-01-22 14:49:24', null, null);
-INSERT INTO `sys_log` VALUES ('2895', 'admin', null, 'com.louis.mango.admin.service.impl.SysUserServiceImpl.findPage()', null, '75', '0:0:0:0:0:0:0:1',null, 'admin', '2019-01-22 14:49:24', null, null);
-INSERT INTO `sys_log` VALUES ('2896', 'admin', null, 'com.louis.mango.admin.service.impl.SysRoleServiceImpl.findAll()', null, '2', '0:0:0:0:0:0:0:1',null, 'admin', '2019-01-22 14:49:24', null, null);
+INSERT INTO `sys_log` VALUES ('1', 'admin', null, 'com.louis.kitty.admin.sevice.impl.SysDictServiceImpl.findPage()',null, null, '4', '0:0:0:0:0:0:0:1', null,'admin', '2018-09-23 19:54:16', null, null);
+INSERT INTO `sys_log` VALUES ('2', 'admin', null, 'com.louis.kitty.admin.sevice.impl.SysRoleServiceImpl.findPage()', null,null, '4', '0:0:0:0:0:0:0:1',null, 'admin', '2018-09-23 19:54:17', null, null);
+INSERT INTO `sys_log` VALUES ('3', 'admin', null, 'com.louis.kitty.admin.sevice.impl.SysUserServiceImpl.findPage()', null,null, '36', '0:0:0:0:0:0:0:1',null, 'admin', '2018-09-23 19:54:18', null, null);
+INSERT INTO `sys_log` VALUES ('4', 'admin', null, 'com.louis.kitty.admin.sevice.impl.SysDictServiceImpl.findPage()', null,null, '4', '0:0:0:0:0:0:0:1',null, 'admin', '2018-09-23 19:54:20', null, null);
+INSERT INTO `sys_log` VALUES ('5', 'admin', null, 'com.louis.kitty.admin.sevice.impl.SysRoleServiceImpl.findPage()',null, null, '4', '0:0:0:0:0:0:0:1', null,'admin', '2018-09-23 19:54:20', null, null);
+INSERT INTO `sys_log` VALUES ('6', 'admin', null, 'com.louis.kitty.admin.sevice.impl.SysUserServiceImpl.findPage()', null,null, '27', '0:0:0:0:0:0:0:1',null, 'admin', '2018-09-23 19:54:21', null, null);
+INSERT INTO `sys_log` VALUES ('7', 'admin', null, 'com.louis.kitty.admin.sevice.impl.SysRoleServiceImpl.findPage()', null,null, '4', '0:0:0:0:0:0:0:1', null,'admin', '2018-09-23 19:54:22', null, null);
+INSERT INTO `sys_log` VALUES ('8', 'admin', null, 'com.louis.kitty.admin.sevice.impl.SysDictServiceImpl.findPage()', null,null, '4', '0:0:0:0:0:0:0:1', null,'admin', '2018-09-23 19:54:23', null, null);
+INSERT INTO `sys_log` VALUES ('2798', null, null, 'com.louis.mango.admin.service.impl.SysUserServiceImpl.findByName()',null, null, '361', '0:0:0:0:0:0:0:1',null, null, null, null, null);
+INSERT INTO `sys_log` VALUES ('2799', null, null, 'com.louis.mango.admin.service.impl.SysUserServiceImpl.findByName()',null, null, '4', '0:0:0:0:0:0:0:1', null,null, null, null, null);
+INSERT INTO `sys_log` VALUES ('2800', null, null, 'com.louis.mango.admin.service.impl.SysMenuServiceImpl.findByUser()',null, null, '43', '0:0:0:0:0:0:0:1',null, null, null, null, null);
+INSERT INTO `sys_log` VALUES ('2801', null, null, 'com.louis.mango.admin.service.impl.SysUserServiceImpl.findPermissions()',null, null, '49', '0:0:0:0:0:0:0:1',null, null, null, null, null);
+INSERT INTO `sys_log` VALUES ('2802', null, null, 'com.louis.mango.admin.service.impl.SysUserServiceImpl.findByName()', null,null, '221', '0:0:0:0:0:0:0:1', null,null, null, null, null);
+INSERT INTO `sys_log` VALUES ('2803', null, null, 'com.louis.mango.admin.service.impl.SysUserServiceImpl.findByName()',null, null, '3', '0:0:0:0:0:0:0:1', null,null, null, null, null);
+INSERT INTO `sys_log` VALUES ('2804', null, null, 'com.louis.mango.admin.service.impl.SysMenuServiceImpl.findByUser()',null, null, '37', '0:0:0:0:0:0:0:1',null, null, null, null, null);
+INSERT INTO `sys_log` VALUES ('2805', null, null, 'com.louis.mango.admin.service.impl.SysUserServiceImpl.findPermissions()',null, null, '43', '0:0:0:0:0:0:0:1',null, null, null, null, null);
+INSERT INTO `sys_log` VALUES ('2806', 'admin', null, 'com.louis.mango.admin.service.impl.SysLoginLogServiceImpl.writeLoginLog()',null, null, '138', '0:0:0:0:0:0:0:1',null, 'admin', '2019-01-21 10:15:43', null, null);
+INSERT INTO `sys_log` VALUES ('2807', 'admin', null, 'com.louis.mango.admin.service.impl.SysMenuServiceImpl.findTree()',null, null, '15', '0:0:0:0:0:0:0:1', 'admin',null, '2019-01-21 10:15:44', null, null);
+INSERT INTO `sys_log` VALUES ('2808', 'admin', null, 'com.louis.mango.admin.service.impl.SysMenuServiceImpl.findByUser()',null, null, '16', '0:0:0:0:0:0:0:1', 'admin',null, '2019-01-21 10:15:44', null, null);
+INSERT INTO `sys_log` VALUES ('2809', 'admin', null, 'com.louis.mango.admin.service.impl.SysUserServiceImpl.findPermissions()',null, null, '22', '0:0:0:0:0:0:0:1', null,'admin', '2019-01-21 10:15:44', null, null);
+INSERT INTO `sys_log` VALUES ('2876', 'admin', null, 'com.louis.mango.admin.service.impl.SysLoginLogServiceImpl.findPage()',null, null, '13', '0:0:0:0:0:0:0:1', null,'admin', '2019-01-22 14:48:10', null, null);
+INSERT INTO `sys_log` VALUES ('2877', 'admin', null, 'com.louis.mango.admin.service.impl.SysRoleServiceImpl.findPage()',null, null, '15', '0:0:0:0:0:0:0:1', null,'admin', '2019-01-22 14:48:13', null, null);
+INSERT INTO `sys_log` VALUES ('2878', 'admin', null, 'com.louis.mango.admin.service.impl.SysMenuServiceImpl.findTree()',null, 'null', '10', '0:0:0:0:0:0:0:1', null,'admin', '2019-01-22 14:48:13', null, null);
+INSERT INTO `sys_log` VALUES ('2879', 'admin', null, 'com.louis.mango.admin.service.impl.SysDeptServiceImpl.findTree()',null, null, '3', '0:0:0:0:0:0:0:1',null, 'admin', '2019-01-22 14:48:14', null, null);
+INSERT INTO `sys_log` VALUES ('2880', 'admin', null, 'com.louis.mango.admin.service.impl.SysDeptServiceImpl.findTree()',null, null, '2', '0:0:0:0:0:0:0:1',null, 'admin', '2019-01-22 14:48:14', null, null);
+INSERT INTO `sys_log` VALUES ('2881', 'admin', null, 'com.louis.mango.admin.service.impl.SysUserServiceImpl.findPage()',null, null, '49', '0:0:0:0:0:0:0:1',null, 'admin', '2019-01-22 14:48:14', null, null);
+INSERT INTO `sys_log` VALUES ('2882', 'admin', null, 'com.louis.mango.admin.service.impl.SysRoleServiceImpl.findAll()',null, null, '1', '0:0:0:0:0:0:0:1',null, 'admin', '2019-01-22 14:48:14', null, null);
+INSERT INTO `sys_log` VALUES ('2883', 'admin', null, 'com.louis.mango.admin.service.impl.SysMenuServiceImpl.findTree()', null,'null', '3', '0:0:0:0:0:0:0:1',null, 'admin', '2019-01-22 14:48:15', null, null);
+INSERT INTO `sys_log` VALUES ('2884', 'admin', null, 'com.louis.mango.admin.service.impl.SysConfigServiceImpl.findPage()',null, null, '8', '0:0:0:0:0:0:0:1', null,'admin', '2019-01-22 14:48:15', null, null);
+INSERT INTO `sys_log` VALUES ('2885', 'admin', null, 'com.louis.mango.admin.service.impl.SysLoginLogServiceImpl.findPage()',null, null, '7', '0:0:0:0:0:0:0:1',null, 'admin', '2019-01-22 14:48:16', null, null);
+INSERT INTO `sys_log` VALUES ('2886', 'admin', null, 'com.louis.mango.admin.service.impl.SysDeptServiceImpl.findTree()', null,null, '2', '0:0:0:0:0:0:0:1', null,'admin', '2019-01-22 14:48:22', null, null);
+INSERT INTO `sys_log` VALUES ('2887', 'admin', null, 'com.louis.mango.admin.service.impl.SysUserServiceImpl.findPage()', null,null, '61', '0:0:0:0:0:0:0:1',null, 'admin', '2019-01-22 14:48:22', null, null);
+INSERT INTO `sys_log` VALUES ('2888', 'admin', null, 'com.louis.mango.admin.service.impl.SysRoleServiceImpl.findAll()',null, null, '1', '0:0:0:0:0:0:0:1',null, 'admin', '2019-01-22 14:48:22', null, null);
+INSERT INTO `sys_log` VALUES ('2889', 'admin', null, 'com.louis.mango.admin.service.impl.SysUserServiceImpl.findPage()',null, null, '18', '0:0:0:0:0:0:0:1', null,'admin', '2019-01-22 14:48:25', null, null);
+INSERT INTO `sys_log` VALUES ('2890', 'admin', null, 'com.louis.mango.admin.service.impl.SysRoleServiceImpl.findAll()',null, null, '2', '0:0:0:0:0:0:0:1',null, 'admin', '2019-01-22 14:48:25', null, null);
+INSERT INTO `sys_log` VALUES ('2891', 'admin', null, 'com.louis.mango.admin.service.impl.SysUserServiceImpl.findPage()',null, null, '43', '0:0:0:0:0:0:0:1',null, 'admin', '2019-01-22 14:48:27', null, null);
+INSERT INTO `sys_log` VALUES ('2892', 'admin', null, 'com.louis.mango.admin.service.impl.SysRoleServiceImpl.findAll()',null, null, '1', '0:0:0:0:0:0:0:1',null, 'admin', '2019-01-22 14:48:27', null, null);
+INSERT INTO `sys_log` VALUES ('2893', 'admin', null, 'com.louis.mango.admin.service.impl.SysUserServiceImpl.createUserExcelFile()',null, null, '1577', '0:0:0:0:0:0:0:1',null, 'admin', '2019-01-22 14:48:38', null, null);
+INSERT INTO `sys_log` VALUES ('2894', 'admin', null, 'com.louis.mango.admin.service.impl.SysDeptServiceImpl.findTree()',null, null, '1', '0:0:0:0:0:0:0:1', null,'admin', '2019-01-22 14:49:24', null, null);
+INSERT INTO `sys_log` VALUES ('2895', 'admin', null, 'com.louis.mango.admin.service.impl.SysUserServiceImpl.findPage()', null,null, '75', '0:0:0:0:0:0:0:1',null, 'admin', '2019-01-22 14:49:24', null, null);
+INSERT INTO `sys_log` VALUES ('2896', 'admin', null, 'com.louis.mango.admin.service.impl.SysRoleServiceImpl.findAll()',null, null, '2', '0:0:0:0:0:0:0:1',null, 'admin', '2019-01-22 14:49:24', null, null);
 
 -- ----------------------------
 -- Table structure for sys_login_log

@@ -8,6 +8,8 @@ public class SysLog extends BaseModel {
     private String operation;
 
     private String method;
+    
+    private String params;
 
     private String browser;
 
@@ -41,6 +43,14 @@ public class SysLog extends BaseModel {
 		this.method = method;
 	}
 
+	public String getParams() {
+		return params;
+	}
+
+	public void setParams(String params) {
+		this.params = params;
+	}
+	
 	public String getBrowser() {
 		return browser;
 	}

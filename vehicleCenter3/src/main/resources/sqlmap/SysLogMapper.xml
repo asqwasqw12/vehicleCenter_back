@@ -6,6 +6,7 @@
     <result column="user_name" jdbcType="VARCHAR" property="userName" />
     <result column="operation" jdbcType="VARCHAR" property="operation" />
     <result column="method" jdbcType="VARCHAR" property="method" />
+    <result column="params" jdbcType="VARCHAR" property="params" />
     <result column="browser" jdbcType="VARCHAR" property="browser" />
     <result column="time" jdbcType="BIGINT" property="time" />
     <result column="ip" jdbcType="VARCHAR" property="ip" />
@@ -16,7 +17,7 @@
     <result column="last_update_time" jdbcType="TIMESTAMP" property="lastUpdateTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, user_name, operation, method, browser, time, ip, address,create_by, create_time, last_update_by, 
+    id, user_name, operation, method,params, browser, time, ip, address,create_by, create_time, last_update_by, 
     last_update_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
@@ -29,13 +30,27 @@
     delete from sys_log
     where id = #{id,jdbcType=BIGINT}
   </delete>
+  <delete id="deleteByParams" parameterType="java.util.Map">
+    delete from sys_log 
+    <where>
+    	<if test="userName !=null and userName !=''">
+    	 	user_name LIKE CONCAT(CONCAT('%',#{userName}),'%')
+    	</if>
+    	<if test="endTime !=null and endTime!=''">
+    		and create_time <![CDATA[<=]]> #{endTime,jdbcType=TIMESTAMP}
+    	</if>
+    	<if test="startTime!=null and startTime!=''">
+    	    and create_time >= #{startTime,jdbcType=TIMESTAMP}
+    	</if>
+    </where>
+  </delete>
   <insert id="insert" parameterType="com.eshop.sys.pojo.SysLog">
     insert into sys_log (id, user_name, operation, 
-      method, browser, time, 
+      method, params,browser, time, 
       ip,address, create_by, create_time, 
       last_update_by, last_update_time)
     values (#{id,jdbcType=BIGINT}, #{userName,jdbcType=VARCHAR}, #{operation,jdbcType=VARCHAR}, 
-      #{method,jdbcType=VARCHAR}, #{browser,jdbcType=VARCHAR}, #{time,jdbcType=BIGINT}, 
+      #{method,jdbcType=VARCHAR},#{params,jdbcType=VARCHAR}, #{browser,jdbcType=VARCHAR}, #{time,jdbcType=BIGINT}, 
       #{ip,jdbcType=VARCHAR},#{address,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
       #{lastUpdateBy,jdbcType=VARCHAR}, #{lastUpdateTime,jdbcType=TIMESTAMP})
   </insert>
@@ -53,6 +68,9 @@
       </if>
       <if test="method != null">
         method,
+      </if>
+      <if test="params != null">
+        params,
       </if>
       <if test="browser != null">
         browser,
@@ -92,6 +110,9 @@
       <if test="method != null">
         #{method,jdbcType=VARCHAR},
       </if>
+      <if test="params != null">
+        #{params,jdbcType=VARCHAR},
+      </if>
       <if test="browser != null">
         #{browser,jdbcType=VARCHAR},
       </if>
@@ -130,6 +151,9 @@
       <if test="method != null">
         method = #{method,jdbcType=VARCHAR},
       </if>
+      <if test="params != null">
+        params = #{params,jdbcType=VARCHAR},
+      </if>
       <if test="browser != null">
         browser = #{browser,jdbcType=VARCHAR},
       </if>
@@ -162,6 +186,7 @@
     set user_name = #{userName,jdbcType=VARCHAR},
       operation = #{operation,jdbcType=VARCHAR},
       method = #{method,jdbcType=VARCHAR},
+      params = #{params,jdbcType=VARCHAR},
       browser = #{browser,jdbcType=VARCHAR},
       time = #{time,jdbcType=BIGINT},
       ip = #{ip,jdbcType=VARCHAR},
@@ -190,6 +215,9 @@
   		</if>
   		<if test="method != null and method !=''">
         	and l.method LIKE CONCAT(CONCAT('%',#{method}),'%')
+   		</if>
+   		<if test="params != null and params !=''">
+        	and l.params LIKE CONCAT(CONCAT('%',#{params}),'%')
    		</if>
     	<if test="browser != null and browser !=''">
        		 and l.browser LIKE CONCAT(CONCAT('%',#{browser}),'%')

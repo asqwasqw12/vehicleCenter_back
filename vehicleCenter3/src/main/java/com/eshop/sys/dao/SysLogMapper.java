@@ -11,6 +11,7 @@ import com.eshop.sys.pojo.SysLog;
 public interface SysLogMapper {
 	
 	 int deleteByPrimaryKey(Long id);
+	 int deleteByParams(Map<String,Object> params);
 
 	    int insert(SysLog record);
 

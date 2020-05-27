@@ -68,15 +68,15 @@ public class SysLogAspect {
 		sysLog.setMethod(className + "." + methodName + "()");
        
 		// 请求的参数
-				//Object[] args = joinPoint.getArgs();
-				//try{
-				//	String params = JSONObject.toJSONString(args[0]);
-				//	if(params.length() > 200) {
-				//		params = params.substring(0, 200) + "...";
-				//	}
-				//	sysLog.setParams(params);
-				//} catch (Exception e){
-				//}
+				Object[] args = joinPoint.getArgs();
+				try{
+					String params = JSONObject.toJSONString(args[0]);
+					if(params.length() > 200) {
+						params = params.substring(0, 200) + "...";
+					}
+					sysLog.setParams(params);
+				} catch (Exception e){
+			}
 
 		// 获取request
 		HttpServletRequest request = HttpUtils.getHttpServletRequest();
