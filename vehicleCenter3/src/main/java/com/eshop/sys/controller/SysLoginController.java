@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,6 +23,7 @@ import com.eshop.sys.pojo.LoginBean;
 import com.eshop.sys.pojo.SysUser;
 import com.eshop.sys.security.JwtAuthenticatioToken;
 import com.eshop.sys.security.JwtUserDetails;
+import com.eshop.sys.service.OnlineUserService;
 import com.eshop.sys.service.SysUserService;
 
 
@@ -36,6 +39,9 @@ public class SysLoginController {
 	
 	@Autowired
 	private AuthenticationManager authenticationManager;
+	
+	@Autowired
+	OnlineUserService onlineUserService;
 	
 	@Log("用户登录")
 	@PostMapping(value = "/login")
@@ -60,6 +66,14 @@ public class SysLoginController {
 		System.out.println("开始系统登录认证。。。");
 		// 系统登录认证
 		JwtAuthenticatioToken token = SecurityUtils.login(request, username, password, authenticationManager);
+		Authentication authentication=SecurityUtils.getAuthentication();
+		if(authentication != null)
+		{
+			final JwtUserDetails jwtUser = (JwtUserDetails) authentication.getPrincipal();
+			// 保存在线信息
+	        onlineUserService.save(jwtUser, token, request);
+		}
+		
 		System.out.println("系统登录认证结束！！！");
 		return HttpResult.ok(token);
 	}

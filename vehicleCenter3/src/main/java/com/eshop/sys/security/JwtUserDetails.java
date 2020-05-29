@@ -7,6 +7,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+
+import com.eshop.sys.pojo.SysUser;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 //安全用户模型
@@ -40,7 +42,16 @@ public class JwtUserDetails implements UserDetails {
 		  this.salt = salt; 
 		  this.authorities = authorities; 
 		  }
-	 
+	  
+	    JwtUserDetails(SysUser user, Collection<? extends GrantedAuthority> authorities){
+	    	this.username = user.getName();
+	    	this.password = user.getPassword();
+	    	this.salt = user.getSalt();
+	    	this.deptName = user.getDeptName();
+	    	this.job = user.getJob();
+	    	this.realName = user.getRealName();
+	    	this.authorities = authorities; 
+	    }
 
     
     @Override
@@ -57,6 +68,18 @@ public class JwtUserDetails implements UserDetails {
     public String getSalt() {
 		return salt;
 	}
+    
+    public String getDeptName() {
+    	return deptName;
+    }
+    
+    public String getJob() {
+    	return job;
+    }
+    
+    public String getRealName() {
+    	return realName;
+    }
     
     //获取当前用户对象所具有的角色信息
     @Override

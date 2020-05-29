@@ -67,6 +67,8 @@ public class SecurityUtils {
 		return username;
 	}
 	
+	
+	
 	/**
 	 * 获取用户名
 	 * @return
