@@ -52,7 +52,7 @@ CREATE TABLE `sys_dept` (
   `create_by` varchar(50) DEFAULT null COMMENT '创建人',
   `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `last_update_by` varchar(50) DEFAULT null COMMENT '更新人',
-  `last_update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT COMMENT '更新时间',
+  `last_update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT  '更新时间',
   `del_flag` tinyint(4) DEFAULT '0' COMMENT '是否删除  -1：已删除  0：正常',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8 COMMENT='机构管理';
@@ -89,7 +89,7 @@ CREATE TABLE `sys_dict` (
   `create_by` varchar(50) DEFAULT null COMMENT '创建人',
   `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `last_update_by` varchar(50) DEFAULT null COMMENT '更新人',
-  `last_update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT COMMENT '更新时间',
+  `last_update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT  '更新时间',
   `remarks` varchar(255) DEFAULT null COMMENT '备注信息',
   `del_flag` tinyint(4) DEFAULT '0' COMMENT '是否删除  -1：已删除  0：正常',
   PRIMARY KEY (`id`) USING BTREE
@@ -179,7 +179,7 @@ CREATE TABLE `sys_login_log` (
   `create_by` varchar(50) DEFAULT null COMMENT '创建人',
   `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `last_update_by` varchar(50) DEFAULT null COMMENT '更新人',
-  `last_update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT COMMENT '更新时间',
+  `last_update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT  '更新时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2804 DEFAULT CHARSET=utf8 COMMENT='系统登录日志';
 
@@ -218,7 +218,7 @@ CREATE TABLE `sys_menu` (
   `create_by` varchar(50) DEFAULT null COMMENT '创建人',
   `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `last_update_by` varchar(50) DEFAULT null COMMENT '更新人',
-  `last_update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT COMMENT '更新时间',
+  `last_update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT  '更新时间',
   `del_flag` tinyint(4) DEFAULT '0' COMMENT '是否删除  -1：已删除  0：正常',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `parent_id` (`parent_id`) USING BTREE
@@ -279,7 +279,7 @@ CREATE TABLE `sys_role` (
   `create_by` varchar(50) DEFAULT null COMMENT '创建人',
   `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `last_update_by` varchar(50) DEFAULT null COMMENT '更新人',
-  `last_update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT COMMENT '更新时间',
+  `last_update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT  '更新时间',
   `del_flag` tinyint(4) DEFAULT '0' COMMENT '是否删除  -1：已删除  0：正常',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COMMENT='角色管理';
@@ -303,7 +303,7 @@ CREATE TABLE `sys_role_dept` (
   `create_by` varchar(50) DEFAULT null COMMENT '创建人',
   `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `last_update_by` varchar(50) DEFAULT null COMMENT '更新人',
-  `last_update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT COMMENT '更新时间',
+  `last_update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `role_id` (`role_id`) USING BTREE,
   INDEX `dept_id` (`dept_id`) USING BTREE,
@@ -329,7 +329,7 @@ CREATE TABLE `sys_role_menu` (
   `create_by` varchar(50) DEFAULT null COMMENT '创建人',
   `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `last_update_by` varchar(50) DEFAULT null COMMENT '更新人',
-  `last_update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT COMMENT '更新时间',
+  `last_update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT  '更新时间',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `role_id` (`role_id`) USING BTREE,
   INDEX `menu_id` (`menu_id`) USING BTREE,
@@ -475,7 +475,7 @@ CREATE TABLE `sys_user` (
   `create_by` varchar(50) DEFAULT null COMMENT '创建人',
   `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `last_update_by` varchar(50) DEFAULT null COMMENT '更新人',
-  `last_update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT COMMENT '更新时间',
+  `last_update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT  '更新时间',
   `del_flag` tinyint(4) DEFAULT '0' COMMENT '是否删除  -1：已删除  0：正常',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `name` (`name`) USING BTREE,
@@ -511,7 +511,7 @@ CREATE TABLE `sys_user_role` (
   `create_by` varchar(50) DEFAULT null COMMENT '创建人',
   `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `last_update_by` varchar(50) DEFAULT null COMMENT '更新人',
-  `last_update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT COMMENT '更新时间',
+  `last_update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT  '更新时间',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `user_id` (`user_id`) USING BTREE,
   INDEX `role_id` (`role_id`) USING BTREE,
@@ -535,3 +535,33 @@ INSERT INTO `sys_user_role` VALUES ('83', '26', '3', null, null, null, null);
 INSERT INTO `sys_user_role` VALUES ('85', '29', '2', null, null, null, null);
 INSERT INTO `sys_user_role` VALUES ('86', '28', '4', null, null, null, null);
 INSERT INTO `sys_user_role` VALUES ('87', '27', '3', null, null, null, null);
+
+-- ----------------------------
+-- Table structure for file
+-- ----------------------------
+DROP TABLE IF EXISTS `file`;
+CREATE TABLE `file` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '编号',
+  `user_id` bigint(20) DEFAULT NULL COMMENT '用户ID',
+  `name` varchar(255) NOT NULL COMMENT '文件名',
+  `real_name` varchar(255) NOT NULL COMMENT '真实文件名',
+  `extend_name` varchar(50) DEFAULT NULL COMMENT '扩展名',
+  `type` varchar(255) DEFAULT NULL COMMENT '文件类型',
+  `parent_id` bigint(20) DEFAULT NULL COMMENT '父id',
+  `file_url` varchar(255) DEFAULT NULL COMMENT '文件后端实际地址',
+  `file_size` bigint(20) DEFAULT NULL COMMENT '文件大小',
+  `is_dir` int(11) DEFAULT NULL COMMENT '目录or文件',
+  `is_share` int(11) DEFAULT NULL COMMENT '共享or私人',
+  `create_by` varchar(50) DEFAULT NULL COMMENT '创建人',
+  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `last_update_by` varchar(50) DEFAULT NULL COMMENT '更新人',
+  `last_update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`) USING BTREE,
+  UNIQUE KEY `name` (`name`,`file_path`) USING BTREE,
+  KEY `FK_file_sys_user` (`user_id`),
+  CONSTRAINT `FK_file_sys_user` FOREIGN KEY (`user_id`) REFERENCES `sys_user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8 COMMENT='文件管理';
+-- ----------------------------
+-- Records of file
+-- ----------------------------
+

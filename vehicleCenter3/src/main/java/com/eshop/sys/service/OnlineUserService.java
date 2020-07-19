@@ -14,17 +14,24 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Service;
 
 import com.eshop.common.FileUtil;
+import com.eshop.common.HttpResult;
 import com.eshop.common.RedisUtils;
 import com.eshop.common.StringUtils;
+import com.eshop.common.page.MybatisPageHelper;
+import com.eshop.common.page.PageRequest;
+import com.eshop.common.page.PageResult;
 import com.eshop.sys.pojo.OnlineUser;
+import com.eshop.sys.pojo.SysDict;
 import com.eshop.sys.security.JwtUserDetails;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Slf4j
 public class OnlineUserService {
-	private final static long EXPIRE_TIME = 30 * 60 * 1000;
+	private final static long EXPIRE_TIME = 40 * 60;
 	private final static String ONLINE_KEY = "online-token";
 	
     private RedisUtils redisUtils;
@@ -59,13 +66,20 @@ public class OnlineUserService {
      * @param pageable /
      * @return /
      */
-   /* public Map<String,Object> getAll(String filter, Pageable pageable){
-        List<OnlineUser> onlineUsers = getAll(filter);
-        return PageUtil.toPage(
-                PageUtil.toPage(pageable.getPageNumber(),pageable.getPageSize(),onlineUsers),
-                onlineUsers.size()
-        );
-    }*/
+    public PageResult findPage(PageRequest pageRequest){
+    	String strFilter=null;
+    	PageResult pageResult = null;
+    	Map<String,Object> params = pageRequest.getObjectParam();
+    	if(params.get("filter") != null || params.get("filter") !="") {
+    		strFilter = (String) params.get("filter");
+    	}
+        List<OnlineUser> onlineUsers = getAll(strFilter);
+        int pageNum = pageRequest.getPageNum();
+		int pageSize = pageRequest.getPageSize();
+		PageHelper.startPage(pageNum, pageSize);
+		pageResult = MybatisPageHelper.getPageResult(pageRequest, new PageInfo<OnlineUser>((List<OnlineUser>) onlineUsers));
+        return pageResult;
+    }
 
     /**
      * 查询全部数据，不分页
@@ -115,7 +129,7 @@ public class OnlineUserService {
      * @param response /
      * @throws IOException /
      */
-    public void download(List<OnlineUser> all, HttpServletResponse response) throws IOException {
+    public void downloadExcel(List<OnlineUser> all, HttpServletResponse response) throws IOException {
         List<Map<String, Object>> list = new ArrayList<>();
         for (OnlineUser user : all) {
             Map<String,Object> map = new LinkedHashMap<>();

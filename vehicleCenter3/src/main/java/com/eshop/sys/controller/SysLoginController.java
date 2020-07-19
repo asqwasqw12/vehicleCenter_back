@@ -1,6 +1,8 @@
 package com.eshop.sys.controller;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.URLDecoder;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,12 +12,14 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.eshop.aop.Log;
+import com.eshop.common.FileUtil;
 import com.eshop.common.HttpResult;
 import com.eshop.common.PasswordUtils;
 import com.eshop.common.SecurityUtils;
@@ -46,6 +50,30 @@ public class SysLoginController {
 	@Log("用户登录")
 	@PostMapping(value = "/login")
 	public HttpResult login(@RequestBody LoginBean loginBean, HttpServletRequest request) throws IOException {
+		String path = System.getProperty("user.dir");
+		System.out.println("path="+path);
+		String path1 = ResourceUtils.getURL("classpath:").getPath();
+		 String absolutePath =URLDecoder.decode(new File(path1).getAbsolutePath(),"utf-8") + File.separator;
+		   String projectRootAbsolutePath = absolutePath;
+
+	        int index = projectRootAbsolutePath.indexOf("file:");
+	        System.out.println("index="+String.valueOf(index));
+	        if (index != -1){
+	            projectRootAbsolutePath = projectRootAbsolutePath.substring(0, index);
+	        }
+
+	        System.out.println("static="+projectRootAbsolutePath + "static" + File.separator);
+		 System.out.println("absolutePath="+absolutePath);
+		System.out.println("path1="+path1);
+		String classPath = FileUtil.class.getClassLoader().getResource("").getPath();
+		System.out.println("path1="+classPath);
+		String path2 = new File(classPath).getParentFile().getParentFile().getAbsolutePath();
+		System.out.println("path1="+path2);
+		/*
+		 * File upload = new File(path.getAbsolutePath(),"static/images/upload/");
+		 * if(!upload.exists()) upload.mkdirs();
+		 * System.out.println("upload url:"+upload.getAbsolutePath());
+		 */
 		String username = loginBean.getAccount();
 		String password = loginBean.getPassword();
 		System.out.println("Account:"+username+"password:"+password);
@@ -66,12 +94,13 @@ public class SysLoginController {
 		System.out.println("开始系统登录认证。。。");
 		// 系统登录认证
 		JwtAuthenticatioToken token = SecurityUtils.login(request, username, password, authenticationManager);
+		String strToken = token.getToken();
 		Authentication authentication=SecurityUtils.getAuthentication();
 		if(authentication != null)
 		{
 			final JwtUserDetails jwtUser = (JwtUserDetails) authentication.getPrincipal();
 			// 保存在线信息
-	        onlineUserService.save(jwtUser, token, request);
+	        onlineUserService.save(jwtUser, strToken, request);
 		}
 		
 		System.out.println("系统登录认证结束！！！");

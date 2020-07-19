@@ -3,19 +3,26 @@ package com.eshop.sys.security;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
 import org.springframework.stereotype.Component;
 
 import com.eshop.aop.Log;
+import com.eshop.common.JwtTokenUtils;
+import com.eshop.common.SecurityUtils;
+import com.eshop.sys.service.OnlineUserService;
 
 @Component
 public class CustomLogoutHandler implements LogoutHandler {
+	@Autowired
+	OnlineUserService onlineUserService;
 	
 	@Log("退出登录")
 	@Override
 	public void logout(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
 		System.out.println("执行了退出登录");
+		onlineUserService.logout(JwtTokenUtils.getToken(request));
         /*//确定注入了tokenStore
         Assert.notNull(tokenStore, "tokenStore must be set");
        //获取头部的认证信息

@@ -15,6 +15,7 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
+import java.net.URLDecoder;
 import java.security.MessageDigest;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -388,23 +389,63 @@ public class FileUtil extends cn.hutool.core.io.FileUtil {
 	    file.delete();
 	}
 	
+	 /**
+     * 路径解码
+     * @param url
+     * @return
+     */
+    public static String urlDecode(String url){
+        String decodeUrl = null;
+        try {
+            decodeUrl = URLDecoder.decode(url, "utf-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return  decodeUrl;
+    }
+	
 	/**
 	 * 获取项目根路径
 	 * @return
 	 */
 	public static String getProjectPath() {
+		//System.getProperties("user.dir");//获取根路径
 		String classPath = getClassPath();
 		return new File(classPath).getParentFile().getParentFile().getAbsolutePath();
 	}
 
 	/**
-	 * 获取类路径
+	 * 获取项目资源路径
 	 * @return
 	 */
 	public static String getClassPath() {
-		String classPath = FileUtil.class.getClassLoader().getResource("").getPath();
+		String classPath = null;
+		try {
+		String StrPath = FileUtil.class.getClassLoader().getResource("").getPath();
+		classPath = URLDecoder.decode(new File(StrPath).getAbsolutePath(),"utf-8") + File.separator;
+		}catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
 		return classPath;
 	}
+	
+	/**
+     * 得到static路径
+     *
+     * @return
+     */
+    public static String getStaticPath() {
+        String projectRootAbsolutePath =getClassPath();
+
+        int index = projectRootAbsolutePath.indexOf("file:");
+        if (index != -1){
+            projectRootAbsolutePath = projectRootAbsolutePath.substring(0, index);
+        }
+
+        return projectRootAbsolutePath + "static" + File.separator;
+
+
+    }
 	
 	public static void main(String[] args){
 //        File file = new File("D:/errlog.txt");

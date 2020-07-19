@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.eshop.dao.FileMapper">
+  <resultMap id="BaseResultMap" type="com.eshop.pojo.FileBean">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="real_name" jdbcType="VARCHAR" property="realName" />
+    <result column="extend_name" jdbcType="VARCHAR" property="extendName" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="parent_id" jdbcType="BIGINT" property="parentId" />
+    <result column="file_url" jdbcType="VARCHAR" property="fileUrl" />
+    <result column="file_size" jdbcType="BIGINT" property="fileSize" />
+    <result column="is_dir" jdbcType="INTEGER" property="isDir" />
+    <result column="is_share" jdbcType="INTEGER" property="isShare" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="last_update_by" jdbcType="VARCHAR" property="lastUpdateBy" />
+    <result column="last_update_time" jdbcType="TIMESTAMP" property="lastUpdateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id,user_id, name,real_name, extend_name, type,parent_id, file_url,file_size,is_dir,is_share,create_by, create_time, last_update_by, last_update_time
+  </sql>
+  
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from file
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="findByPid" parameterType="java.lang.Long" resultMap="BaseResultMap">
+  	select
+  	<include refid="Base_Column_List" />
+    from file
+    where parent_id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from file
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  
+  <insert id="insert" parameterType="com.eshop.pojo.FileBean">
+        INSERT ignore INTO file (id, user_id,name,real_name, extend_name, type,parent_id,file_url, file_size,is_dir,is_share,create_by, create_time, last_update_by, last_update_time)
+        VALUES (#{id,jdbcType=BIGINT},#{userId,jdbcType=BIGINT},#{name,jdbcType=VARCHAR},#{realName,jdbcType=VARCHAR},#{extendName,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR},#{parentId,jdbcType=BIGINT},#{fileUrl,jdbcType=VARCHAR},#{fileSize,jdbcType=BIGINT},
+         #{isDir,jdbcType=INTEGER},#{isShare,jdbcType=INTEGER}, #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{lastUpdateBy,jdbcType=VARCHAR}, 
+      #{lastUpdateTime,jdbcType=TIMESTAMP});
+  </insert>
+    
+  <insert id="insertSelective" parameterType="com.eshop.pojo.FileBean">
+    	insert ignore into file
+    	<trim prefix="(" suffix=")" suffixOverrides=",">
+    		<if test="id != null">
+    			id,
+    		</if>
+    		<if test="userId != null">
+    			user_id,
+    		</if>
+    		<if test="name != null">
+    			name,
+    		</if>
+    		<if test="extendName != null">
+    			extend_name,
+    		</if>
+    		<if test="realName != null">
+    			real_name,
+    		</if>
+    		<if test="type != null">
+    			type,
+    		</if>
+    		<if test="parentId != null">
+    			parent_id,
+    		</if>
+    		<if test="fileUrl != null">
+    			file_url,
+    		</if>
+    		<if test="fileSize != null">
+    			file_size,
+    		</if>
+    		<if test="isDir != null">
+    			is_dir,
+    		</if>
+    		<if test="isShare != null">
+    			is_share,
+    		</if>
+    		<if test="createBy != null">
+        		create_by,
+      		</if>
+      		<if test="createTime != null">
+        		create_time,
+     		</if>
+      		<if test="lastUpdateBy != null">
+        		last_update_by,
+      		</if>
+      		<if test="lastUpdateTime != null">
+        		last_update_time,
+      		</if>
+    	</trim>
+    	<trim prefix="values (" suffix=")" suffixOverrides=",">
+    		<if test="id != null">
+    			#{id,jdbcType=BIGINT},
+    		</if>
+    		<if test="userId != null">
+    			#{userId,jdbcType=BIGINT},
+    		</if>
+    		<if test="name != null">
+    			#{name,jdbcType=VARCHAR},
+    		</if>
+    		<if test="realName != null">
+    			#{realName,jdbcType=VARCHAR},
+    		</if>
+    		<if test="extendName != null">
+    			#{extendName,jdbcType=VARCHAR},
+    		</if>
+    		<if test="type != null">
+    			#{type,jdbcType=VARCHAR},
+    		</if>
+    		<if test="parentId != null">
+    			#{parentId,jdbcType=BIGINT},
+    		</if>
+    		<if test="fileUrl != null">
+    			#{fileUrl,jdbcType=VARCHAR},
+    		</if>
+    		<if test="fileSize != null">
+    			#{fileSize,jdbcType=BIGINT},
+    		</if>   		
+    		<if test="isDir != null">
+    			#{isDir,jdbcType=INTEGER},
+    		</if>
+    		<if test="isShare != null">
+    			#{isShare,jdbcType=INTEGER},
+    		</if>
+    		<if test="createBy != null">
+        		#{createBy,jdbcType=VARCHAR},
+      		</if>
+      		<if test="createTime != null">
+        		#{createTime,jdbcType=TIMESTAMP},
+     		</if>
+      		<if test="lastUpdateBy != null">
+        		#{lastUpdateBy,jdbcType=VARCHAR},
+      		</if>
+      		<if test="lastUpdateTime != null">
+        		#{lastUpdateTime,jdbcType=TIMESTAMP}
+      		</if>
+    	</trim>
+  </insert>
+
+  <insert id="batchInsert" parameterType="java.util.List">
+        INSERT ignore INTO file (id,user_id, name, real_name,extend_name, type,parent_id,file_url, file_size,is_dir,is_share,create_by, create_time, last_update_by, last_update_time)
+        VALUES
+        <foreach collection="list" item="file" index="index" separator=",">
+        (#{file.id},#{file.userId},#{file.name},#{file.realName},#{file.extendName}, #{file.type},#{file.parentId},#{file.fileUrl},
+         #{file.fileSize}, #{file.isDir},#{file.isShare}, #{file.createBy}, #{file.createTime},
+         #{file.lastUpdateBy}, #{file.lastUpdateTime})
+        </foreach>
+   </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.eshop.pojo.FileBean">
+     update file
+     <set>
+      <if test="userId != null">
+    	user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="name != null">
+    	name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="extendName != null">
+    	extend_name = #{extendName,jdbcType=VARCHAR},
+      </if>
+      <if test="realName != null">
+    	real_name = #{realName,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+    	type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null">
+    	parent_id = #{parentId,jdbcType=BIGINT},
+      </if>
+      <if test="fileUrl != null">
+    	file_url = #{fileUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="fileSize != null">
+    	file_size = #{fileSize,jdbcType=BIGINT},
+      </if>
+      <if test="isDir != null">
+    	is_dir = #{isDir,jdbcType=INTEGER},
+      </if>
+      <if test="isShare != null">
+    	is_share = #{isShare,jdbcType=INTEGER},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateBy != null">
+        last_update_by = #{lastUpdateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateTime != null">
+        last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+   </update>
+   
+  <update id="updateByPrimaryKey" parameterType="com.eshop.pojo.FileBean">
+     update file
+     set name = #{name,jdbcType=VARCHAR},
+        user_id = #{userId,jdbcType=BIGINT},
+        extend_name = #{extendName,jdbcType=VARCHAR},
+        real_name = #{realName,jdbcType=VARCHAR},
+        type = #{type,jdbcType=VARCHAR},
+        parent_id = #{parentId,jdbcType=BIGINT},
+        file_url = #{fileUrl,jdbcType=VARCHAR},
+        file_size = #{fileSize,jdbcType=BIGINT},
+        is_dir = #{isDir,jdbcType=INTEGER},
+        is_share = #{isShare,jdbcType=INTEGER},
+        create_by = #{createBy,jdbcType=VARCHAR},
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+        last_update_by = #{lastUpdateBy,jdbcType=VARCHAR},
+        last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP}
+     where id = #{id,jdbcType=BIGINT}
+    </update>
+    
+  <select id="findAll" resultMap="BaseResultMap">
+      select 
+      <include refid="Base_Column_List" />
+      from file
+  	</select>
+  	
+  <select id="findByName" parameterType="java.lang.String" resultMap="BaseResultMap">
+  	  select
+  	  <include refid="Base_Column_List" />
+      from file f
+      <where>
+    	<if test="name !=null and name !=''">
+  			 f.name LIKE CONCAT(CONCAT('%',#{name}),'%')
+  		</if>
+      </where>
+   </select>
+   
+   <select id="findByType" parameterType="java.lang.String" resultMap="BaseResultMap">
+   	  select
+  	  <include refid="Base_Column_List" />
+      from file f
+      <where>
+    	<if test="type !=null and type !=''">
+  			 f.type LIKE CONCAT(CONCAT('%',#{type}),'%')
+  		</if>
+      </where>
+   </select>
+    
+  <select id="findPage" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from file
+  </select>
+</mapper>
