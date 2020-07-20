@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.eshop.pojo.FileBean;
 import com.eshop.sys.service.CurdService;
 
@@ -26,6 +28,9 @@ public interface FileService extends CurdService<FileBean>{
 	
 	//获取子文件树
 	List<FileBean> findFileChildren(List<FileBean> deptList);
+	
+	//上传文件
+	void upload(String name,Long parentId,MultipartFile multipartFile);
 	
 	//导出数据
    // void downloadExcel(List<?> records, HttpServletResponse response) throws IOException;

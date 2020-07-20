@@ -105,12 +105,12 @@
     		<if test="name != null">
     			#{name,jdbcType=VARCHAR},
     		</if>
-    		<if test="realName != null">
-    			#{realName,jdbcType=VARCHAR},
-    		</if>
     		<if test="extendName != null">
     			#{extendName,jdbcType=VARCHAR},
     		</if>
+    		<if test="realName != null">
+    			#{realName,jdbcType=VARCHAR},
+    		</if>   		
     		<if test="type != null">
     			#{type,jdbcType=VARCHAR},
     		</if>
@@ -155,7 +155,7 @@
    </insert>
 
   <update id="updateByPrimaryKeySelective" parameterType="com.eshop.pojo.FileBean">
-     update file
+     update ignore file
      <set>
       <if test="userId != null">
     	user_id = #{userId,jdbcType=BIGINT},
@@ -204,7 +204,7 @@
    </update>
    
   <update id="updateByPrimaryKey" parameterType="com.eshop.pojo.FileBean">
-     update file
+     update ignore file
      set name = #{name,jdbcType=VARCHAR},
         user_id = #{userId,jdbcType=BIGINT},
         extend_name = #{extendName,jdbcType=VARCHAR},

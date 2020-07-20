@@ -1,7 +1,10 @@
 package com.eshop.service.impl;
 
+import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,20 +13,31 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.eshop.common.DateTimeUtils;
 import com.eshop.common.FileUtil;
 import com.eshop.common.SecurityUtils;
+import com.eshop.common.StringUtils;
 import com.eshop.dao.FileMapper;
+import com.eshop.exception.VehicleCenterException;
 import com.eshop.pojo.FileBean;
 import com.eshop.service.FileService;
+import com.eshop.sys.dao.SysUserMapper;
+import com.eshop.sys.pojo.SysUser;
+
+import cn.hutool.core.util.ObjectUtil;
 
 
 @Service
 public class FileServiceImpl implements FileService {
 	@Autowired
 	FileMapper fileMapper;
+	@Autowired
+	SysUserMapper sysUserMapper;
 	
 	 @Value("${file.path}")
 	 private String path;
@@ -78,6 +92,38 @@ public class FileServiceImpl implements FileService {
 		List<FileBean> fileList = fileMapper.findByName(name);
 		records =findFileChildren(fileList);
 		return records;
+	}
+	
+	@Override
+	//@CacheEvict(allEntries = true)
+    @Transactional(rollbackFor = Exception.class)
+	public void upload(String name,Long parentId,MultipartFile multipartFile) {
+		    FileUtil.checkSize(maxSize, multipartFile.getSize());
+	        String extendName = FileUtil.getExtensionName(multipartFile.getOriginalFilename());
+	        String type = FileUtil.getFileType(extendName);
+	        SimpleDateFormat formater = new SimpleDateFormat("yyyyMMdd");
+	        String backPath = path + type + File.separator + formater.format(new Date()) + File.separator;  //比如图片，保存的文件地址为path/图片/20200720/
+	        File file = FileUtil.upload(multipartFile, backPath);
+	        SysUser user = sysUserMapper.findByName(SecurityUtils.getUsername());
+	        if(ObjectUtil.isNull(file)){
+	            throw new VehicleCenterException("上传失败");
+	        }
+	        try {
+	            name = StringUtils.isBlank(name) ? FileUtil.getFileNameNoEx(multipartFile.getOriginalFilename()) : name;
+	            FileBean fileBean =new FileBean();
+	            fileBean.setName(name);
+	            fileBean.setParentId(parentId);
+	            fileBean.setRealName(file.getName());
+	            fileBean.setExtendName(extendName);
+	            fileBean.setType(type);
+	            fileBean.setFileSize(multipartFile.getSize());
+	            fileBean.setUserId(user.getId());
+	            fileBean.setFileUrl(backPath);
+	            save(fileBean);
+	        }catch (Exception e){
+	            FileUtil.del(file);
+	            throw e;
+	        }
 	}
 	
 	private String findFrontPath(Long id) {

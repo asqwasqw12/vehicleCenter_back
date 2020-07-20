@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.eshop.aop.Log;
 import com.eshop.common.FileUtil;
@@ -66,8 +67,8 @@ public HttpResult delete(@RequestBody List<FileBean> records) {
 @Log("上传文件")
 @PreAuthorize("hasAuthority('file:list:add') AND hasAuthority('file:list:edit')")
 @PostMapping(value="/upload")
-public HttpResult upload(@RequestBody List<FileBean> records) {
-	
+public HttpResult upload(@RequestParam String name,@RequestParam Long parentId, @RequestParam("file") MultipartFile file) {
+	fileService.upload(name,parentId,file);
 	return HttpResult.ok();
 }
 

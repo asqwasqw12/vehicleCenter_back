@@ -230,7 +230,7 @@ public class SysUserServiceImpl implements SysUserService {
 	}
 
 	@Override
-	@CacheEvict(allEntries = true)
+	//@CacheEvict(allEntries = true)
 	@Transactional(rollbackFor = Exception.class)
 	public void updateAvatar(MultipartFile multipartFile) {
 		SysUser user = sysUserMapper.findByName(SecurityUtils.getUsername());
@@ -238,7 +238,7 @@ public class SysUserServiceImpl implements SysUserService {
 		String oldPath = "";
 		if (userAvatar != null) {
 			oldPath = avatar + userAvatar;
-			System.out.println("oldPath=" + oldPath);
+			//System.out.println("oldPath=" + oldPath);
 		}
 		File file = FileUtil.upload(multipartFile, avatar);
 		assert file != null;
