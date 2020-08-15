@@ -1,14 +1,9 @@
-package com.eshop.jt808.pojo;
+package com.eshop.pojo;
 
-import org.springframework.beans.BeanUtils;
-
-import com.eshop.jt808.pojo.req.LocationMsg;
-
-public class Location  {
-	private Long id;
-	private Long vehicleId;			//车辆Id
-	private String terminalPhone; // 终端手机号
-    private Integer alarm;       // 告警信息
+public class VehicleLocation {
+	
+	private Long vehicleId;		//车辆Id
+	private Integer alarm;       // 告警信息
     private Integer statusField; //状态
     private Float latitude;		//经度
     private Float longitude;	//纬度
@@ -16,14 +11,6 @@ public class Location  {
     private Short speed;		//速度
     private Short direction;	//方向
     private String time;		//时间
-    
-    public void setId(Long id) {
-    	this.id = id;
-    }
-    
-    public Long getId() {
-    	return this.id;
-    }
     
     public void setVehicleId(Long vehicleId) {
     	this.vehicleId = vehicleId;
@@ -33,13 +20,6 @@ public class Location  {
     	return this.vehicleId;
     }
     
-    public void setTerminalPhone(String terminalPhone) {
-    	this.terminalPhone = terminalPhone;
-    }
-    
-   public String getTerminalPhone() {
-	   return this.terminalPhone;
-   }
    
    public void setAlarm(Integer alarm) {
 	   this.alarm = alarm;
@@ -104,12 +84,5 @@ public class Location  {
    public String getTime() {
 	   return this.time;
    }
-   
-    public static Location parseFromLocationMsg(LocationMsg msg) {
-        Location location = new Location();
-        location.setTerminalPhone(msg.getHeader().getTerminalPhone());
-        BeanUtils.copyProperties(msg, location);
-        return location;
-    }
 
 }

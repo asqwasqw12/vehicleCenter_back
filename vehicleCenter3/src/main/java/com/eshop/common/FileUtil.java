@@ -219,6 +219,8 @@ public class FileUtil extends cn.hutool.core.io.FileUtil {
         // 1M
         int len = 1024 * 1024;
         if(size > (maxSize * len)){
+        	System.out.println("maxSize="+maxSize*len);
+        	System.out.println("size="+size);
             throw new VehicleCenterException("文件超出规定大小");
         }
     }
@@ -290,7 +292,8 @@ public class FileUtil extends cn.hutool.core.io.FileUtil {
         FileInputStream fis = null;
         try {
             fis = new FileInputStream(file);
-            response.setHeader("Content-Disposition", "attachment; filename="+file.getName());
+            //response.setHeader("Content-Disposition", "attachment; filename="+file.getName());           
+            response.setHeader("Content-Disposition", "attachment; filename="+new String(file.getName().getBytes("utf-8"), "ISO-8859-1"));
             IOUtils.copy(fis,response.getOutputStream());
             response.flushBuffer();
         } catch (Exception e) {

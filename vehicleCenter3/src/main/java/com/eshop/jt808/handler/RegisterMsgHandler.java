@@ -19,6 +19,7 @@ public class RegisterMsgHandler extends BaseHandler<RegisterMsg> {
     protected void channelRead0(ChannelHandlerContext ctx, RegisterMsg msg) throws Exception {
 		//log.debug(msg.toString());
     	System.out.println("RegisterMsgHandler.msg:"+msg.toString());
+    	System.out.println("默认鉴权成功！！！！！！！");
         //默认鉴权成功
         RegisterRespMsg resp = RegisterRespMsg.success(msg, getSerialNumber(ctx.channel()));
         write(ctx,resp);

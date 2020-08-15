@@ -8,6 +8,8 @@ import com.eshop.jt808.pojo.Location;
 import com.eshop.jt808.pojo.req.LocationMsg;
 import com.eshop.jt808.pojo.res.CommonRespMsg;
 import com.eshop.jt808.service.LocationService;
+import com.eshop.pojo.VehicleDevice;
+import com.eshop.service.VehicleDeviceService;
 
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
@@ -26,11 +28,18 @@ public class LocationMsgHandler extends BaseHandler<LocationMsg>{
 	@Autowired
 	LocationService locationService;
 	
+	@Autowired
+	VehicleDeviceService vehicleDeviceService;
+	
 	@Override
     protected void channelRead0(ChannelHandlerContext ctx, LocationMsg msg) throws Exception {
         //log.debug(msg.toString());
 		System.out.println("LocationMsgHandler.msg:"+msg.toString());
-		locationService.saveLocation(Location.parseFromLocationMsg(msg));
+		Location location = Location.parseFromLocationMsg(msg);
+		Long vehicleId = vehicleDeviceService.findByTerminalPhone(location.getTerminalPhone())
+		//保存位置信息到mysql
+		locationService.saveLocation(location);
+		
         CommonRespMsg resp = CommonRespMsg.success(msg, getSerialNumber(ctx.channel()));
         workerGroup.execute(() -> write(ctx, resp));//直接write是由businessGroup执行，换成workerGroup写可以少一些判断逻辑，略微提升性能
     }

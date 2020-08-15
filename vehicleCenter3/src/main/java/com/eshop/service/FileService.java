@@ -3,6 +3,7 @@ package com.eshop.service;
 import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.web.multipart.MultipartFile;
@@ -31,6 +32,9 @@ public interface FileService extends CurdService<FileBean>{
 	
 	//上传文件
 	void upload(String name,Long parentId,MultipartFile multipartFile);
+	
+	//下载文件
+	void download(FileBean record,HttpServletRequest request, HttpServletResponse response);
 	
 	//导出数据
    // void downloadExcel(List<?> records, HttpServletResponse response) throws IOException;

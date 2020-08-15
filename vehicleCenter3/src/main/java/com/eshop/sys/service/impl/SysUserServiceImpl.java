@@ -21,6 +21,7 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -51,6 +52,7 @@ import com.github.pagehelper.PageInfo;
 
 
 @Service
+@CacheConfig(cacheNames = "user")
 public class SysUserServiceImpl implements SysUserService {
 
 	@Autowired
@@ -230,7 +232,7 @@ public class SysUserServiceImpl implements SysUserService {
 	}
 
 	@Override
-	//@CacheEvict(allEntries = true)
+	@CacheEvict(allEntries = true)
 	@Transactional(rollbackFor = Exception.class)
 	public void updateAvatar(MultipartFile multipartFile) {
 		SysUser user = sysUserMapper.findByName(SecurityUtils.getUsername());

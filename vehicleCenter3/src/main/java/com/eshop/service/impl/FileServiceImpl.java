@@ -2,6 +2,7 @@ package com.eshop.service.impl;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -9,11 +10,14 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -33,6 +37,7 @@ import cn.hutool.core.util.ObjectUtil;
 
 
 @Service
+@CacheConfig(cacheNames = {"fileBean"})
 public class FileServiceImpl implements FileService {
 	@Autowired
 	FileMapper fileMapper;
@@ -95,15 +100,15 @@ public class FileServiceImpl implements FileService {
 	}
 	
 	@Override
-	//@CacheEvict(allEntries = true)
+	@CacheEvict(allEntries = true)
     @Transactional(rollbackFor = Exception.class)
 	public void upload(String name,Long parentId,MultipartFile multipartFile) {
 		    FileUtil.checkSize(maxSize, multipartFile.getSize());
 	        String extendName = FileUtil.getExtensionName(multipartFile.getOriginalFilename());
 	        String type = FileUtil.getFileType(extendName);
 	        SimpleDateFormat formater = new SimpleDateFormat("yyyyMMdd");
-	        String backPath = path + type + File.separator + formater.format(new Date()) + File.separator;  //比如图片，保存的文件地址为path/图片/20200720/
-	        File file = FileUtil.upload(multipartFile, backPath);
+	        String backPath = type + File.separator + formater.format(new Date()) + File.separator;  //比如图片，保存的文件地址为图片/20200720/
+	        File file = FileUtil.upload(multipartFile, path+backPath);
 	        SysUser user = sysUserMapper.findByName(SecurityUtils.getUsername());
 	        if(ObjectUtil.isNull(file)){
 	            throw new VehicleCenterException("上传失败");
@@ -124,6 +129,23 @@ public class FileServiceImpl implements FileService {
 	            FileUtil.del(file);
 	            throw e;
 	        }
+	}
+	
+	@Override
+	public void download(FileBean record,HttpServletRequest request, HttpServletResponse response)  {
+		String fileName = null;// 文件名
+		fileName = record.getRealName();
+        if (fileName != null) {
+            try {
+            // getCanonicalFile 可解析正确各种路径
+            File dest = new File(path + record.getFileUrl()+fileName).getCanonicalFile();
+            if (dest.exists()) {
+            	FileUtil.downloadFile(request, response, dest, false);
+             }
+            }catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
 	}
 	
 	private String findFrontPath(Long id) {
