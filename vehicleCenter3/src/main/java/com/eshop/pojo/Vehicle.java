@@ -6,7 +6,7 @@ public class Vehicle extends BasePojo {
 	private String type;	//型号	
 	private String vin;		//车架识别码
 	private String license;	//牌照
-	private String companyId;	//出厂编号
+	private Long companyId;	//出厂编号
 	private String chassis;	//底盘品牌
 	private String configure;		//配置
 
@@ -45,11 +45,11 @@ public class Vehicle extends BasePojo {
     	return license;
     }
     
-    public void setCompanyId(String companyId) {
+    public void setCompanyId(Long companyId) {
     	this.companyId = companyId;
     }
     
-    public String getCompanyId() {
+    public Long getCompanyId() {
     	return companyId;
     }
      

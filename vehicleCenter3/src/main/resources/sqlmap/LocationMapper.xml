@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.eshop.jt808.dao.LocationMapper">
+  <resultMap id="BaseResultMap" type="com.eshop.jt808.pojo.Location">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="vehicle_id" jdbcType="BIGINT" property="vehicleId" />
+    <result column="terminal_phone" jdbcType="VARCHAR" property="terminalPhone" />
+    <result column="alarm" jdbcType="INTEGER" property="alarm" />
+    <result column="status_field" jdbcType="INTEGER" property="statusField" />
+    <result column="latitude" jdbcType="FLOAT" property="latitude" />
+    <result column="longitude" jdbcType="FLOAT" property="longitude" />
+    <result column="elevation" jdbcType="SMALLINT" property="elevation" />
+    <result column="speed" jdbcType="SMALLINT" property="speed" />
+    <result column="direction" jdbcType="SMALLINT" property="direction" />
+    <result column="time" jdbcType="VARCHAR" property="time" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, vehicle_id, terminal_phone, alarm, status_field, latitude, longitude, elevation, speed, 
+    direction, time, create_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ter_location
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from ter_location
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.eshop.jt808.pojo.Location">
+    insert into ter_location (id, vehicle_id, terminal_phone, alarm, status_field, latitude, longitude, elevation, speed, 
+    direction, time, create_time
+      )
+    values (#{id,jdbcType=BIGINT}, #{vehicleId,jdbcType=BIGINT}, #{terminalPhone,jdbcType=VARCHAR}, 
+      #{alarm,jdbcType=INTEGER}, #{statusField,jdbcType=INTEGER}, #{latitude,jdbcType=FLOAT}, 
+      #{longitude,jdbcType=FLOAT}, #{elevation,jdbcType=SMALLINT}, #{speed,jdbcType=SMALLINT}, 
+      #{direction,jdbcType=SMALLINT}, #{time,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP }
+      )
+  </insert>
+  
+  <insert id="insertSelective" parameterType="com.eshop.jt808.pojo.Location">
+    insert into ter_location
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="vehicleId != null">
+        vehicle_id,
+      </if>
+      <if test="terminalPhone != null">
+        terminal_phone,
+      </if>
+      <if test="alarm != null">
+        alarm,
+      </if>
+      <if test="statusField != null">
+        status_field,
+      </if>
+      <if test="latitude != null">
+        latitude,
+      </if>
+      <if test="longitude != null">
+        longitude,
+      </if>
+      <if test="elevation != null">
+        elevation,
+      </if>
+      <if test="speed != null">
+        speed,
+      </if>
+      <if test="direction != null">
+        direction,
+      </if>
+      <if test="time != null">
+        time,
+      </if>
+      <if test="createTime != null">
+       create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="vehicleId != null">
+        #{vehicleId,jdbcType=BIGINT},
+      </if>
+      <if test="terminalPhone != null">
+        #{terminalPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="alarm != null">
+        #{alarm,jdbcType=INTEGER},
+      </if>
+      <if test="statusField != null">
+        #{statusField,jdbcType=INTEGER},
+      </if>
+      <if test="latitude != null">
+        #{latitude,jdbcType=FLOAT},
+      </if>
+      <if test="longitude != null">
+        #{longitude,jdbcType=FLOAT},
+      </if>
+      <if test="elevation != null">
+        #{elevation,jdbcType=SMALLINT},
+      </if>
+      <if test="speed != null">
+        #{speed,jdbcType=SMALLINT},
+      </if>
+      <if test="direction != null">
+        #{direction,jdbcType=SMALLINT},
+      </if>
+      <if test="time != null">
+        #{time,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP },
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.eshop.jt808.pojo.Location">
+    update ter_location
+    <set>
+      <if test="vehicleId != null">
+       vehicle_id = #{vehicleId,jdbcType=BIGINT},
+      </if>
+      <if test="terminalPhone != null">
+       terminal_phone = #{terminalPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="alarm != null">
+        alarm = #{alarm,jdbcType=INTEGER},
+      </if>
+      <if test="statusField != null">
+        status_field = #{statusField,jdbcType=INTEGER},
+      </if>
+      <if test="latitude != null">
+        latitude = #{latitude,jdbcType=FLOAT},
+      </if>
+      <if test="longitude != null">
+       longitude =  #{longitude,jdbcType=FLOAT},
+      </if>
+      <if test="elevation != null">
+       elevation = #{elevation,jdbcType=SMALLINT},
+      </if>
+      <if test="speed != null">
+        speed = #{speed,jdbcType=SMALLINT},
+      </if>
+      <if test="direction != null">
+        direction = #{direction,jdbcType=SMALLINT},
+      </if>
+      <if test="time != null">
+        time = #{time,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+       createTime = #{createTime,jdbcType=TIMESTAMP },
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <update id="updateByPrimaryKey" parameterType="com.eshop.jt808.pojo.Location">
+    update ter_location
+    set  vehicle_id = #{vehicleId,jdbcType=BIGINT},
+      	 terminal_phone = #{terminalPhone,jdbcType=VARCHAR},
+         alarm = #{alarm,jdbcType=INTEGER},
+         status_field = #{statusField,jdbcType=INTEGER},
+         latitude = #{latitude,jdbcType=FLOAT},
+         longitude =  #{longitude,jdbcType=FLOAT},
+         elevation = #{elevation,jdbcType=SMALLINT},
+         speed = #{speed,jdbcType=SMALLINT},
+         direction = #{direction,jdbcType=SMALLINT},
+         time = #{time,jdbcType=VARCHAR},
+         createTime = #{createTime,jdbcType=TIMESTAMP }
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <select id="findAll" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ter_location
+  </select>
+  
+  <select id="findByVehicleId" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ter_location
+    where vehicle_id = #{vehicleId,jdbcType=BIGINT}
+  </select>
+
+  
+</mapper>

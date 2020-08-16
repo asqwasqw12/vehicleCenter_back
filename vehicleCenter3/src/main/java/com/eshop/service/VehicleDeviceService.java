@@ -11,7 +11,7 @@ public interface VehicleDeviceService extends CurdService<VehicleDevice> {
 	 * 查询全部
 	 * @return
 	 */
-	VehicleDevice findAll();
+	//VehicleDevice findAll();
 	
 	//根据车辆查询
 	List<VehicleDevice> findByVehicleId(Long vehicleId);

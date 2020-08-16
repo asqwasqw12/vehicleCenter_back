@@ -36,9 +36,14 @@ public class LocationMsgHandler extends BaseHandler<LocationMsg>{
         //log.debug(msg.toString());
 		System.out.println("LocationMsgHandler.msg:"+msg.toString());
 		Location location = Location.parseFromLocationMsg(msg);
-		Long vehicleId = vehicleDeviceService.findByTerminalPhone(location.getTerminalPhone())
+		VehicleDevice vehicleDevice = vehicleDeviceService.findByTerminalPhone(location.getTerminalPhone());
+		Long vehicleId =null;
+		if(vehicleDevice != null) {
+			vehicleId = vehicleDevice.getDeviceId();
+			location.setVehicleId(vehicleId);
+		}
 		//保存位置信息到mysql
-		locationService.saveLocation(location);
+		locationService.save(location);
 		
         CommonRespMsg resp = CommonRespMsg.success(msg, getSerialNumber(ctx.channel()));
         workerGroup.execute(() -> write(ctx, resp));//直接write是由businessGroup执行，换成workerGroup写可以少一些判断逻辑，略微提升性能

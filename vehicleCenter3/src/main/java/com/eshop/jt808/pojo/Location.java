@@ -1,5 +1,7 @@
 package com.eshop.jt808.pojo;
 
+import java.util.Date;
+
 import org.springframework.beans.BeanUtils;
 
 import com.eshop.jt808.pojo.req.LocationMsg;
@@ -16,6 +18,14 @@ public class Location  {
     private Short speed;		//速度
     private Short direction;	//方向
     private String time;		//时间
+    private Date createTime;	//创建时间
+    public Date getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
     
     public void setId(Long id) {
     	this.id = id;

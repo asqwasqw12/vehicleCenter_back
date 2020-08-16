@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.eshop.dao.VehicleMapper">
+  <resultMap id="BaseResultMap" type="com.eshop.pojo.Vehicle">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="vin" jdbcType="VARCHAR" property="vin" />
+    <result column="license" jdbcType="VARCHAR" property="license" />
+    <result column="company_id" jdbcType="BIGINT" property="companyId" />
+    <result column="chassis" jdbcType="VARCHAR" property="chassis" />
+    <result column="configure" jdbcType="TEXT" property="configure" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="last_update_by" jdbcType="VARCHAR" property="lastUpdateBy" />
+    <result column="last_update_time" jdbcType="TIMESTAMP" property="lastUpdateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, name, type, vin, license,company_id,chassis,configure, create_by, create_time, last_update_by, 
+    last_update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from vehicle
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from vehicle
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.eshop.pojo.Vehicle">
+    insert into vehicle (id, name, type, vin, license,company_id,chassis,configure, create_by, create_time, last_update_by, 
+    last_update_time
+      )
+    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR},
+      #{type,jdbcType=VARCHAR}, #{vin,jdbcType=VARCHAR}, #{license,jdbcType=VARCHAR}, #{companyId,jdbcType=BIGINT}, 
+      #{chassis,jdbcType=VARCHAR},#{configure,jdbcType=TEXT},
+      #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{lastUpdateBy,jdbcType=VARCHAR}, 
+      #{lastUpdateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  
+  <insert id="insertSelective" parameterType="com.eshop.pojo.Vehicle">
+    insert into vehicle
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="vin != null">
+        vin,
+      </if>
+      <if test="license != null">
+        license,
+      </if>
+      <if test="companyId != null">
+        company_id,
+      </if>
+      <if test="chassis != null">
+        chassis,
+      </if>
+      <if test="configure != null">
+        configure,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="lastUpdateBy != null">
+        last_update_by,
+      </if>
+      <if test="lastUpdateTime != null">
+        last_update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="vin != null">
+        #{vin,jdbcType=VARCHAR},
+      </if>
+      <if test="license != null">
+        #{license,jdbcType=VARCHAR},
+      </if>
+      <if test="companyId != null">
+        #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="chassis != null">
+        #{chassis,jdbcType=VARCHAR},
+      </if>
+      <if test="configure != null">
+        #{configure,jdbcType=TEXT},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateBy != null">
+        #{lastUpdateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateTime != null">
+        #{lastUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.eshop.pojo.Vehicle">
+    update vehicle
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="vin != null">
+        vin = #{vin,jdbcType=VARCHAR},
+      </if>
+      <if test="license != null">
+        license = #{license,jdbcType=VARCHAR},
+      </if>
+      <if test="companyId != null">
+        company_id = #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="chassis != null">
+        chassis = #{chassis,jdbcType=VARCHAR},
+      </if>
+      <if test="configure != null">
+        configure = #{configure,jdbcType=TEXT},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateBy != null">
+        last_update_by = #{lastUpdateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateTime != null">
+        last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateByPrimaryKey" parameterType="com.eshop.pojo.Vehicle">
+    update vehicle
+    set name = #{name,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      vin = #{vin,jdbcType=VARCHAR},
+      license = #{license,jdbcType=VARCHAR},
+      company_id = #{companyId,jdbcType=BIGINT},
+      chassis = #{chassis,jdbcType=VARCHAR},
+      configure = #{configure,jdbcType=TEXT},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      last_update_by = #{lastUpdateBy,jdbcType=VARCHAR},
+      last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findPage" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from vehicle
+  </select>
+  
+  <select id="findPageByParams" parameterType="java.util.Map" resultMap="BaseResultMap">
+ 	select 
+    <include refid="Base_Column_List" />
+    from vehicle v
+    <where>
+  		<if test="name !=null and name !=''">
+  			 v.name LIKE CONCAT(CONCAT('%',#{name}),'%')
+  		</if>
+    	<if test="type != null and type !=''">
+       		 and v.type LIKE CONCAT(CONCAT('%',#{type}),'%')
+    	</if>
+    	<if test="vin != null and vin !=''">
+       		 and v.vin LIKE CONCAT(CONCAT('%',#{vin}),'%')
+    	</if>
+    	<if test="license != null and license !=''">
+       		 and v.license LIKE CONCAT(CONCAT('%',#{license}),'%')
+    	</if>
+    	<if test="chassis != null and chassis !=''">
+       		 and v.chassis LIKE CONCAT(CONCAT('%',#{chassis}),'%')
+    	</if>
+    	<if test="createBy != null and createBy !=''">
+        	and v.create_by LIKE CONCAT(CONCAT('%',#{createBy}),'%')
+    	</if>
+    	<if test="endTime !=null and endTime!=''">
+    		and v.create_time <![CDATA[<=]]> #{endTime,jdbcType=TIMESTAMP}
+    	</if>
+    	<if test="startTime!=null and startTime!=''">
+    	    and v.create_time >= #{startTime,jdbcType=TIMESTAMP}
+    	</if>
+    	<if test="lastUpdateBy != null and lastUpdateBy !=''">
+        	and v.last_update_by LIKE CONCAT(CONCAT('%',#{lastUpdateBy}),'%')
+    	</if>
+    </where>
+  </select>
+
+</mapper>

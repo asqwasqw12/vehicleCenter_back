@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.eshop.dao.VehicleDeviceMapper">
+  <resultMap id="BaseResultMap" type="com.eshop.pojo.VehicleDevice">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="vehicle_id" jdbcType="BIGINT" property="vehicleId" />
+    <result column="device_id" jdbcType="BIGINT" property="deviceId" />
+    <result column="terminal_phone" jdbcType="VARCHAR" property="terminalPhone" />
+    <result column="is_com" jdbcType="INTEGER" property="isCom" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="last_update_by" jdbcType="VARCHAR" property="lastUpdateBy" />
+    <result column="last_update_time" jdbcType="TIMESTAMP" property="lastUpdateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, vehicle_id, device_id,terminal_phone, is_com, create_by, create_time, last_update_by, last_update_time
+  </sql>
+   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from vehicle_device
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="findByVehicleId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from vehicle_device
+    where vehicle_id = #{vehicleId,jdbcType=BIGINT}
+  </select>
+  <select id="findByDeviceId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from vehicle_device
+    where device_id = #{deviceId,jdbcType=BIGINT}
+  </select>
+  <select id="findByTerminalPhone" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from vehicle_device
+    where terminal_phone = #{terminalPhone,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from vehicle_device
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.eshop.pojo.VehicleDevice">
+    insert into vehicle_device (id, vehicle_id, device_id,terminal_phone, is_com, create_by, create_time, last_update_by, last_update_time
+      )
+    values (#{id,jdbcType=BIGINT}, #{vehicleId,jdbcType=BIGINT}, #{deviceId,jdbcType=BIGINT}, #{terminalPhone,jdbcType=VARCHAR}, 
+      #{isCom,jdbcType=INTEGER},#{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{lastUpdateBy,jdbcType=VARCHAR }
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.eshop.pojo.VehicleDevice">
+    insert into vehicle_device
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="vehicleId != null">
+        vehicle_id,
+      </if>
+      <if test="deviceId != null">
+        device_id,
+      </if>
+      <if test="terminalPhone != null">
+        terminal_phone,
+      </if>
+      <if test="isCom != null">
+        is_com,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="createTime != null">
+        create_time,
+     </if>
+     <if test="lastUpdateBy != null">
+        last_update_by,
+      </if>
+      <if test="lastUpdateTime != null">
+        last_update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="vehicleId != null">
+        #{vehicleId,jdbcType=BIGINT},
+      </if>
+      <if test="deviceId != null">
+        #{deviceId,jdbcType=BIGINT},
+      </if>
+      <if test="terminalPhone != null">
+        #{terminalPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="isCom != null">
+        #{isCom,jdbcType=INTEGER},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateBy != null">
+        #{lastUpdateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateTime != null">
+        #{lastUpdateTime,jdbcType=TIMESTAMP}
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.eshop.pojo.VehicleDevice">
+    update vehicle_device
+    <set>
+      <if test="vehicleId != null">
+       vehicle_id = #{vehicleId,jdbcType=BIGINT},
+      </if>
+      <if test="deviceId != null">
+       device_id = #{deviceId,jdbcType=BIGINT},
+      </if>
+      <if test="terminalPhone != null">
+       terminal_phone = #{terminalPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="isCom != null">
+        is_com = #{isCom,jdbcType=INTEGER},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateBy != null">
+        last_update_by = #{lastUpdateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateTime != null">
+        last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateByPrimaryKey" parameterType="com.eshop.pojo.VehicleDevice">
+    update vehicle_device
+    set  vehicle_id = #{vehicleId,jdbcType=BIGINT},
+         device_id = #{deviceId,jdbcType=BIGINT},
+      	 terminal_phone = #{terminalPhone,jdbcType=VARCHAR},
+         is_com = #{isCom,jdbcType=INTEGER},
+         create_by = #{createBy,jdbcType=VARCHAR},
+         create_time = #{createTime,jdbcType=TIMESTAMP},
+         last_update_by = #{lastUpdateBy,jdbcType=VARCHAR},
+         last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP }
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="findAll" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from vehicle_device
+  </select> 
+  
+  <select id="findPageByParams" parameterType="java.util.Map" resultMap="BaseResultMap">
+ 	select 
+    <include refid="Base_Column_List" />
+    from vehicle_device v
+    <where>
+  		<if test="terminalPhone !=null and value !=''">
+  			 v.terminal_phone LIKE CONCAT(CONCAT('%',#{terminalPhone}),'%')
+  		</if>
+    	<if test="createBy != null and createBy !=''">
+        	and v.create_by LIKE CONCAT(CONCAT('%',#{createBy}),'%')
+    	</if>
+    	<if test="endTime !=null and endTime!=''">
+    		and v.create_time <![CDATA[<=]]> #{endTime,jdbcType=TIMESTAMP}
+    	</if>
+    	<if test="startTime!=null and startTime!=''">
+    	    and v.create_time >= #{startTime,jdbcType=TIMESTAMP}
+    	</if>
+    	<if test="lastUpdateBy != null and lastUpdateBy !=''">
+        	and v.last_update_by LIKE CONCAT(CONCAT('%',#{lastUpdateBy}),'%')
+    	</if>
+    </where>
+  </select>
+  
+</mapper>
