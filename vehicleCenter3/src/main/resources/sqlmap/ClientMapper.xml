@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.eshop.dao.ClientMapper">
+  <resultMap id="BaseResultMap" type="com.eshop.pojo.Client">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="sex" jdbcType="VARCHAR" property="sex" />
+    <result column="mobilephone" jdbcType="VARCHAR" property="mobilephone" />
+    <result column="telephone" jdbcType="VARCHAR" property="telephone" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="post" jdbcType="VARCHAR" property="post" />
+    <result column="qq" jdbcType="VARCHAR" property="qq" />
+    <result column="wechat" jdbcType="VARCHAR" property="wechat" />
+    <result column="education" jdbcType="VARCHAR" property="education" />
+    <result column="hobby" jdbcType="VARCHAR" property="hobby" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="birthday" jdbcType="TIMESTAMP" property="birthday" />
+    <result column="constellation" jdbcType="VARCHAR" property="constellation" />
+    <result column="upper_contact_id" jdbcType="BIGINT" property="upperContactId" />
+    <result column="company_id" jdbcType="BIGINT" property="CompanyId" />
+    <result column="remarks" jdbcType="LONGVARCHAR" property="remarks" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="last_update_by" jdbcType="VARCHAR" property="lastUpdateBy" />
+    <result column="last_update_time" jdbcType="TIMESTAMP" property="lastUpdateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, name, sex,mobilephone, telephone,email, post, qq, wechat, education, hobby, address,
+    birthday,constellation,upper_contact_id,company_id,remarks,
+     create_by, create_time, last_update_by, last_update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from client
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="findByCompanyId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from client
+    where company_id = #{companyId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from client
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.eshop.pojo.Client">
+    insert into client (id, name, sex,mobilephone, telephone,email, post, qq, wechat, education, hobby, address,
+    birthday,constellation,upper_contact_id,company_id,remarks,
+     create_by, create_time, last_update_by, last_update_time
+      )
+    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR},
+      #{sex,jdbcType=VARCHAR}, #{mobilephone,jdbcType=VARCHAR}, #{telephone,jdbcType=VARCHAR},
+      #{email,jdbcType=VARCHAR}, #{post,jdbcType=VARCHAR}, #{qq,jdbcType=VARCHAR},
+      #{wechat,jdbcType=VARCHAR}, #{education,jdbcType=VARCHAR}, #{hobby,jdbcType=VARCHAR},
+      #{address,jdbcType=VARCHAR}, #{birthday,jdbcType=TIMESTAMP}, #{constellation,jdbcType=VARCHAR}, 
+      #{upperContactId,jdbcType=BIGINT}, #{companyId,jdbcType=BIGINT},#{remarks,jdbcType=LONGVARCHAR},
+      #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{lastUpdateBy,jdbcType=VARCHAR}, 
+      #{lastUpdateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  
+  <insert id="insertSelective" parameterType="com.eshop.pojo.Client">
+    insert into client
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="sex != null">
+        sex,
+      </if>
+      <if test="mobilephone != null">
+        mobilephone,
+      </if>
+      <if test="telephone != null">
+        telephone,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="post != null">
+        post,
+      </if>
+      <if test="qq != null">
+        qq,
+      </if>
+      <if test="wechat != null">
+        wechat,
+      </if>      
+      <if test="education != null">
+        education,
+      </if>
+      <if test="hobby != null">
+        hobby,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="birthday != null">
+        birthday,
+      </if>
+      <if test="constellation != null">
+        constellation,
+      </if>
+      <if test="upperContactId != null">
+        upper_contact_id,
+      </if>
+      <if test="companyId != null">
+        company_id,
+      </if>
+      <if test="remarks != null">
+        remarks,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="lastUpdateBy != null">
+        last_update_by,
+      </if>
+      <if test="lastUpdateTime != null">
+        last_update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="mobilephone != null">
+        #{mobilephone,jdbcType=VARCHAR},
+      </if>
+      <if test="telephone != null">
+        #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="post != null">
+        #{post,jdbcType=VARCHAR},
+      </if>
+      <if test="qq != null">
+        #{qq,jdbcType=VARCHAR},
+      </if>
+      <if test="wechat != null">
+        #{wechat,jdbcType=VARCHAR},
+      </if>
+      <if test="education != null">
+        #{education,jdbcType=VARCHAR},
+      </if>
+      <if test="hobby != null">
+        #{hobby,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null">
+        #{birthday,jdbcType=TIMESTAMP},
+      </if>      
+      <if test="constellation != null">
+        #{constellation,jdbcType=VARCHAR},
+      </if>
+      <if test="upperContactId != null">
+        #{upperContactId,jdbcType=BIGINT},
+      </if>
+      <if test="companyId != null">
+        #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="remarks != null">
+        #{remarks,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateBy != null">
+        #{lastUpdateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateTime != null">
+        #{lastUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.eshop.pojo.Client">
+    update client
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        sex = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="mobilephone != null">
+        mobilephone = #{mobilephone,jdbcType=VARCHAR},
+      </if>
+      <if test="telephone != null">
+       telephone = #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="post != null">
+        post = #{post,jdbcType=VARCHAR},
+      </if>
+      <if test="qq != null">
+        qq = #{qq,jdbcType=VARCHAR},
+      </if>
+      <if test="wechat != null">
+       wechat = #{wechat,jdbcType=VARCHAR},
+      </if>
+      <if test="education != null">
+        education = #{education,jdbcType=VARCHAR},
+      </if>
+      <if test="hobby != null">
+       hobby = #{hobby,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null">
+        birthday = #{birthday,jdbcType=TIMESTAMP},
+      </if>      
+      <if test="constellation != null">
+        constellation = #{constellation,jdbcType=VARCHAR},
+      </if>
+      <if test="upperContactId != null">
+       upper_contact_id = #{upperContactId,jdbcType=BIGINT},
+      </if>
+      <if test="companyId != null">
+       company_id = #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="remarks != null">
+        remarks = #{remarks,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateBy != null">
+        last_update_by = #{lastUpdateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateTime != null">
+        last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <update id="updateByPrimaryKey" parameterType="com.eshop.pojo.Client">
+    update client
+    set name = #{name,jdbcType=VARCHAR},
+        sex = #{sex,jdbcType=VARCHAR},
+        mobilephone = #{mobilephone,jdbcType=VARCHAR},
+        telephone = #{telephone,jdbcType=VARCHAR},
+        email = #{email,jdbcType=VARCHAR},
+        post = #{post,jdbcType=VARCHAR},
+        qq = #{qq,jdbcType=VARCHAR},
+        wechat = #{wechat,jdbcType=VARCHAR},
+        education = #{education,jdbcType=VARCHAR},
+        hobby = #{hobby,jdbcType=VARCHAR},
+        address = #{address,jdbcType=VARCHAR},
+        birthday = #{birthday,jdbcType=TIMESTAMP},
+        constellation = #{constellation,jdbcType=VARCHAR},
+        upper_contact_id = #{upperContactId,jdbcType=BIGINT},
+        company_id = #{companyId,jdbcType=BIGINT},
+        remarks = #{remarks,jdbcType=LONGVARCHAR},
+        create_by = #{createBy,jdbcType=VARCHAR},
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+        last_update_by = #{lastUpdateBy,jdbcType=VARCHAR},
+        last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findPage" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from client
+  </select>
+  
+  <select id="findPageByParams" parameterType="java.util.Map" resultMap="BaseResultMap">
+ 	select 
+    <include refid="Base_Column_List" />
+    from client c
+    <where>
+  		<if test="name !=null and name !=''">
+  			 c.name LIKE CONCAT(CONCAT('%',#{name}),'%')
+  		</if>
+    	<if test="sex != null and sex !=''">
+       		 and c.sex LIKE CONCAT(CONCAT('%',#{sex}),'%')
+    	</if>
+    	<if test="mobilephone != null and mobilephone !=''">
+       		 and c.mobilephone LIKE CONCAT(CONCAT('%',#mobilephone}),'%')
+    	</if>
+    	<if test="telephone != null and telephone !=''">
+       		 and c.telephone LIKE CONCAT(CONCAT('%',#telephone}),'%')
+    	</if>
+    	<if test="email != null and email !=''">
+       		 and c.email LIKE CONCAT(CONCAT('%',#{email}),'%')
+    	</if>
+    	<if test="post != null and post !=''">
+       		 and c.post LIKE CONCAT(CONCAT('%',#{post}),'%')
+    	</if>
+    	<if test="qq != null and qq !=''">
+       		 and c.qq LIKE CONCAT(CONCAT('%',#{qq}),'%')
+    	</if>
+    	<if test="wechat != null and wechat !=''">
+       		 and c.wechat LIKE CONCAT(CONCAT('%',#{wechat}),'%')
+    	</if>
+    	<if test="education != null and education !=''">
+       		 and c.education LIKE CONCAT(CONCAT('%',#{education}),'%')
+    	</if>
+    	<if test="hobby != null and hobby !=''">
+       		 and c.hobby LIKE CONCAT(CONCAT('%',#{hobby}),'%')
+    	</if>
+    	<if test="address != null and address !=''">
+       		 and c.address LIKE CONCAT(CONCAT('%',#{address}),'%')
+    	</if>
+    	<if test="constellation != null and constellation !=''">
+       		 and c.constellation LIKE CONCAT(CONCAT('%',#{constellation}),'%')
+    	</if>   	
+    	<if test="createBy != null and createBy !=''">
+        	and c.create_by LIKE CONCAT(CONCAT('%',#{createBy}),'%')
+    	</if>
+    	<if test="endTime !=null and endTime!=''">
+    		and c.create_time <![CDATA[<=]]> #{endTime,jdbcType=TIMESTAMP}
+    	</if>
+    	<if test="startTime!=null and startTime!=''">
+    	    and c.create_time >= #{startTime,jdbcType=TIMESTAMP}
+    	</if>
+    	<if test="lastUpdateBy != null and lastUpdateBy !=''">
+        	and c.last_update_by LIKE CONCAT(CONCAT('%',#{lastUpdateBy}),'%')
+    	</if>
+    </where>
+  </select>
+
+</mapper>

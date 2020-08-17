@@ -9,7 +9,7 @@
     <result column="license" jdbcType="VARCHAR" property="license" />
     <result column="company_id" jdbcType="BIGINT" property="companyId" />
     <result column="chassis" jdbcType="VARCHAR" property="chassis" />
-    <result column="configure" jdbcType="TEXT" property="configure" />
+    <result column="configure" jdbcType="LONGVARCHAR" property="configure" />
     <result column="create_by" jdbcType="VARCHAR" property="createBy" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="last_update_by" jdbcType="VARCHAR" property="lastUpdateBy" />
@@ -35,7 +35,7 @@
       )
     values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR},
       #{type,jdbcType=VARCHAR}, #{vin,jdbcType=VARCHAR}, #{license,jdbcType=VARCHAR}, #{companyId,jdbcType=BIGINT}, 
-      #{chassis,jdbcType=VARCHAR},#{configure,jdbcType=TEXT},
+      #{chassis,jdbcType=VARCHAR},#{configure,jdbcType=LONGVARCHAR},
       #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{lastUpdateBy,jdbcType=VARCHAR}, 
       #{lastUpdateTime,jdbcType=TIMESTAMP}
       )
@@ -104,7 +104,7 @@
         #{chassis,jdbcType=VARCHAR},
       </if>
       <if test="configure != null">
-        #{configure,jdbcType=TEXT},
+        #{configure,jdbcType=LONGVARCHAR},
       </if>
       <if test="createBy != null">
         #{createBy,jdbcType=VARCHAR},
@@ -117,7 +117,6 @@
       </if>
       <if test="lastUpdateTime != null">
         #{lastUpdateTime,jdbcType=TIMESTAMP},
-      </if>
       </if>
     </trim>
   </insert>
@@ -144,7 +143,7 @@
         chassis = #{chassis,jdbcType=VARCHAR},
       </if>
       <if test="configure != null">
-        configure = #{configure,jdbcType=TEXT},
+        configure = #{configure,jdbcType=LONGVARCHAR},
       </if>
       <if test="createBy != null">
         create_by = #{createBy,jdbcType=VARCHAR},
@@ -170,7 +169,7 @@
       license = #{license,jdbcType=VARCHAR},
       company_id = #{companyId,jdbcType=BIGINT},
       chassis = #{chassis,jdbcType=VARCHAR},
-      configure = #{configure,jdbcType=TEXT},
+      configure = #{configure,jdbcType=LONGVARCHAR},
       create_by = #{createBy,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       last_update_by = #{lastUpdateBy,jdbcType=VARCHAR},

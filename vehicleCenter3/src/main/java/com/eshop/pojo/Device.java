@@ -16,7 +16,7 @@ public class Device extends BasePojo {
 		this.number = number;
 	}
 
-	public String gettType() {
+	public String getType() {
 	return type;
 	}
 

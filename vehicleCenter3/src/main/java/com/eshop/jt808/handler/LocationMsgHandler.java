@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import com.eshop.jt808.pojo.Location;
 import com.eshop.jt808.pojo.req.LocationMsg;
 import com.eshop.jt808.pojo.res.CommonRespMsg;
+import com.eshop.jt808.service.LocationInRedisService;
 import com.eshop.jt808.service.LocationService;
 import com.eshop.pojo.VehicleDevice;
 import com.eshop.service.VehicleDeviceService;
@@ -29,6 +30,9 @@ public class LocationMsgHandler extends BaseHandler<LocationMsg>{
 	LocationService locationService;
 	
 	@Autowired
+	LocationInRedisService locationInRedisService;
+	
+	@Autowired
 	VehicleDeviceService vehicleDeviceService;
 	
 	@Override
@@ -44,6 +48,9 @@ public class LocationMsgHandler extends BaseHandler<LocationMsg>{
 		}
 		//保存位置信息到mysql
 		locationService.save(location);
+		
+		//保存位置信息到Redis
+		locationInRedisService.save(location);
 		
         CommonRespMsg resp = CommonRespMsg.success(msg, getSerialNumber(ctx.channel()));
         workerGroup.execute(() -> write(ctx, resp));//直接write是由businessGroup执行，换成workerGroup写可以少一些判断逻辑，略微提升性能

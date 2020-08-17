@@ -19,6 +19,7 @@ public class Client extends BasePojo {
 	private String constellation;   //星座
 	private Long  upperContactId;	//上级联系人Id
 	private Long  companyId;		//公司Id
+	private String remarks;			//备注
 	//非数据库字段
 	private String upperContactName; //上级联系人
 	//非数据库字段
@@ -131,6 +132,12 @@ public class Client extends BasePojo {
 		this.companyId = companyId;
 	}
 	
+	public String getRemarks() {
+		return remarks;
+	}
+	public void setRemarks(String remarks) {
+		this.remarks = remarks;
+	}
 	
 	
 	public String getUpperContactName() {

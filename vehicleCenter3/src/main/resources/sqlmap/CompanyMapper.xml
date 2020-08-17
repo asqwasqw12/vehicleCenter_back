@@ -1,46 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.eshop.dao.DeviceMapper">
-  <resultMap id="BaseResultMap" type="com.eshop.pojo.Device">
+<mapper namespace="com.eshop.dao.CompanyMapper">
+   <resultMap id="BaseResultMap" type="com.eshop.pojo.Company">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="type" jdbcType="VARCHAR" property="type" />
-    <result column="number" jdbcType="VARCHAR" property="number" />
-    <result column="brand" jdbcType="VARCHAR" property="brand" />
-    <result column="version" jdbcType="VARCHAR" property="version" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="telephone" jdbcType="VARCHAR" property="telephone" />
+    <result column="website" jdbcType="VARCHAR" property="website" />
+    <result column="industry" jdbcType="VARCHAR" property="industry" />
+    <result column="remarks" jdbcType="LONGVARCHAR" property="remarks" />
     <result column="create_by" jdbcType="VARCHAR" property="createBy" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="last_update_by" jdbcType="VARCHAR" property="lastUpdateBy" />
     <result column="last_update_time" jdbcType="TIMESTAMP" property="lastUpdateTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, name, type, number, brand,version, create_by, create_time, last_update_by, 
+    id, name, address, telephone, website,industry,remarks, create_by, create_time, last_update_by, 
     last_update_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from device
+    from company
     where id = #{id,jdbcType=BIGINT}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from device
+    delete from company
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  
-  <insert id="insert" parameterType="com.eshop.pojo.Device">
-    insert into device (id, name, type, number, brand,version, create_by, create_time, last_update_by, 
+  <insert id="insert" parameterType="com.eshop.pojo.Company">
+    insert into company (id, name, address, telephone, website,industry,remarks, create_by, create_time, last_update_by, 
     last_update_time
       )
-    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR},
-      #{type,jdbcType=VARCHAR}, #{number,jdbcType=VARCHAR}, #{brand,jdbcType=VARCHAR}, #{version,jdbcType=VARCHAR},     
+    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR},#{address,jdbcType=VARCHAR},
+      #{telephone,jdbcType=VARCHAR}, #{website,jdbcType=VARCHAR}, #{industry,jdbcType=VARCHAR}, #{remarks,jdbcType=LONGVARCHAR},     
       #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{lastUpdateBy,jdbcType=VARCHAR}, 
       #{lastUpdateTime,jdbcType=TIMESTAMP}
       )
   </insert>
   
-  <insert id="insertSelective" parameterType="com.eshop.pojo.Device">
-    insert into device
+  <insert id="insertSelective" parameterType="com.eshop.pojo.Company">
+    insert into company
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
@@ -48,17 +48,20 @@
       <if test="name != null">
         name,
       </if>
-      <if test="type != null">
-        type,
+      <if test="address != null">
+        address,
       </if>
-      <if test="number != null">
-        number,
+      <if test="telephone != null">
+        telephone,
       </if>
-      <if test="brand != null">
-        brand,
+      <if test="website != null">
+        website,
       </if>
-      <if test="version != null">
-        version,
+      <if test="industry != null">
+        industry,
+      </if>
+      <if test="remarks != null">
+        remarks,
       </if>
       <if test="createBy != null">
         create_by,
@@ -80,17 +83,20 @@
       <if test="name != null">
         #{name,jdbcType=VARCHAR},
       </if>
-      <if test="type != null">
-        #{type,jdbcType=VARCHAR},
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
       </if>
-      <if test="number != null">
-        #{number,jdbcType=VARCHAR},
+      <if test="telephone != null">
+        #{telephone,jdbcType=VARCHAR},
       </if>
-      <if test="brand != null">
-        #{brand,jdbcType=VARCHAR},
+      <if test="website != null">
+        #{website,jdbcType=VARCHAR},
       </if>
-      <if test="version != null">
-        #{version,jdbcType=VARCHAR},
+      <if test="industry != null">
+        #{industry,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null">
+        #{remarks,jdbcType=LONGVARCHAR},
       </if>
       <if test="createBy != null">
         #{createBy,jdbcType=VARCHAR},
@@ -106,24 +112,26 @@
       </if>
     </trim>
   </insert>
-  
-  <update id="updateByPrimaryKeySelective" parameterType="com.eshop.pojo.Device">
-    update device
+  <update id="updateByPrimaryKeySelective" parameterType="com.eshop.pojo.Company">
+    update company
     <set>
       <if test="name != null">
         name = #{name,jdbcType=VARCHAR},
       </if>
-      <if test="type != null">
-        type = #{type,jdbcType=VARCHAR},
+      <if test="address != null">
+        address = #{type,jdbcType=VARCHAR},
       </if>
-      <if test="number != null">
-        number = #{number,jdbcType=VARCHAR},
+      <if test="telephone != null">
+        telephone = #{telephone,jdbcType=VARCHAR},
       </if>
-      <if test="brand != null">
-        brand = #{brand,jdbcType=VARCHAR},
+      <if test="website != null">
+        website = #{website,jdbcType=VARCHAR},
       </if>
-      <if test="version != null">
-        version = #{version,jdbcType=VARCHAR},
+      <if test="industry != null">
+        industry = #{industry,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null">
+        remarks = #{remarks,jdbcType=LONGVARCHAR },
       </if>
       <if test="createBy != null">
         create_by = #{createBy,jdbcType=VARCHAR},
@@ -141,44 +149,46 @@
     where id = #{id,jdbcType=BIGINT}
   </update>
   
-   <update id="updateByPrimaryKey" parameterType="com.eshop.pojo.Device">
-    update device
+   <update id="updateByPrimaryKey" parameterType="com.eshop.pojo.Company">
+    update company
     set name = #{name,jdbcType=VARCHAR},
-      type = #{type,jdbcType=VARCHAR},
-      number = #{number,jdbcType=VARCHAR},
-      brand = #{brand,jdbcType=VARCHAR},
-      version = #{version,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      telephone = #{telephone,jdbcType=VARCHAR},
+      website = #{website,jdbcType=VARCHAR},
+      industry = #{industry,jdbcType=VARCHAR},
+      remarks = #{remarks,jdbcType=LONGVARCHAR},
       create_by = #{createBy,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       last_update_by = #{lastUpdateBy,jdbcType=VARCHAR},
       last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
+  
   <select id="findPage" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from device
+    from company
   </select>
   
   <select id="findPageByParams" parameterType="java.util.Map" resultMap="BaseResultMap">
  	select 
     <include refid="Base_Column_List" />
-    from device d
+    from company c
     <where>
   		<if test="name !=null and name !=''">
-  			 d.name LIKE CONCAT(CONCAT('%',#{name}),'%')
+  			 c.name LIKE CONCAT(CONCAT('%',#{name}),'%')
   		</if>
-    	<if test="type != null and type !=''">
-       		 and d.type LIKE CONCAT(CONCAT('%',#{type}),'%')
+    	<if test="address != null and address !=''">
+       		 and c.address LIKE CONCAT(CONCAT('%',#{address}),'%')
     	</if>
-    	<if test="number != null and number !=''">
-       		 and d.number LIKE CONCAT(CONCAT('%',#{number}),'%')
+    	<if test="telephone != null and telephone !=''">
+       		 and c.telephone LIKE CONCAT(CONCAT('%',#{telephone}),'%')
     	</if>
-    	<if test="brand != null and brand !=''">
-       		 and d.brand LIKE CONCAT(CONCAT('%',#{brand}),'%')
+    	<if test="website != null and website !=''">
+       		 and c.website LIKE CONCAT(CONCAT('%',#{website}),'%')
     	</if>
-    	<if test="version != null and version !=''">
-       		 and d.version LIKE CONCAT(CONCAT('%',#{version}),'%')
+    	<if test="industry != null and industry !=''">
+       		 and c.industry LIKE CONCAT(CONCAT('%',#{industry}),'%')
     	</if>
     	<if test="createBy != null and createBy !=''">
         	and d.create_by LIKE CONCAT(CONCAT('%',#{createBy}),'%')
@@ -194,4 +204,5 @@
     	</if>
     </where>
   </select>
+
 </mapper>

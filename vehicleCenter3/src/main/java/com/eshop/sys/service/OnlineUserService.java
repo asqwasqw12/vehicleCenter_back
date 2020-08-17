@@ -32,7 +32,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class OnlineUserService {
 	private final static long EXPIRE_TIME = 40 * 60;
-	private final static String ONLINE_KEY = "online-token";
+	private final static String ONLINE_KEY = "online_token";
 	
     private RedisUtils redisUtils;
 

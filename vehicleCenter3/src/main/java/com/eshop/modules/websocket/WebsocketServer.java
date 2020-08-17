@@ -88,8 +88,8 @@ public class WebsocketServer {
     }
 
     // 此为单点消息 (发送对象)
-    public void sendObjMessage(String shopId, Object message) {
-        Session session = sessionPool.get(shopId);
+    public void sendObjMessage(String userName, Object message) {
+        Session session = sessionPool.get(userName);
         if (session != null) {
             try {
                 session.getAsyncRemote().sendObject(message);

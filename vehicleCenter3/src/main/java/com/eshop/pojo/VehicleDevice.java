@@ -4,7 +4,7 @@ public class VehicleDevice extends BasePojo {
 	
 	private Long vehicleId;  //车辆Id
 	private Long deviceId;   //设备Id
-	private int isTerminal;	 //是否为数据通讯终端
+	private int isCom;	 //是否为数据通讯终端
 	private String terminalPhone;    //终端手机号
 	
 	public void setVehicleId(Long vehicleId) {
@@ -23,12 +23,12 @@ public class VehicleDevice extends BasePojo {
     	return deviceId;
     }
     
-    public void setIsTerminal(int isTerminal) {
-		this.isTerminal = isTerminal;
+    public void setIsCom(int isCom) {
+		this.isCom = isCom;
 	}
     
-    public int getIsTerminalr() {
-		return isTerminal;
+    public int getIsCom() {
+		return isCom;
 	}
     
     public void setTerminalPhone(String terminalPhone) {

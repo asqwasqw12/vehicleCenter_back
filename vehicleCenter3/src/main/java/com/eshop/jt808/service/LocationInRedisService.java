@@ -5,19 +5,22 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.stereotype.Service;
+
 import com.eshop.common.RedisUtils;
 import com.eshop.common.StringUtils;
 import com.eshop.common.page.MybatisPageHelper;
 import com.eshop.common.page.PageRequest;
 import com.eshop.common.page.PageResult;
-import com.eshop.pojo.VehicleLocation;
+import com.eshop.jt808.pojo.Location;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
+@Service
 public class LocationInRedisService {
 	
 	private final static long EXPIRE_TIME = -1;
-	private final static String lOCATION_KEY = "real-time-location";
+	private final static String lOCATION_KEY = "real_time_location";
 	private RedisUtils redisUtils;
 	
 	
@@ -28,9 +31,9 @@ public class LocationInRedisService {
 	 /**
      * 保存车辆位置信息
      */
-    public void save(VehicleLocation vehicleLocation){
-    	if(vehicleLocation != null) {
-    		redisUtils.set(lOCATION_KEY + vehicleLocation.getVehicleId(), vehicleLocation, EXPIRE_TIME);
+    public void save(Location location){
+    	if(location != null) {
+    		redisUtils.set(lOCATION_KEY + location.getVehicleId(), location, EXPIRE_TIME);
     	}
         
     }
@@ -48,11 +51,11 @@ public class LocationInRedisService {
     	if(params.get("filter") != null || params.get("filter") !="") {
     		strFilter = (String) params.get("filter");
     	}
-        List<VehicleLocation> vehicleLocationList = getAll(strFilter);
+        List<Location> locationList = getAll(strFilter);
         int pageNum = pageRequest.getPageNum();
 		int pageSize = pageRequest.getPageSize();
 		PageHelper.startPage(pageNum, pageSize);
-		pageResult = MybatisPageHelper.getPageResult(pageRequest, new PageInfo<VehicleLocation>((List<VehicleLocation>) vehicleLocationList));
+		pageResult = MybatisPageHelper.getPageResult(pageRequest, new PageInfo<Location>((List<Location>) locationList));
         return pageResult;
     }
 
@@ -61,22 +64,22 @@ public class LocationInRedisService {
      * @param filter /
      * @return /
      */
-    public List<VehicleLocation> getAll(String filter){
+    public List<Location> getAll(String filter){
         List<String> keys = redisUtils.scan(lOCATION_KEY + "*");
         Collections.reverse(keys);
-        List<VehicleLocation> vehicleLocationList = new ArrayList<>();
+        List<Location> locationList = new ArrayList<>();
         for (String key : keys) {
-        	VehicleLocation vehicleLocation = (VehicleLocation) redisUtils.get(key);
+        	Location location = (Location) redisUtils.get(key);
             if(StringUtils.isNotBlank(filter)){
-                if(vehicleLocation.toString().contains(filter)){
-                	vehicleLocationList.add(vehicleLocation);
+                if(location.toString().contains(filter)){
+                	locationList.add(location);
                 }
             } else {
-            	vehicleLocationList.add(vehicleLocation);
+            	locationList.add(location);
             }
         }
-        vehicleLocationList.sort((o1, o2) -> o2.getTime().compareTo(o1.getTime()));
-        return vehicleLocationList;
+        locationList.sort((o1, o2) -> o2.getTime().compareTo(o1.getTime()));
+        return locationList;
     }
 
 }
