@@ -3,6 +3,8 @@ package com.eshop.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.eshop.pojo.Company;
 
 
@@ -22,5 +24,11 @@ public interface CompanyMapper {
     int updateByPrimaryKey(Company record);
     
     List<Company> findPageByParams(Map<String,Object> params);
+    
+    List<Company> findByPid(Long id); 
+    
+    List<Company> findByName(@Param(value="name") String name);
+    	    
+    List<Company> findAll();
 
 }

@@ -9,13 +9,15 @@
     <result column="website" jdbcType="VARCHAR" property="website" />
     <result column="industry" jdbcType="VARCHAR" property="industry" />
     <result column="remarks" jdbcType="LONGVARCHAR" property="remarks" />
+    <result column="parent_id" jdbcType="BIGINT" property="parentId" />
+    <result column="order_num" jdbcType="INTEGER" property="orderNum" />
     <result column="create_by" jdbcType="VARCHAR" property="createBy" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="last_update_by" jdbcType="VARCHAR" property="lastUpdateBy" />
     <result column="last_update_time" jdbcType="TIMESTAMP" property="lastUpdateTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, name, address, telephone, website,industry,remarks, create_by, create_time, last_update_by, 
+    id, name, address, telephone, website,industry,remarks,parent_id, order_num, create_by, create_time, last_update_by, 
     last_update_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
@@ -24,18 +26,24 @@
     from company
     where id = #{id,jdbcType=BIGINT}
   </select>
+  <select id="findByPid" parameterType="java.lang.Long" resultMap="BaseResultMap">
+  	select
+  	<include refid="Base_Column_List" />
+    from company
+    where parent_id = #{id,jdbcType=BIGINT}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from company
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.eshop.pojo.Company">
-    insert into company (id, name, address, telephone, website,industry,remarks, create_by, create_time, last_update_by, 
+    insert into company (id, name, address, telephone, website,industry,remarks,parent_id, order_num, create_by, create_time, last_update_by, 
     last_update_time
       )
     values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR},#{address,jdbcType=VARCHAR},
       #{telephone,jdbcType=VARCHAR}, #{website,jdbcType=VARCHAR}, #{industry,jdbcType=VARCHAR}, #{remarks,jdbcType=LONGVARCHAR},     
-      #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{lastUpdateBy,jdbcType=VARCHAR}, 
-      #{lastUpdateTime,jdbcType=TIMESTAMP}
+       #{parentId,jdbcType=BIGINT}, #{orderNum,jdbcType=INTEGER},#{createBy,jdbcType=VARCHAR}, 
+       #{createTime,jdbcType=TIMESTAMP}, #{lastUpdateBy,jdbcType=VARCHAR}, #{lastUpdateTime,jdbcType=TIMESTAMP}
       )
   </insert>
   
@@ -62,6 +70,12 @@
       </if>
       <if test="remarks != null">
         remarks,
+      </if>
+      <if test="parentId != null">
+        parent_id,
+      </if>
+      <if test="orderNum != null">
+        order_num,
       </if>
       <if test="createBy != null">
         create_by,
@@ -98,6 +112,12 @@
       <if test="remarks != null">
         #{remarks,jdbcType=LONGVARCHAR},
       </if>
+      <if test="parentId != null">
+        #{parentId,jdbcType=BIGINT},
+      </if>
+      <if test="orderNum != null">
+        #{orderNum,jdbcType=INTEGER},
+      </if>
       <if test="createBy != null">
         #{createBy,jdbcType=VARCHAR},
       </if>
@@ -133,6 +153,12 @@
       <if test="remarks != null">
         remarks = #{remarks,jdbcType=LONGVARCHAR },
       </if>
+      <if test="parentId != null">
+        parent_id = #{parentId,jdbcType=BIGINT},
+      </if>
+      <if test="orderNum != null">
+        order_num = #{orderNum,jdbcType=INTEGER},
+      </if>
       <if test="createBy != null">
         create_by = #{createBy,jdbcType=VARCHAR},
       </if>
@@ -157,6 +183,8 @@
       website = #{website,jdbcType=VARCHAR},
       industry = #{industry,jdbcType=VARCHAR},
       remarks = #{remarks,jdbcType=LONGVARCHAR},
+      parent_id = #{parentId,jdbcType=BIGINT},
+      order_num = #{orderNum,jdbcType=INTEGER},
       create_by = #{createBy,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       last_update_by = #{lastUpdateBy,jdbcType=VARCHAR},
@@ -164,10 +192,21 @@
     where id = #{id,jdbcType=BIGINT}
   </update>
   
-  <select id="findPage" resultMap="BaseResultMap">
+  <select id="findAll" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from company
+  </select>
+  
+  <select id="findByName" parameterType="java.lang.String" resultMap="BaseResultMap">
+  	select
+  	<include refid="Base_Column_List" />
+    from company c
+    <where>
+    	<if test="name !=null and name !=''">
+  			 c.name LIKE CONCAT(CONCAT('%',#{name}),'%')
+  		</if>
+    </where>
   </select>
   
   <select id="findPageByParams" parameterType="java.util.Map" resultMap="BaseResultMap">

@@ -29,16 +29,16 @@ public class VehicleLocationController {
 	@Log("查看车辆位置信息")
 	@GetMapping(value="/findAll")
 	public HttpResult findAll() throws InterruptedException {
-		String userName = SecurityUtils.getUsername();
+		
 		String Strfilter = null;
 		List<Location> list = locationInRedisService.getAll(Strfilter);
-		String message = JSONObject.toJSONString(list);
-		 for (int i = 0; i < 20; i++){
-	            Thread.sleep(1000);
-	            System.out.println("userName:"+userName);
-	            webSocket.sendTextMessage(userName, message);
-	        }
-		return HttpResult.ok("传输完毕");
+		/*
+		 * String userName = SecurityUtils.getUsername();
+		 * String message = JSONObject.toJSONString(list); for (int i = 0; i < 20; i++){
+		 * Thread.sleep(1000); System.out.println("userName:"+userName);
+		 * webSocket.sendTextMessage(userName, message); }
+		 */
+		return HttpResult.ok(list);
 	}
 
 }
