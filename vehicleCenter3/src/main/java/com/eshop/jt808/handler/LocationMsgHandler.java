@@ -1,5 +1,8 @@
 package com.eshop.jt808.handler;
 
+
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -48,6 +51,8 @@ public class LocationMsgHandler extends BaseHandler<LocationMsg>{
 		}
 		//保存位置信息到mysql
 		locationService.save(location);
+		Date now =new Date();
+		//location.setCreateTime(now);
 		
 		//保存位置信息到Redis
 		locationInRedisService.save(location);

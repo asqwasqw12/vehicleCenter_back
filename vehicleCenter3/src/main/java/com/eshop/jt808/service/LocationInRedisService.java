@@ -28,6 +28,10 @@ public class LocationInRedisService {
         this.redisUtils = redisUtils;
     }
 	
+	public static String getLocationKey() {
+		return lOCATION_KEY;
+	}
+	
 	 /**
      * 保存车辆位置信息
      */

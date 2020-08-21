@@ -14,6 +14,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.eshop.jt808.pojo.Location;
 import com.eshop.jt808.service.LocationInRedisService;
 import com.eshop.modules.websocket.WebsocketServer;
+import com.eshop.pojo.VehicleStatus;
+import com.eshop.service.VehicleStatusInRedisService;
 
 @Component
 public class ScheduleTask {
@@ -21,6 +23,8 @@ public class ScheduleTask {
 	Logger logger = LoggerFactory.getLogger(ScheduleTask.class);
 	@Autowired
 	LocationInRedisService locationInRedisService;
+	@Autowired
+	VehicleStatusInRedisService vehicleStatusInRedisService;
 	@Autowired
     private WebsocketServer webSocket;
 	
@@ -30,7 +34,8 @@ public class ScheduleTask {
             //Thread.sleep(5000);  //睡眠5秒
             logger.info(Thread.currentThread().getName()); //打印当前线程名字
             String Strfilter = null;
-            List<Location> list = locationInRedisService.getAll(Strfilter);
+            //List<Location> list1 = locationInRedisService.getAll(Strfilter);
+            List<VehicleStatus> list = vehicleStatusInRedisService.getAll(Strfilter);
     		String message = JSONObject.toJSONString(list);
     		webSocket.sendAllMessage(message);
  
