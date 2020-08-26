@@ -175,6 +175,9 @@ public class SysMenuServiceImpl implements SysMenuService {
 		        			 map.put("URL地址",menu.getUrl());
 		        			 map.put("权限标识",menu.getPerms());
 		        			 map.put("顺序编号",menu.getOrderNum());
+		        			 map.put("不缓存", menu.getNoCache());
+		        			 map.put("组件名称", menu.getComponentName());
+		        			 map.put("隐藏", menu.getHidden());
 		        			 map.put("创建人",menu.getCreateBy()); 
 		        			 map.put("创建时间日期",DateTimeUtils.getDateTime(menu.getCreateTime())); 
 		        			 map.put("最后更新人",menu.getLastUpdateBy()); 

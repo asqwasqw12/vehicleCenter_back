@@ -6,23 +6,29 @@ import java.util.List;
 
 public class SysMenu extends BaseModel {
 	
-	 private Long parentId;
+	 private Long parentId;    //父菜单
 
-	    private String name;
+	    private String name;  //菜单名称
 
-	    private String url;
+	    private String url;  //菜单URL,类型：1.普通页面（如用户管理， /sys/user） 2.嵌套完整外部页面，以http(s)开头的链接 3.嵌套服务器页面，使用iframe:前缀+目标URL(如SQL监控， iframe:/druid/login.html, iframe:前缀会替换成服务器地址)
 	    
-	    private String location;
+	    private String location;  //vue组件位置
 
-	    private String perms;
+	    private String perms;   //授权(多个用逗号分隔，如：sys:user:add,sys:user:edit)
 
-	    private Integer type;
+	    private Integer type;  //类型   0：目录   1：菜单   2：按钮
 
-	    private String icon;
+	    private String icon;  //菜单图标
 
-	    private Integer orderNum;
+	    private Integer orderNum; //排序
 
-	    private Byte delFlag;
+	    private Byte delFlag;  //删除标志
+	    
+	    private Integer noCache; //缓存=0，不缓存=1
+	    
+	    private Integer hidden;  //隐藏 =1 ，不隐藏=0
+	    
+	    private String componentName; //组件名称
 
 	    // 非数据库字段
 	    private String parentName;
@@ -126,5 +132,30 @@ public class SysMenu extends BaseModel {
 		public void setParentName(String parentName) {
 			this.parentName = parentName;
 		}
+		
+		public Integer getNoCache() {
+			return noCache;
+		}
+
+		public void setNoCache(Integer noCache) {
+			this.noCache = noCache;
+		}
+		
+		public Integer getHidden() {
+			return hidden;
+		}
+
+		public void setHidden(Integer hidden) {
+			this.type = hidden;
+		}
+		
+		public String getComponentName() {
+			return componentName;
+		}
+
+		public void setComponentName(String componentName) {
+			this.componentName = componentName;
+		}
+		
 
 }

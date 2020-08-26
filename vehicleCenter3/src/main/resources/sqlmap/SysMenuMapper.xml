@@ -16,10 +16,13 @@
     <result column="last_update_by" jdbcType="VARCHAR" property="lastUpdateBy" />
     <result column="last_update_time" jdbcType="TIMESTAMP" property="lastUpdateTime" />
     <result column="del_flag" jdbcType="TINYINT" property="delFlag" />
+    <result column="no_cache" jdbcType="INTEGER" property="noCache" />
+    <result column="hidden" jdbcType="INTEGER" property="hidden" />
+    <result column="component_name" jdbcType="VARCHAR" property="componentName" />
   </resultMap>
   <sql id="Base_Column_List">
     id, name, parent_id, url,location, perms, type, icon, order_num, create_by, create_time, last_update_by, 
-    last_update_time, del_flag
+    last_update_time, del_flag,no_cache,hidden,component_name
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
@@ -41,12 +44,13 @@
     insert into sys_menu (id, name, parent_id, 
       url,location,perms, type, icon, 
       order_num, create_by, create_time, 
-      last_update_by, last_update_time, del_flag
+      last_update_by, last_update_time, del_flag,no_cache,hidden,component_name
       )
     values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{parentId,jdbcType=BIGINT}, 
       #{url,jdbcType=VARCHAR},#{location,jdbcType=VARCHAR}, #{perms,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, #{icon,jdbcType=VARCHAR}, 
       #{orderNum,jdbcType=INTEGER}, #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{lastUpdateBy,jdbcType=VARCHAR}, #{lastUpdateTime,jdbcType=TIMESTAMP}, #{delFlag,jdbcType=TINYINT}
+      #{lastUpdateBy,jdbcType=VARCHAR}, #{lastUpdateTime,jdbcType=TIMESTAMP}, #{delFlag,jdbcType=TINYINT},
+      #{noCache,jdbcType=INTEGER},#{hidden,jdbcType=INTEGER},#{componentName,jdbcType=VARCHAR},
       )
   </insert>
   <insert id="insertSelective" parameterType="com.eshop.sys.pojo.SysMenu">
@@ -94,6 +98,15 @@
       <if test="delFlag != null">
         del_flag,
       </if>
+       <if test="noCache != null">
+        no_cache,
+      </if>
+       <if test="hidden != null">
+        hidden,
+      </if>
+       <if test="componentName != null">
+        component_name,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -137,6 +150,15 @@
       </if>
       <if test="delFlag != null">
         #{delFlag,jdbcType=TINYINT},
+      </if>
+      <if test="noCache != null">
+        #{noCache,jdbcType=INTEGER},
+      </if>
+       <if test="hidden != null">
+        #{hidden,jdbcType=INTEGER},
+      </if>
+       <if test="componentName != null">
+        #{componentName,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -182,6 +204,15 @@
       <if test="delFlag != null">
         del_flag = #{delFlag,jdbcType=TINYINT},
       </if>
+      <if test="noCache != null">
+        no_cache = #{noCache,jdbcType=INTEGER},
+      </if>
+      <if test="hidden != null">
+        hidden = #{hidden,jdbcType=INTEGER},
+      </if>
+      <if test="componentName != null">
+        component_name = #{componentName,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -199,7 +230,10 @@
       create_time = #{createTime,jdbcType=TIMESTAMP},
       last_update_by = #{lastUpdateBy,jdbcType=VARCHAR},
       last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
-      del_flag = #{delFlag,jdbcType=TINYINT}
+      del_flag = #{delFlag,jdbcType=TINYINT},
+      no_cache = #{noCache,jdbcType=INTEGER},
+      hidden = #{hidden,jdbcType=INTEGER},
+      component_name = #{componentName,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
   <select id="findAll"  resultMap="BaseResultMap">

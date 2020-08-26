@@ -5,16 +5,44 @@
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="parent_id" jdbcType="BIGINT" property="parentId" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="telephone" jdbcType="VARCHAR" property="telephone" />
+    <result column="website" jdbcType="VARCHAR" property="website" />
+    <result column="industry" jdbcType="VARCHAR" property="industry" />
+    <result column="remarks" jdbcType="LONGVARCHAR" property="remarks" />
+    <result column="is_company" jdbcType="INTEGER" property="isCompany" />
     <result column="order_num" jdbcType="INTEGER" property="orderNum" />
     <result column="create_by" jdbcType="VARCHAR" property="createBy" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="last_update_by" jdbcType="VARCHAR" property="lastUpdateBy" />
     <result column="last_update_time" jdbcType="TIMESTAMP" property="lastUpdateTime" />
     <result column="del_flag" jdbcType="TINYINT" property="delFlag" />
+    <result column="person_num" jdbcType="INTEGER" property="personNum" />
+    <result column="service_num" jdbcType="INTEGER" property="serviceNum" />
+    <result column="clean_area" jdbcType="INTEGER" property="cleanArea" />
+    <result column="green_area" jdbcType="INTEGER" property="greenArea" />
+    <result column="mechine_rate" jdbcType="FLOAT" property="mechineRate" />
+    <result column="rubbish_volume" jdbcType="FLOAT" property="rubbishVolume" />
+    <result column="renewable_resources_volume" jdbcType="FLOAT" property="renewableResourcesVolume" />
+    <result column="work_start_time" jdbcType="TIMESTAMP" property="workStartTime" />
+    <result column="administrative_division" jdbcType="VARCHAR" property="administrativeDivision" />
+    <result column="latitude" jdbcType="FLOAT" property="latitude" />
+    <result column="longitude" jdbcType="FLOAT" property="longitude" />
+    <result column="juridical_person" jdbcType="VARCHAR" property="juridicalPerson" />
+    <result column="registered_time" jdbcType="TIMESTAMP" property="registeredTime" />
+    <result column="registered_capital" jdbcType="DECIMAL" property="registeredCapital" />
+    <result column="stock_rate" jdbcType="VARCHAR" property="stockRate" />
+    <result column="manager" jdbcType="VARCHAR" property="manager" />
+    <result column="manager_phone" jdbcType="VARCHAR" property="managerPhone" />
+    <result column="vice_manager" jdbcType="VARCHAR" property="viceManager" />
+    <result column="vice_manager_phone" jdbcType="VARCHAR" property="viceManagerPhone" />
+    <result column="fax" jdbcType="VARCHAR" property="fax" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, name, parent_id, order_num, create_by, create_time, last_update_by, last_update_time, 
-    del_flag
+    id, name, parent_id,address, telephone, website,industry,remarks,is_company,order_num, create_by, create_time, last_update_by, last_update_time, 
+    del_flag,person_num,service_num,clean_area,green_area,mechine_rate,rubbish_volume,renewable_resources_volume,
+    work_start_time,administrative_division,latitude,longitude,juridical_person,registered_time,registered_capital,
+    stock_rate,manager,manager_phone,vice_manager,vice_manager_phone,fax
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
@@ -33,13 +61,36 @@
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.eshop.sys.pojo.SysDept">
-    insert into sys_dept (id, name, parent_id, 
-      order_num, create_by, create_time, 
-      last_update_by, last_update_time, del_flag
+    insert into sys_dept ( id, name, parent_id,address, telephone, website,industry,remarks,is_company order_num,
+     create_by, create_time, last_update_by, last_update_time, del_flag,
+     person_num,service_num,clean_area,green_area,mechine_rate,rubbish_volume,renewable_resources_volume,
+    work_start_time,administrative_division,latitude,longitude,juridical_person,registered_time,registered_capital,
+    stock_rate,manager,manager_phone,vice_manager,vice_manager_phone,fax
       )
-    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{parentId,jdbcType=BIGINT}, 
-      #{orderNum,jdbcType=INTEGER}, #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{lastUpdateBy,jdbcType=VARCHAR}, #{lastUpdateTime,jdbcType=TIMESTAMP}, #{delFlag,jdbcType=TINYINT}
+    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{parentId,jdbcType=BIGINT}, #{address,jdbcType=VARCHAR},
+      #{telephone,jdbcType=VARCHAR}, #{website,jdbcType=VARCHAR}, #{industry,jdbcType=VARCHAR}, #{remarks,jdbcType=LONGVARCHAR},
+     #{isCompany,jdbcType=INTEGER}, #{orderNum,jdbcType=INTEGER}, #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{lastUpdateBy,jdbcType=VARCHAR}, #{lastUpdateTime,jdbcType=TIMESTAMP}, #{delFlag,jdbcType=TINYINT},
+      #{personNum,jdbcType=INTEGER},
+      #{serviceNum,jdbcType=INTEGER},
+      #{cleanArea,jdbcType=INTEGER},
+      #{greenArea,jdbcType=INTEGER},
+      #{mechineRate,jdbcType=FLOAT},
+      #{rubbishVolume,jdbcType=FLOAT},
+      #{renewableResourcesVolume,jdbcType=FLOAT},
+      #{workStartTime,jdbcType=TIMESTAMP},
+      #{administrativeDivision,jdbcType=VARCHAR},
+      #{latitude,jdbcType=FLOAT},
+      #{longitude,jdbcType=FLOAT},
+      #{juridicalPerson,jdbcType=VARCHAR},
+      #{registeredTime,jdbcType=TIMESTAMP},
+      #{registeredCapital,jdbcType=DECIMAL},
+      #{stockRate,jdbcType=VARCHAR},
+      #{manager,jdbcType=VARCHAR},
+      #{managerPhone,jdbcType=VARCHAR},
+      #{viceManager,jdbcType=VARCHAR},
+      #{viceManagerPhone,jdbcType=VARCHAR},
+      #{fax,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.eshop.sys.pojo.SysDept">
@@ -53,6 +104,24 @@
       </if>
       <if test="parentId != null">
         parent_id,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="telephone != null">
+        telephone,
+      </if>
+      <if test="website != null">
+        website,
+      </if>
+      <if test="industry != null">
+        industry,
+      </if>
+      <if test="remarks != null">
+        remarks,
+      </if>
+      <if test="isCompany != null">
+        is_company,
       </if>
       <if test="orderNum != null">
         order_num,
@@ -72,6 +141,66 @@
       <if test="delFlag != null">
         del_flag,
       </if>
+      <if test="personNum != null">
+        person_num,
+      </if>
+      <if test="serviceNum != null">
+        service_num,
+      </if>
+      <if test="cleanArea != null">
+        clean_area,
+      </if>
+      <if test="greenArea != null">
+        green_area,
+      </if>
+      <if test="mechineRate != null">
+        mechine_rate,
+      </if>
+      <if test="rubbishVolume != null">
+        rubbish_volume,
+      </if>
+      <if test="renewableResourcesVolume != null">
+        renewable_resources_volume,
+      </if>
+      <if test="workStartTime != null">
+        work_start_time,
+      </if>
+      <if test="administrativeDivision != null">
+        administrative_division,
+      </if>
+      <if test="latitude!= null">
+        latitude,
+      </if>
+      <if test="longitude != null">
+        longitude,
+      </if>
+      <if test="juridicalPerson != null">
+        juridical_person,
+      </if>
+      <if test="registeredTime != null">
+        registered_time,
+      </if>
+      <if test="registeredCapital != null">
+        registered_capital,
+      </if>
+      <if test="stockRate != null">
+        stock_rate,
+      </if>
+      <if test="manager != null">
+        manager,
+      </if>
+      <if test="managerPhone != null">
+        manager_phone,
+      </if>
+      <if test="viceManager != null">
+        vice_manager,
+      </if>
+      <if test="viceManagerPhone != null">
+        vice_manager_phone,
+      </if>
+      <if test="fax != null">
+        fax
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -82,6 +211,24 @@
       </if>
       <if test="parentId != null">
         #{parentId,jdbcType=BIGINT},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="telephone != null">
+        #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="website != null">
+        #{website,jdbcType=VARCHAR},
+      </if>
+      <if test="industry != null">
+        #{industry,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null">
+        #{remarks,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="isCompany != null">
+        #{isCompany,jdbcType=INTEGER},
       </if>
       <if test="orderNum != null">
         #{orderNum,jdbcType=INTEGER},
@@ -101,6 +248,66 @@
       <if test="delFlag != null">
         #{delFlag,jdbcType=TINYINT},
       </if>
+      <if test="personNum != null">
+        #{personNum,jdbcType=INTEGER},
+      </if>
+      <if test="serviceNum != null">
+        #{serviceNum,jdbcType=INTEGER},
+      </if>
+      <if test="cleanArea != null">
+        #{cleanArea,jdbcType=INTEGER},
+      </if>
+      <if test="greenArea != null">
+        #{greenArea,jdbcType=INTEGER},
+      </if>
+      <if test="mechineRate != null">
+        #{mechineRate,jdbcType=FLOAT},
+      </if>
+      <if test="rubbishVolume != null">
+        #{rubbishVolume,jdbcType=FLOAT},
+      </if>
+      <if test="renewableResourcesVolume != null">
+        #{renewableResourcesVolume,jdbcType=FLOAT},
+      </if>
+      <if test="workStartTime != null">
+        #{workStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="administrativeDivision != null">
+        #{administrativeDivision,jdbcType=VARCHAR},
+      </if>
+      <if test="latitude != null">
+        #{latitude,jdbcType=FLOAT},
+      </if>
+      <if test="longitude != null">
+        #{longitude,jdbcType=FLOAT},
+      </if>
+      <if test="juridicalPerson != null">
+        #{juridicalPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="registeredTime != null">
+        #{registeredTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="registeredCapital != null">
+        #{registeredCapital,jdbcType=DECIMAL},
+      </if>
+      <if test="stockRate != null">
+        #{stockRate,jdbcType=VARCHAR},
+      </if>
+      <if test="manager != null">
+        #{manager,jdbcType=VARCHAR},
+      </if>
+      <if test="managerPhone != null">
+        #{managerPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="viceManager != null">
+        #{viceManager,jdbcType=VARCHAR},
+      </if>
+      <if test="viceManagerPhone != null">
+        #{viceManagerPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="fax != null">
+        #{fax,jdbcType=VARCHAR}
+      </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.eshop.sys.pojo.SysDept">
@@ -111,6 +318,24 @@
       </if>
       <if test="parentId != null">
         parent_id = #{parentId,jdbcType=BIGINT},
+      </if>
+      <if test="address != null">
+        address = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="telephone != null">
+        telephone = #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="website != null">
+        website = #{website,jdbcType=VARCHAR},
+      </if>
+      <if test="industry != null">
+        industry = #{industry,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null">
+        remarks = #{remarks,jdbcType=LONGVARCHAR },
+      </if>
+      <if test="isCompany != null">
+        is_company = #{isCompany,jdbcType=INTEGER},
       </if>
       <if test="orderNum != null">
         order_num = #{orderNum,jdbcType=INTEGER},
@@ -130,6 +355,66 @@
       <if test="delFlag != null">
         del_flag = #{delFlag,jdbcType=TINYINT},
       </if>
+      <if test="personNum != null">
+        person_num = #{personNum,jdbcType=INTEGER},
+      </if>
+      <if test="serviceNum != null">
+        service_num = #{serviceNum,jdbcType=INTEGER},
+      </if>
+      <if test="cleanArea != null">
+       clean_area = #{cleanArea,jdbcType=INTEGER},
+      </if>
+      <if test="greenArea != null">
+       green_area = #{greenArea,jdbcType=INTEGER},
+      </if>
+      <if test="mechineRate != null">
+       mechine_rate = #{mechineRate,jdbcType=FLOAT},
+      </if>
+      <if test="rubbishVolume != null">
+       rubbish_volume = #{rubbishVolume,jdbcType=FLOAT},
+      </if>
+      <if test="renewableResourcesVolume != null">
+       renewable_resources_volume = #{renewableResourcesVolume,jdbcType=FLOAT},
+      </if>
+      <if test="workStartTime != null">
+       work_start_time = #{workStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="administrativeDivision != null">
+       administrative_division = #{administrativeDivision,jdbcType=VARCHAR},
+      </if>
+      <if test="latitude != null">
+       latitude = #{latitude,jdbcType=FLOAT},
+      </if>
+      <if test="longitude != null">
+       longitude = #{longitude,jdbcType=FLOAT},
+      </if>
+      <if test="juridicalPerson != null">
+       juridical_person = #{juridicalPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="registeredTime != null">
+       registered_time = #{registeredTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="registeredCapital != null">
+        registered_capital = #{registeredCapital,jdbcType=DECIMAL},
+      </if>
+      <if test="stockRate != null">
+        stock_rate =#{stockRate,jdbcType=VARCHAR},
+      </if>
+      <if test="manager != null">
+        manager = #{manager,jdbcType=VARCHAR},
+      </if>
+      <if test="managerPhone != null">
+       manager_phone = #{managerPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="viceManager != null">
+       vice_manager = #{viceManager,jdbcType=VARCHAR},
+      </if>
+      <if test="viceManagerPhone != null">
+       vice_manager_phone = #{viceManagerPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="fax != null">
+        fax = #{fax,jdbcType=VARCHAR}
+      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -137,12 +422,38 @@
     update sys_dept
     set name = #{name,jdbcType=VARCHAR},
       parent_id = #{parentId,jdbcType=BIGINT},
+       address = #{address,jdbcType=VARCHAR},
+      telephone = #{telephone,jdbcType=VARCHAR},
+      website = #{website,jdbcType=VARCHAR},
+      industry = #{industry,jdbcType=VARCHAR},
+      remarks = #{remarks,jdbcType=LONGVARCHAR},
+      is_company = #{isCompany,jdbcType=INTEGER},
       order_num = #{orderNum,jdbcType=INTEGER},
       create_by = #{createBy,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       last_update_by = #{lastUpdateBy,jdbcType=VARCHAR},
       last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
-      del_flag = #{delFlag,jdbcType=TINYINT}
+      del_flag = #{delFlag,jdbcType=TINYINT},
+        person_num = #{personNum,jdbcType=INTEGER},
+        service_num = #{serviceNum,jdbcType=INTEGER},
+       clean_area = #{cleanArea,jdbcType=INTEGER},
+       green_area = #{greenArea,jdbcType=INTEGER},
+       mechine_rate = #{mechineRate,jdbcType=FLOAT},
+       rubbish_volume = #{rubbishVolume,jdbcType=FLOAT},
+       renewable_resources_volume = #{renewableResourcesVolume,jdbcType=FLOAT},
+       work_start_time = #{workStartTime,jdbcType=TIMESTAMP},
+       administrative_division = #{administrativeDivision,jdbcType=VARCHAR},
+       latitude = #{latitude,jdbcType=FLOAT},
+       longitude = #{longitude,jdbcType=FLOAT},
+       juridical_person = #{juridicalPerson,jdbcType=VARCHAR},
+       registered_time = #{registeredTime,jdbcType=TIMESTAMP},
+        registered_capital = #{registeredCapital,jdbcType=DECIMAL},
+        stock_rate =#{stockRate,jdbcType=VARCHAR},
+        manager = #{manager,jdbcType=VARCHAR},
+       manager_phone = #{managerPhone,jdbcType=VARCHAR},
+       vice_manager = #{viceManager,jdbcType=VARCHAR},
+       vice_manager_phone = #{viceManagerPhone,jdbcType=VARCHAR},
+       fax = #{fax,jdbcType=VARCHAR}     
     where id = #{id,jdbcType=BIGINT}
   </update>
   <select id="findAll" resultMap="BaseResultMap">
@@ -165,4 +476,41 @@
     <include refid="Base_Column_List" />
     from sys_dept
   </select>
+  <select id="findPageByParams" parameterType="java.util.Map" resultMap="BaseResultMap">
+ 	select 
+    <include refid="Base_Column_List" />
+    from sys_dept d
+    <where>
+  		<if test="name !=null and name !=''">
+  			 d.name LIKE CONCAT(CONCAT('%',#{name}),'%')
+  		</if>
+    	<if test="address != null and address !=''">
+       		 and d.address LIKE CONCAT(CONCAT('%',#{address}),'%')
+    	</if>
+    	<if test="telephone != null and telephone !=''">
+       		 and d.telephone LIKE CONCAT(CONCAT('%',#{telephone}),'%')
+    	</if>
+    	<if test="website != null and website !=''">
+       		 and d.website LIKE CONCAT(CONCAT('%',#{website}),'%')
+    	</if>
+    	<if test="industry != null and industry !=''">
+       		 and d.industry LIKE CONCAT(CONCAT('%',#{industry}),'%')
+    	</if>
+    	<if test="createBy != null and createBy !=''">
+        	and d.create_by LIKE CONCAT(CONCAT('%',#{createBy}),'%')
+    	</if>
+    	<if test="endTime !=null and endTime!=''">
+    		and d.create_time <![CDATA[<=]]> #{endTime,jdbcType=TIMESTAMP}
+    	</if>
+    	<if test="startTime!=null and startTime!=''">
+    	    and d.create_time >= #{startTime,jdbcType=TIMESTAMP}
+    	</if>
+    	<if test="lastUpdateBy != null and lastUpdateBy !=''">
+        	and d.last_update_by LIKE CONCAT(CONCAT('%',#{lastUpdateBy}),'%')
+    	</if>
+    	<if test="administrativeDivision != null and administrativeDivision !=''">
+        	and d.administrative_division LIKE CONCAT(CONCAT('%',#{administrativeDivision}),'%')
+    	</if>
+    </where>
+   </select>
 </mapper>

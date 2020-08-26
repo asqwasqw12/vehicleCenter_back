@@ -1,6 +1,7 @@
 package com.eshop.sys.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
@@ -22,6 +23,8 @@ public interface SysDeptMapper {
 	    int updateByPrimaryKey(SysDept record);
 	    
 	    List<SysDept> findByPid(Long id); 
+	    
+	    List<SysDept> findPageByParams(Map<String,Object> params);
 	    
 	    List<SysDept> findByName(@Param(value="name") String name);
 	    	    

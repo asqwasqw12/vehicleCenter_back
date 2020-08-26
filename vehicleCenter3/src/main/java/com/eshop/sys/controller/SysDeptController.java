@@ -54,6 +54,17 @@ public class SysDeptController {
 		}
 	}
 	
+	@Log("查找部门")
+	@PreAuthorize("hasAuthority('sys:dept:view')")
+	@GetMapping(value="/findById")
+	public HttpResult findTree(@RequestParam Long id) {
+		if(id !=null && id !=0) {
+			return HttpResult.ok(sysDeptService.findById(id));
+		}else {
+			return HttpResult.error("参数错误");
+		}
+	}
+	
 	  @Log("导出部门数据")
 	  @PreAuthorize("hasAuthority('sys:dept:view')")	  
 	  @PostMapping(value="/exportDeptExcelFile") 
