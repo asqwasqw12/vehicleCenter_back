@@ -15,7 +15,6 @@ import com.eshop.common.DateTimeUtils;
 import com.eshop.common.FileUtil;
 import com.eshop.sys.dao.SysDeptMapper;
 import com.eshop.sys.pojo.SysDept;
-import com.eshop.sys.pojo.SysUser;
 import com.eshop.sys.service.SysDeptService;
 
 @Service
@@ -105,7 +104,7 @@ public class SysDeptServiceImpl implements SysDeptService {
 	        			 map.put("服务人口（万）",dept.getServiceNum()); 
 	        			 map.put("清扫保洁面积(万平方米）",dept.getCleanArea()); 
 	        			 map.put("绿化带面积(万平方米）",dept.getGreenArea()); 
-	        			 map.put("机械化作业率",dept.getmechineRate()); 
+	        			 map.put("机械化作业率",dept.getMachineRate()); 
 	        			 map.put("垃圾清运量（吨/天）",dept.getRubbishVolume()); 
 	        			 map.put("可再生资源回收（吨/月）",dept.getRenewableResourcesVolume()); 
 	        			 map.put("进场时间",dept.getWorkStartTime()); 

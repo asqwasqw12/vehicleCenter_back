@@ -21,15 +21,15 @@
     <result column="service_num" jdbcType="INTEGER" property="serviceNum" />
     <result column="clean_area" jdbcType="INTEGER" property="cleanArea" />
     <result column="green_area" jdbcType="INTEGER" property="greenArea" />
-    <result column="mechine_rate" jdbcType="FLOAT" property="mechineRate" />
+    <result column="machine_rate" jdbcType="FLOAT" property="machineRate" />
     <result column="rubbish_volume" jdbcType="FLOAT" property="rubbishVolume" />
     <result column="renewable_resources_volume" jdbcType="FLOAT" property="renewableResourcesVolume" />
-    <result column="work_start_time" jdbcType="TIMESTAMP" property="workStartTime" />
+    <result column="work_start_time" jdbcType="DATE" property="workStartTime" />
     <result column="administrative_division" jdbcType="VARCHAR" property="administrativeDivision" />
     <result column="latitude" jdbcType="FLOAT" property="latitude" />
     <result column="longitude" jdbcType="FLOAT" property="longitude" />
     <result column="juridical_person" jdbcType="VARCHAR" property="juridicalPerson" />
-    <result column="registered_time" jdbcType="TIMESTAMP" property="registeredTime" />
+    <result column="registered_time" jdbcType="DATE" property="registeredTime" />
     <result column="registered_capital" jdbcType="DECIMAL" property="registeredCapital" />
     <result column="stock_rate" jdbcType="VARCHAR" property="stockRate" />
     <result column="manager" jdbcType="VARCHAR" property="manager" />
@@ -40,7 +40,7 @@
   </resultMap>
   <sql id="Base_Column_List">
     id, name, parent_id,address, telephone, website,industry,remarks,is_company,order_num, create_by, create_time, last_update_by, last_update_time, 
-    del_flag,person_num,service_num,clean_area,green_area,mechine_rate,rubbish_volume,renewable_resources_volume,
+    del_flag,person_num,service_num,clean_area,green_area,machine_rate,rubbish_volume,renewable_resources_volume,
     work_start_time,administrative_division,latitude,longitude,juridical_person,registered_time,registered_capital,
     stock_rate,manager,manager_phone,vice_manager,vice_manager_phone,fax
   </sql>
@@ -63,7 +63,7 @@
   <insert id="insert" parameterType="com.eshop.sys.pojo.SysDept">
     insert into sys_dept ( id, name, parent_id,address, telephone, website,industry,remarks,is_company order_num,
      create_by, create_time, last_update_by, last_update_time, del_flag,
-     person_num,service_num,clean_area,green_area,mechine_rate,rubbish_volume,renewable_resources_volume,
+     person_num,service_num,clean_area,green_area,machine_rate,rubbish_volume,renewable_resources_volume,
     work_start_time,administrative_division,latitude,longitude,juridical_person,registered_time,registered_capital,
     stock_rate,manager,manager_phone,vice_manager,vice_manager_phone,fax
       )
@@ -75,15 +75,15 @@
       #{serviceNum,jdbcType=INTEGER},
       #{cleanArea,jdbcType=INTEGER},
       #{greenArea,jdbcType=INTEGER},
-      #{mechineRate,jdbcType=FLOAT},
+      #{machineRate,jdbcType=FLOAT},
       #{rubbishVolume,jdbcType=FLOAT},
       #{renewableResourcesVolume,jdbcType=FLOAT},
-      #{workStartTime,jdbcType=TIMESTAMP},
+      #{workStartTime,jdbcType=DATE},
       #{administrativeDivision,jdbcType=VARCHAR},
       #{latitude,jdbcType=FLOAT},
       #{longitude,jdbcType=FLOAT},
       #{juridicalPerson,jdbcType=VARCHAR},
-      #{registeredTime,jdbcType=TIMESTAMP},
+      #{registeredTime,jdbcType=DATE},
       #{registeredCapital,jdbcType=DECIMAL},
       #{stockRate,jdbcType=VARCHAR},
       #{manager,jdbcType=VARCHAR},
@@ -153,8 +153,8 @@
       <if test="greenArea != null">
         green_area,
       </if>
-      <if test="mechineRate != null">
-        mechine_rate,
+      <if test="machineRate != null">
+        machine_rate,
       </if>
       <if test="rubbishVolume != null">
         rubbish_volume,
@@ -260,8 +260,8 @@
       <if test="greenArea != null">
         #{greenArea,jdbcType=INTEGER},
       </if>
-      <if test="mechineRate != null">
-        #{mechineRate,jdbcType=FLOAT},
+      <if test="machineRate != null">
+        #{machineRate,jdbcType=FLOAT},
       </if>
       <if test="rubbishVolume != null">
         #{rubbishVolume,jdbcType=FLOAT},
@@ -270,7 +270,7 @@
         #{renewableResourcesVolume,jdbcType=FLOAT},
       </if>
       <if test="workStartTime != null">
-        #{workStartTime,jdbcType=TIMESTAMP},
+        #{workStartTime,jdbcType=DATE},
       </if>
       <if test="administrativeDivision != null">
         #{administrativeDivision,jdbcType=VARCHAR},
@@ -285,7 +285,7 @@
         #{juridicalPerson,jdbcType=VARCHAR},
       </if>
       <if test="registeredTime != null">
-        #{registeredTime,jdbcType=TIMESTAMP},
+        #{registeredTime,jdbcType=DATE},
       </if>
       <if test="registeredCapital != null">
         #{registeredCapital,jdbcType=DECIMAL},
@@ -316,11 +316,9 @@
       <if test="name != null">
         name = #{name,jdbcType=VARCHAR},
       </if>
-      <if test="parentId != null">
         parent_id = #{parentId,jdbcType=BIGINT},
-      </if>
       <if test="address != null">
-        address = #{type,jdbcType=VARCHAR},
+        address = #{address,jdbcType=VARCHAR},
       </if>
       <if test="telephone != null">
         telephone = #{telephone,jdbcType=VARCHAR},
@@ -367,8 +365,8 @@
       <if test="greenArea != null">
        green_area = #{greenArea,jdbcType=INTEGER},
       </if>
-      <if test="mechineRate != null">
-       mechine_rate = #{mechineRate,jdbcType=FLOAT},
+      <if test="machineRate != null">
+       machine_rate = #{machineRate,jdbcType=FLOAT},
       </if>
       <if test="rubbishVolume != null">
        rubbish_volume = #{rubbishVolume,jdbcType=FLOAT},
@@ -377,7 +375,7 @@
        renewable_resources_volume = #{renewableResourcesVolume,jdbcType=FLOAT},
       </if>
       <if test="workStartTime != null">
-       work_start_time = #{workStartTime,jdbcType=TIMESTAMP},
+       work_start_time = #{workStartTime,jdbcType=DATE},
       </if>
       <if test="administrativeDivision != null">
        administrative_division = #{administrativeDivision,jdbcType=VARCHAR},
@@ -392,7 +390,7 @@
        juridical_person = #{juridicalPerson,jdbcType=VARCHAR},
       </if>
       <if test="registeredTime != null">
-       registered_time = #{registeredTime,jdbcType=TIMESTAMP},
+       registered_time = #{registeredTime,jdbcType=DATE},
       </if>
       <if test="registeredCapital != null">
         registered_capital = #{registeredCapital,jdbcType=DECIMAL},
@@ -438,15 +436,15 @@
         service_num = #{serviceNum,jdbcType=INTEGER},
        clean_area = #{cleanArea,jdbcType=INTEGER},
        green_area = #{greenArea,jdbcType=INTEGER},
-       mechine_rate = #{mechineRate,jdbcType=FLOAT},
+       machine_rate = #{machineRate,jdbcType=FLOAT},
        rubbish_volume = #{rubbishVolume,jdbcType=FLOAT},
        renewable_resources_volume = #{renewableResourcesVolume,jdbcType=FLOAT},
-       work_start_time = #{workStartTime,jdbcType=TIMESTAMP},
+       work_start_time = #{workStartTime,jdbcType=DATE},
        administrative_division = #{administrativeDivision,jdbcType=VARCHAR},
        latitude = #{latitude,jdbcType=FLOAT},
        longitude = #{longitude,jdbcType=FLOAT},
        juridical_person = #{juridicalPerson,jdbcType=VARCHAR},
-       registered_time = #{registeredTime,jdbcType=TIMESTAMP},
+       registered_time = #{registeredTime,jdbcType=DATE},
         registered_capital = #{registeredCapital,jdbcType=DECIMAL},
         stock_rate =#{stockRate,jdbcType=VARCHAR},
         manager = #{manager,jdbcType=VARCHAR},

@@ -1,7 +1,8 @@
 package com.eshop.sys.pojo;
 
 import java.math.BigDecimal;
-import java.util.Date;
+//import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 
@@ -21,15 +22,15 @@ public class SysDept extends BaseModel {
     private Integer serviceNum;	//服务人口（万）
     private Integer cleanArea;  //清扫保洁面积(万平方米）
     private Integer greenArea;	//绿化带面积(万平方米）
-    private Float mechineRate;	//机械化作业率
+    private Float machineRate;	//机械化作业率
     private Float rubbishVolume;//垃圾清运量（吨/天）
     private Float renewableResourcesVolume;//可再生资源回收（吨/月）
-    private Date workStartTime;		//进场时间
+    private java.sql.Date workStartTime;		//进场时间 java.sql.Date类
     private String administrativeDivision;	//行政区域
     private Float latitude;		//经度
     private Float longitude;	//纬度
     private String juridicalPerson;//公司法人
-    private Date registeredTime;	//注册时间
+    private java.sql.Date registeredTime;	//注册时间 java.sql.Date类
     private BigDecimal registeredCapital; //注册资金
     private String stockRate;   //持股说明
     private String manager;		//总经理
@@ -163,12 +164,12 @@ public class SysDept extends BaseModel {
 		this.greenArea = greenArea;
 	}
 	
-	public Float getmechineRate() {
-		return mechineRate;
+	public Float getMachineRate() {
+		return machineRate;
 	}
 	
-	public void setmechineRate(Float mechineRate) {
-		this.mechineRate = mechineRate;
+	public void setMachineRate(Float machineRate) {
+		this.machineRate = machineRate;
 	}
 	
 	public Float getRubbishVolume() {
