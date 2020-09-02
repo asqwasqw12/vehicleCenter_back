@@ -19,6 +19,7 @@ import com.eshop.common.page.PageResult;
 import com.eshop.dao.VehicleMapper;
 import com.eshop.pojo.Vehicle;
 import com.eshop.service.VehicleService;
+import com.eshop.sys.service.SysDeptService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
@@ -27,6 +28,8 @@ public class VehicleServiceImpl implements VehicleService {
 	
 	@Autowired
 	private VehicleMapper vehicleMapper;
+	@Autowired
+	private SysDeptService  sysDeptService;
 
 	@Override
 	public int save(Vehicle record) {
@@ -63,10 +66,15 @@ public class VehicleServiceImpl implements VehicleService {
 			int pageSize = pageRequest.getPageSize();
 			PageHelper.startPage(pageNum, pageSize);
 			List<Vehicle> result = vehicleMapper.findPageByParams(params);
+			if(result!=null) {
+				findOwnerCompanyName(result);
+				findUserCompanyName(result);
+								
+			}
 			pageResult = MybatisPageHelper.getPageResult(pageRequest, new PageInfo<Vehicle>((List<Vehicle>) result));
 			return pageResult;
 	  }
-	 
+	
 	  @Override
 	  public void downloadExcel(List<?> records, HttpServletResponse response) throws IOException{
 		  List<Map<String, Object>> list = new ArrayList<>();
@@ -76,10 +84,18 @@ public class VehicleServiceImpl implements VehicleService {
 	        	map.put("ID", vehicle.getId());
 	        			 map.put("名称",vehicle.getName());  
 	        			 map.put("类型",vehicle.getType()); 
+	        			 map.put("品牌",vehicle.getBrand()); 
 	        			 map.put("车架识别码", vehicle.getVin()); 
 	        			 map.put("牌照",vehicle.getLicense()); 
-	        			 map.put("所属公司", vehicle.getCompanyId()); 
+	        			 map.put("出厂编号", vehicle.getCompanyNum()); 
 	        			 map.put("底盘型号", vehicle.getChassis()); 
+	        			 map.put("配置", vehicle.getConfigure());
+	        			 map.put("所属机构Id", vehicle.getOwnerCompanyId());
+	        			 map.put("所属机构名称", vehicle.getOwnerCompanyName());
+	        			 map.put("使用机构名称", vehicle.getUserCompanyName());
+	        			 map.put("使用机构", vehicle.getUserCompanyId());
+	        			 map.put("资产状态", vehicle.getStatus());
+	        			 map.put("购买方式", vehicle.getPurchaseWay());
 	        			 map.put("配置", vehicle.getConfigure());
 	        			 map.put("创建人",vehicle.getCreateBy()); 
 	        			 map.put("创建时间日期",DateTimeUtils.getDateTime(vehicle.getCreateTime())); 
@@ -90,5 +106,24 @@ public class VehicleServiceImpl implements VehicleService {
 	        }
 	        FileUtil.downloadExcel(list, response);
 	  }
+	  
+	  private void findOwnerCompanyName(List<Vehicle> list) {
+		  for(Vehicle vehicle : list) {
+				if(vehicle.getOwnerCompanyId()!= null) {
+					if(sysDeptService.findById(vehicle.getOwnerCompanyId())!=null) {
+						vehicle.setOwnerCompanyName(sysDeptService.findById(vehicle.getOwnerCompanyId()).getName());
+					}
+				}
+	  }
+ }
 
+	  private void findUserCompanyName(List<Vehicle> list) {
+		  for(Vehicle vehicle : list) {
+		  if(vehicle.getUserCompanyId()!= null) {
+				if(sysDeptService.findById(vehicle.getUserCompanyId())!=null) {
+					vehicle.setUserCompanyName(sysDeptService.findById(vehicle.getUserCompanyId()).getName());
+				}
+			}
+	  }
+  }
 }

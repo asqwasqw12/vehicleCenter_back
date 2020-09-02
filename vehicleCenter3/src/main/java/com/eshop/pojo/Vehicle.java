@@ -6,10 +6,18 @@ public class Vehicle extends BasePojo {
 	private String type;	//型号	
 	private String vin;		//车架识别码
 	private String license;	//牌照
-	private Long companyId;	//出厂编号
+	private String brand;	//品牌
+	private String companyNum;	//出厂编号
 	private String chassis;	//底盘品牌
 	private String configure;		//配置
-
+	private Long ownerCompanyId; //所属机构
+	private Long userCompanyId;  //使用机构
+    private String status;		//资产状态
+    private String purchaseWay;	//购买方式
+    
+    //非数据库
+    private String ownerCompanyName;//所属机构名称
+    private String userCompanyName;	//使用机构名称
     
     public void setName(String name) {
     	this.name = name;
@@ -45,12 +53,21 @@ public class Vehicle extends BasePojo {
     	return license;
     }
     
-    public void setCompanyId(Long companyId) {
-    	this.companyId = companyId;
+    
+    public void setBrand(String brand) {
+    	this.brand = brand;
     }
     
-    public Long getCompanyId() {
-    	return companyId;
+    public String getBrand() {
+    	return brand;
+    }
+    
+    public void setCompanyNum(String companyNum) {
+    	this.companyNum = companyNum;
+    }
+    
+    public String getCompanyNum() {
+    	return companyNum;
     }
      
     public void setChassis(String chassis) {
@@ -67,6 +84,52 @@ public class Vehicle extends BasePojo {
     
     public String getConfigure() {
     	return configure;
+    }
+    
+    public void setOwnerCompanyId(Long ownerCompanyId) {
+    	this.ownerCompanyId = ownerCompanyId;
+    }
+    public Long getOwnerCompanyId() {
+    	return ownerCompanyId;
+    }
+    
+    public void setUserCompanyId(Long userCompanyId) {
+    	this.userCompanyId = userCompanyId;
+    }
+    public Long getUserCompanyId() {
+    	return userCompanyId;
+    }
+    
+    public void setStatus(String status) {
+    	this.status = status;
+    }
+    
+    public String getStatus() {
+    	return status;
+    }
+    
+    public void setPurchaseWay(String purchaseWay) {
+    	this.purchaseWay = purchaseWay;
+    }
+    
+    public String getPurchaseWay() {
+    	return purchaseWay;
+    }
+    
+    public void setOwnerCompanyName(String ownerCompanyName) {
+    	this.ownerCompanyName = ownerCompanyName;
+    }
+    
+    public String getOwnerCompanyName() {
+    	return ownerCompanyName;
+    }
+    
+    public void setUserCompanyName(String userCompanyName) {
+    	this.userCompanyName = userCompanyName;
+    }
+    
+    public String getUserCompanyName() {
+    	return userCompanyName;
     }
     
 }

@@ -146,7 +146,7 @@ public class SysMenu extends BaseModel {
 		}
 
 		public void setHidden(Integer hidden) {
-			this.type = hidden;
+			this.hidden = hidden;
 		}
 		
 		public String getComponentName() {

@@ -37,7 +37,7 @@ public class ScheduleTask {
             //List<Location> list1 = locationInRedisService.getAll(Strfilter);
             List<VehicleStatus> list = vehicleStatusInRedisService.getAll(Strfilter);
     		String message = JSONObject.toJSONString(list);
-    		webSocket.sendAllMessage(message);
+    		//webSocket.sendAllMessage(message);
  
         }catch (Exception e){
             logger.error(e.getMessage());

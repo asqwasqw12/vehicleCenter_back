@@ -7,17 +7,22 @@
     <result column="type" jdbcType="VARCHAR" property="type" />
     <result column="vin" jdbcType="VARCHAR" property="vin" />
     <result column="license" jdbcType="VARCHAR" property="license" />
-    <result column="company_id" jdbcType="BIGINT" property="companyId" />
+    <result column="company_num" jdbcType="VARCHAR" property="companyNum" />
     <result column="chassis" jdbcType="VARCHAR" property="chassis" />
     <result column="configure" jdbcType="LONGVARCHAR" property="configure" />
     <result column="create_by" jdbcType="VARCHAR" property="createBy" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="last_update_by" jdbcType="VARCHAR" property="lastUpdateBy" />
     <result column="last_update_time" jdbcType="TIMESTAMP" property="lastUpdateTime" />
+    <result column="brand" jdbcType="VARCHAR" property="brand" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="purchase_way" jdbcType="VARCHAR" property="purchaseWay" />
+    <result column="user_company_id" jdbcType="BIGINT" property="userCompanyId" />
+    <result column="owner_company_id" jdbcType="BIGINT" property="ownerCompanyId" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, name, type, vin, license,company_id,chassis,configure, create_by, create_time, last_update_by, 
-    last_update_time
+    id, name, type, vin, license,company_num,chassis,configure, create_by, create_time, last_update_by, 
+    last_update_time,brand,status,purchase_way,user_company_id,owner_company_id
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
@@ -30,14 +35,16 @@
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.eshop.pojo.Vehicle">
-    insert into vehicle (id, name, type, vin, license,company_id,chassis,configure, create_by, create_time, last_update_by, 
-    last_update_time
+    insert into vehicle (id, name, type, vin, license,company_num,chassis,configure, create_by, create_time, last_update_by, 
+    last_update_time,brand,status,purchase_way,user_company_id,owner_company_id
       )
     values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR},
-      #{type,jdbcType=VARCHAR}, #{vin,jdbcType=VARCHAR}, #{license,jdbcType=VARCHAR}, #{companyId,jdbcType=BIGINT}, 
+      #{type,jdbcType=VARCHAR}, #{vin,jdbcType=VARCHAR}, #{license,jdbcType=VARCHAR}, #{companyNum,jdbcType=VARCHAR}, 
       #{chassis,jdbcType=VARCHAR},#{configure,jdbcType=LONGVARCHAR},
       #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{lastUpdateBy,jdbcType=VARCHAR}, 
-      #{lastUpdateTime,jdbcType=TIMESTAMP}
+      #{lastUpdateTime,jdbcType=TIMESTAMP},
+       #{brand,jdbcType=VARCHAR},#{status,jdbcType=VARCHAR},#{puerchaseWay,jdbcType=VARCHAR},
+       #{userCompanyId,jdbcType=BIGINT},#{ownerCompanyId,jdbcType=BIGINT},
       )
   </insert>
   
@@ -59,8 +66,8 @@
       <if test="license != null">
         license,
       </if>
-      <if test="companyId != null">
-        company_id,
+      <if test="companyNum != null">
+        company_num,
       </if>
       <if test="chassis != null">
         chassis,
@@ -80,6 +87,21 @@
       <if test="lastUpdateTime != null">
         last_update_time,
       </if>
+      <if test="brand != null">
+        brand,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="purchaseWay != null">
+        purchase_way,
+      </if>
+      <if test="userCompanyId != null">
+        user_company_id,
+      </if>
+      <if test="ownerCompanyId != null">
+        owner_company_id,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -97,8 +119,8 @@
       <if test="license != null">
         #{license,jdbcType=VARCHAR},
       </if>
-      <if test="companyId != null">
-        #{companyId,jdbcType=BIGINT},
+      <if test="companyNum != null">
+        #{companyNum,jdbcType=VARCHAR},
       </if>
       <if test="chassis != null">
         #{chassis,jdbcType=VARCHAR},
@@ -118,6 +140,21 @@
       <if test="lastUpdateTime != null">
         #{lastUpdateTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="brand != null">
+        #{brand,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="purchaseWay != null">
+        #{purchaseWay,jdbcType=VARCHAR},
+      </if>
+      <if test="userCompanyId != null">
+        #{userCompanyId,jdbcType=BIGINT},
+      </if>
+      <if test="ownerCompanyId != null">
+        #{ownerCompanyId,jdbcType=BIGINT},
+      </if>
     </trim>
   </insert>
   
@@ -136,8 +173,8 @@
       <if test="license != null">
         license = #{license,jdbcType=VARCHAR},
       </if>
-      <if test="companyId != null">
-        company_id = #{companyId,jdbcType=BIGINT},
+      <if test="companyNum != null">
+        company_num = #{companyNum,jdbcType=VARCHAR},
       </if>
       <if test="chassis != null">
         chassis = #{chassis,jdbcType=VARCHAR},
@@ -157,6 +194,21 @@
       <if test="lastUpdateTime != null">
         last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="brand != null">
+        brand = #{brand,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="purchaseWay != null">
+        purchase_way = #{purchaseWay,jdbcType=VARCHAR},
+      </if>
+      <if test="userCompanyId != null">
+        user_company_id = #{userCompanyId,jdbcType=BIGINT},
+      </if>
+       <if test="ownerCompanyId != null">
+        owner_company_id = #{ownerCompanyId,jdbcType=BIGINT}
+      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -167,13 +219,18 @@
       type = #{type,jdbcType=VARCHAR},
       vin = #{vin,jdbcType=VARCHAR},
       license = #{license,jdbcType=VARCHAR},
-      company_id = #{companyId,jdbcType=BIGINT},
+      company_num = #{companyNum,jdbcType=VARCHAR},
       chassis = #{chassis,jdbcType=VARCHAR},
       configure = #{configure,jdbcType=LONGVARCHAR},
       create_by = #{createBy,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       last_update_by = #{lastUpdateBy,jdbcType=VARCHAR},
-      last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP}
+      last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+      brand = #{brand,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      purchase_way = #{purchaseWay,jdbcType=VARCHAR},
+      user_company_id = #{userCompanyId,jdbcType=BIGINT},
+      owner_company_id = #{ownerCompanyId,jdbcType=BIGINT}
     where id = #{id,jdbcType=BIGINT}
   </update>
   <select id="findPage" resultMap="BaseResultMap">
@@ -201,6 +258,21 @@
     	</if>
     	<if test="chassis != null and chassis !=''">
        		 and v.chassis LIKE CONCAT(CONCAT('%',#{chassis}),'%')
+    	</if>
+    	<if test="brand != null and brand !=''">
+       		 and v.brand LIKE CONCAT(CONCAT('%',#{brand}),'%')
+    	</if>
+    	<if test="status != null and status !=''">
+       		 and v.status LIKE CONCAT(CONCAT('%',#{status}),'%')
+    	</if>
+    	<if test="purchaseWay != null and purchaseWay !=''">
+       		 and v.purchase_way LIKE CONCAT(CONCAT('%',#{purchaseWay}),'%')
+    	</if>
+    	<if test="userCompanyId != null and userCompanyId !=''">
+       		 and v.user_company_id = #{userCompanyId,jdbcType=BIGINT}
+    	</if>
+    	<if test="ownerCompanyId != null and ownerCompanyId !=''">
+       		 and v.owner_company_id = #{ownerCompanyId,jdbcType=BIGINT}
     	</if>
     	<if test="createBy != null and createBy !=''">
         	and v.create_by LIKE CONCAT(CONCAT('%',#{createBy}),'%')

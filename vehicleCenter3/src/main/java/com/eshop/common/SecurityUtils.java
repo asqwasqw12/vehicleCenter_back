@@ -59,6 +59,7 @@ public class SecurityUtils {
 		String username = null;
 		Authentication authentication = getAuthentication();
 		if(authentication != null) {
+			System.out.println("SecurityUtils中的authentication!=null,="+authentication);
 			Object principal = authentication.getPrincipal();
 			if(principal != null && principal instanceof UserDetails) {
 				username = ((UserDetails) principal).getUsername();
