@@ -16,13 +16,14 @@
     <result column="last_update_time" jdbcType="TIMESTAMP" property="lastUpdateTime" />
     <result column="brand" jdbcType="VARCHAR" property="brand" />
     <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="manufacture_status" jdbcType="TINYINT" property="manufactureStatus" />
     <result column="purchase_way" jdbcType="VARCHAR" property="purchaseWay" />
     <result column="user_company_id" jdbcType="BIGINT" property="userCompanyId" />
     <result column="owner_company_id" jdbcType="BIGINT" property="ownerCompanyId" />
   </resultMap>
   <sql id="Base_Column_List">
     id, name, type, vin, license,company_num,chassis,configure, create_by, create_time, last_update_by, 
-    last_update_time,brand,status,purchase_way,user_company_id,owner_company_id
+    last_update_time,brand,status,manufacture_status,purchase_way,user_company_id,owner_company_id
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
@@ -36,14 +37,14 @@
   </delete>
   <insert id="insert" parameterType="com.eshop.pojo.Vehicle">
     insert into vehicle (id, name, type, vin, license,company_num,chassis,configure, create_by, create_time, last_update_by, 
-    last_update_time,brand,status,purchase_way,user_company_id,owner_company_id
+    last_update_time,brand,status,manufacture_status,purchase_way,user_company_id,owner_company_id
       )
     values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR},
       #{type,jdbcType=VARCHAR}, #{vin,jdbcType=VARCHAR}, #{license,jdbcType=VARCHAR}, #{companyNum,jdbcType=VARCHAR}, 
       #{chassis,jdbcType=VARCHAR},#{configure,jdbcType=LONGVARCHAR},
       #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{lastUpdateBy,jdbcType=VARCHAR}, 
       #{lastUpdateTime,jdbcType=TIMESTAMP},
-       #{brand,jdbcType=VARCHAR},#{status,jdbcType=VARCHAR},#{puerchaseWay,jdbcType=VARCHAR},
+       #{brand,jdbcType=VARCHAR},#{status,jdbcType=VARCHAR},#{manufactureStatus,jdbcType=TINYINT},#{puerchaseWay,jdbcType=VARCHAR},
        #{userCompanyId,jdbcType=BIGINT},#{ownerCompanyId,jdbcType=BIGINT},
       )
   </insert>
@@ -92,6 +93,9 @@
       </if>
       <if test="status != null">
         status,
+      </if>
+      <if test="manufactureStatus != null">
+        manufacture_status,
       </if>
       <if test="purchaseWay != null">
         purchase_way,
@@ -145,6 +149,9 @@
       </if>
       <if test="status != null">
         #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="manufactureStatus != null">
+        #{manufactureStatus,jdbcType=TINYINT},
       </if>
       <if test="purchaseWay != null">
         #{purchaseWay,jdbcType=VARCHAR},
@@ -200,6 +207,9 @@
       <if test="status != null">
         status = #{status,jdbcType=VARCHAR},
       </if>
+      <if test="manufactureStatus != null">
+        manufacture_status = #{manufactureStatus,jdbcType=TINYINT},
+      </if>
       <if test="purchaseWay != null">
         purchase_way = #{purchaseWay,jdbcType=VARCHAR},
       </if>
@@ -228,6 +238,7 @@
       last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
       brand = #{brand,jdbcType=VARCHAR},
       status = #{status,jdbcType=VARCHAR},
+      manufacture_status = #{manufactureStatus,jdbcType=TINYINT},
       purchase_way = #{purchaseWay,jdbcType=VARCHAR},
       user_company_id = #{userCompanyId,jdbcType=BIGINT},
       owner_company_id = #{ownerCompanyId,jdbcType=BIGINT}
@@ -264,6 +275,9 @@
     	</if>
     	<if test="status != null and status !=''">
        		 and v.status LIKE CONCAT(CONCAT('%',#{status}),'%')
+    	</if>
+    	<if test="manufactureStatus != null and manufactureStatus !=''">
+       		 and v.manufacture_status = #{manufactureStatus,jdbcType=TINYINT}
     	</if>
     	<if test="purchaseWay != null and purchaseWay !=''">
        		 and v.purchase_way LIKE CONCAT(CONCAT('%',#{purchaseWay}),'%')

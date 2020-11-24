@@ -14,7 +14,7 @@ public class Vehicle extends BasePojo {
 	private Long userCompanyId;  //使用机构
     private String status;		//资产状态
     private String purchaseWay;	//购买方式
-    
+    private Byte  manufactureStatus;//制造状态，0-在制，1-入库，2-出库
     //非数据库
     private String ownerCompanyName;//所属机构名称
     private String userCompanyName;	//使用机构名称
@@ -132,4 +132,11 @@ public class Vehicle extends BasePojo {
     	return userCompanyName;
     }
     
+    public void setManufactureStatus(Byte  manufactureStatus) {
+    	this.manufactureStatus = manufactureStatus;
+    }
+    
+    public Byte getManufactureStatus() {
+    	return  manufactureStatus;
+    }
 }

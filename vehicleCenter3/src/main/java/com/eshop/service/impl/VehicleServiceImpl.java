@@ -95,6 +95,7 @@ public class VehicleServiceImpl implements VehicleService {
 	        			 map.put("使用机构名称", vehicle.getUserCompanyName());
 	        			 map.put("使用机构", vehicle.getUserCompanyId());
 	        			 map.put("资产状态", vehicle.getStatus());
+	        			 map.put("生产状态", vehicle.getManufactureStatus());
 	        			 map.put("购买方式", vehicle.getPurchaseWay());
 	        			 map.put("配置", vehicle.getConfigure());
 	        			 map.put("创建人",vehicle.getCreateBy()); 
