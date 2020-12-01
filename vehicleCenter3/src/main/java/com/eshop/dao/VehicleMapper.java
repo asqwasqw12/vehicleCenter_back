@@ -20,5 +20,8 @@ public interface VehicleMapper {
     int updateByPrimaryKey(Vehicle record);
     
     List<Vehicle> findPageByParams(Map<String,Object> params);
+    
+    //查询所有车辆名称
+  	List<String> findAllNames();
 
 }

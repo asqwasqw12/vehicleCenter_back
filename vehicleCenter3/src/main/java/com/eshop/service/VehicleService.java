@@ -17,5 +17,7 @@ public interface VehicleService extends CurdService<Vehicle>{
 	 
 	//下载excel文件
 	void downloadExcel(List<?> records, HttpServletResponse response) throws IOException;
+	
+	
 
 }
