@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -45,6 +46,13 @@ public class VehicleController {
 	  public HttpResult findPage(@RequestBody PageRequest pageRequest) {
 		  return HttpResult.ok(vehicleService.findPage(pageRequest));
 		  }
+	  
+	  @Log("查找车辆名称")
+	  @PreAuthorize("hasAuthority('entry:vehicle:view')")
+	  @GetMapping(value="/findAllNames")
+	  public HttpResult findAllNames() {
+		  return HttpResult.ok(vehicleService.findAllNames());
+	  }
 
 	  @Log("导出车辆数据")
 	  @PreAuthorize("hasAuthority('entry:vehicle:view')")	  

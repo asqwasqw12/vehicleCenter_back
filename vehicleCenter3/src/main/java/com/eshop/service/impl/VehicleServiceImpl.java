@@ -57,6 +57,10 @@ public class VehicleServiceImpl implements VehicleService {
 		return vehicleMapper.selectByPrimaryKey(id);
 	}
 
+	@Override
+	public List<String> findAllNames(){
+		return vehicleMapper.findAllNames();
+	}
 	
 	  @Override 
 	  public PageResult findPage(PageRequest pageRequest) { 

@@ -50,7 +50,7 @@ public class VehicleInStorage extends BasePojo{
 		this.inTime = inTime;
 	}
     
-	public String getoperator() {
+	public String getOperator() {
 		return operator;
 	}
 
