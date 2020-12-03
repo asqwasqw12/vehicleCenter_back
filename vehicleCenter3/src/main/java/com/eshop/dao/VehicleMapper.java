@@ -23,5 +23,8 @@ public interface VehicleMapper {
     
     //查询所有车辆名称
   	List<String> findAllNames();
+  	
+    //查询车辆型号
+  	List<String> findType(String name);
 
 }

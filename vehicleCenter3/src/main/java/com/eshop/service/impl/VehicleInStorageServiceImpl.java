@@ -2,6 +2,7 @@ package com.eshop.service.impl;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,6 +22,8 @@ import com.eshop.pojo.Vehicle;
 import com.eshop.pojo.VehicleInStorage;
 import com.eshop.service.VehicleInStorageService;
 import com.eshop.service.VehicleService;
+import com.eshop.sys.pojo.SysDept;
+import com.eshop.sys.pojo.SysRoleMenu;
 import com.eshop.sys.pojo.SysUser;
 import com.eshop.sys.service.SysUserService;
 import com.github.pagehelper.PageHelper;
@@ -42,6 +45,17 @@ public class VehicleInStorageServiceImpl implements VehicleInStorageService {
 			return vehicleInStroageMapper.insertSelective(record);
 		}
 		return vehicleInStroageMapper.updateByPrimaryKeySelective(record);
+	}
+	
+	@Override
+	public int save(List<VehicleInStorage> records) {
+		if(records == null || records.isEmpty()) {
+			return 1;
+		}
+		for(VehicleInStorage record:records) {
+			vehicleInStroageMapper.insertSelective(record);
+		}
+		return 1;
 	}
 
 	@Override
@@ -65,7 +79,8 @@ public class VehicleInStorageServiceImpl implements VehicleInStorageService {
 	@Override 
 	  public PageResult findPage(PageRequest pageRequest) { 
 		  	PageResult pageResult = null;
-			Map<String, Object> params = pageRequest.getObjectParam();
+			//Map<String, Object> params = pageRequest.getObjectParam();
+			Map<String, Object> params = handlePageRequest(pageRequest);
 			int pageNum = pageRequest.getPageNum();
 			int pageSize = pageRequest.getPageSize();
 			PageHelper.startPage(pageNum, pageSize);
@@ -78,6 +93,25 @@ public class VehicleInStorageServiceImpl implements VehicleInStorageService {
 			return pageResult;
 	  }
 	
+	
+	// PageRequest参数处理函数
+		private Map<String, Object> handlePageRequest(PageRequest pageRequest) {
+			Map<String, Object> params = new HashMap<>();
+			params = pageRequest.getObjectParam();
+
+			// 处理注册时间参数
+			if (params.get("inTime") != null && params.get("inTime") != "") {
+				List<String> strList = new ArrayList<>();
+				strList = (ArrayList<String>) params.get("inTime");
+				if (strList.size() > 0) {
+					String startTime = strList.get(0);
+					String endTime = strList.get(1);
+					params.put("startTime", startTime);
+					params.put("endTime", endTime);
+				}
+			}
+			return params;
+		}
 	//获取车辆属性
 	private void findVehicleProperty(List<VehicleInStorage> list) {
 		  for(VehicleInStorage vehicleInStorage : list) {

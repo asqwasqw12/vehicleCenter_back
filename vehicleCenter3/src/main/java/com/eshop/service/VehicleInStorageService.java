@@ -18,6 +18,6 @@ public interface VehicleInStorageService extends CurdService<VehicleInStorage>{
 	//下载excel文件
 	void downloadExcel(List<?> records, HttpServletResponse response) throws IOException;
 	
-	
+	int save(List<VehicleInStorage> records);
 
 }

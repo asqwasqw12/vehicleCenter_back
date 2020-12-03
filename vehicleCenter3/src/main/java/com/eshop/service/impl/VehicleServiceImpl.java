@@ -62,6 +62,31 @@ public class VehicleServiceImpl implements VehicleService {
 		return vehicleMapper.findAllNames();
 	}
 	
+	@Override
+  	public List<String> findType(String name){
+		return vehicleMapper.findType(name);
+	}
+	
+	@Override
+  	public List<Map<String,Object>> findNamesAndType(){
+		List<String> listNames = new ArrayList<>(); //车辆名称列表
+		List<String> listType = new ArrayList<>(); //车辆名称列表
+		List<Map<String,Object>> list = new ArrayList<>();  //车辆名称型号列表
+		listNames= vehicleMapper.findAllNames();
+		for(String name : listNames) {
+			Map<String,Object> map = new LinkedHashMap<>(); 
+			if (name != null) {
+				listType= vehicleMapper.findType(name);
+				if (listType != null) {
+					map.put("name", name);
+					map.put("type", listType);
+					list.add(map);
+				}
+			}
+		}
+		return list;
+	}
+	
 	  @Override 
 	  public PageResult findPage(PageRequest pageRequest) { 
 		  	PageResult pageResult = null;

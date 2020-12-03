@@ -2,6 +2,7 @@ package com.eshop.controller;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -27,7 +28,7 @@ public class VehicleController {
 	@Autowired
 	private VehicleService vehicleService;
 	
-
+	@Log("保存车辆信息")
 	@PostMapping(value="/save")
 	public HttpResult save(@RequestBody Vehicle record) {
 		return HttpResult.ok(vehicleService.save(record));
@@ -39,6 +40,13 @@ public class VehicleController {
 	public HttpResult delete(@RequestBody List<Vehicle> records) {
 		return HttpResult.ok(vehicleService.delete(records));
 	}
+	
+	  @Log("查找车辆名型")
+	  @PreAuthorize("hasAuthority('entry:vehicle:view')")
+	  @GetMapping(value="/findNamesAndType")
+	  public HttpResult  findNamesAndType(){
+		  return HttpResult.ok(vehicleService.findNamesAndType());
+	  }
 	
 	  @Log("查找车辆") 
 	  @PreAuthorize("hasAuthority('entry:vehicle:view')")
@@ -53,6 +61,7 @@ public class VehicleController {
 	  public HttpResult findAllNames() {
 		  return HttpResult.ok(vehicleService.findAllNames());
 	  }
+	  
 
 	  @Log("导出车辆数据")
 	  @PreAuthorize("hasAuthority('entry:vehicle:view')")	  
