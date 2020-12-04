@@ -145,15 +145,17 @@
     from vehicle_in_storage
   </select>
   <select id="findPageByParams" parameterType="java.util.Map" resultMap="BaseResultMap">
- 	select 
-    <include refid="Base_Column_List" />
-    from vehicle_in_storage v
+ 	select v.* from vehicle_in_storage v,vehicle e
     <where>
-  		<if test="vehicleId !=null and vehicleId !=''">
-  			 v.vehicle_id = #{vehicleId,jdbcType=BIGINT}
+    	 v.vehicle_id = e.id
+  		<if test="name !=null and name !=''">
+  			and e.name LIKE CONCAT(CONCAT('%',#{name}),'%')
   		</if>
-    	<if test="userId !=null and userId !=''">
-  			 v.user_id = #{userId,jdbcType=BIGINT}
+    	<if test="type !=null and type !=''">
+  			and e.type LIKE CONCAT(CONCAT('%',#{type}),'%')
+  		</if>
+  		<if test="vin !=null and vin !=''">
+  			and e.vin LIKE CONCAT(CONCAT('%',#{vin}),'%')
   		</if>
     	<if test="storageName != null and storageName !=''">
        		 and v.storage_name LIKE CONCAT(CONCAT('%',#{storageName}),'%')

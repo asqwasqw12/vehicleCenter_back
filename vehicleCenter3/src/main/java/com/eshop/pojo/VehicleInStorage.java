@@ -13,6 +13,7 @@ public class VehicleInStorage extends BasePojo{
 	private String type;	//型号	
 	private String vin;		//车架识别码
 	private String companyNum;	//出厂编号
+	private Vehicle vehicle;//车辆信息
     
     
     
@@ -93,5 +94,11 @@ public class VehicleInStorage extends BasePojo{
     	return companyNum;
     }
 
+    public Vehicle getVehicle() {
+    	return vehicle;
+    }
 
+    public void setVehicle(Vehicle vehicle) {
+    	this.vehicle = vehicle;
+    }
 }

@@ -289,7 +289,14 @@
     	</if>
     	<if test="manufactureStatus != null and manufactureStatus !=''">
        		 and v.manufacture_status = #{manufactureStatus,jdbcType=TINYINT}
+    	</if>    	
+    	<if test="manufactureStatusList !=null and manufactureStatusList.size !=0 ">
+    	    and v.manufacture_status in 
+    	    <foreach collection="manufactureStatusList" item="manufactureStatus" open="(" separator="," close=")">
+    	    	#{manufactureStatus}
+    	    </foreach>
     	</if>
+    	
     	<if test="purchaseWay != null and purchaseWay !=''">
        		 and v.purchase_way LIKE CONCAT(CONCAT('%',#{purchaseWay}),'%')
     	</if>

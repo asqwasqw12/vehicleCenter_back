@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.eshop.common.DateTimeUtils;
 import com.eshop.common.FileUtil;
@@ -39,9 +40,16 @@ public class VehicleInStorageServiceImpl implements VehicleInStorageService {
 	
 	@Autowired
 	private SysUserService sysUserService;
+	
 	@Override
+	@Transactional
 	public int save(VehicleInStorage record) {
 		if(record.getId() == null || record.getId() == 0) {
+			Vehicle vehicle = vehicleService.findById(record.getVehicleId());
+			if (vehicle !=null) {
+				vehicle.setManufactureStatus((byte) 1);
+			}
+			vehicleService.save(vehicle);//在保存入库信息之前，将车辆制造状态修改为入库状态
 			return vehicleInStroageMapper.insertSelective(record);
 		}
 		return vehicleInStroageMapper.updateByPrimaryKeySelective(record);
@@ -53,7 +61,8 @@ public class VehicleInStorageServiceImpl implements VehicleInStorageService {
 			return 1;
 		}
 		for(VehicleInStorage record:records) {
-			vehicleInStroageMapper.insertSelective(record);
+			save(record);
+			//vehicleInStroageMapper.insertSelective(record);
 		}
 		return 1;
 	}
@@ -122,6 +131,7 @@ public class VehicleInStorageServiceImpl implements VehicleInStorageService {
 					vehicleInStorage.setType(vehicle.getType());
 					vehicleInStorage.setVin(vehicle.getVin());
 					vehicleInStorage.setCompanyNum(vehicle.getCompanyNum());
+					vehicleInStorage.setVehicle(vehicle);
 				}
 			}
 	  }
@@ -133,7 +143,7 @@ public class VehicleInStorageServiceImpl implements VehicleInStorageService {
     		if(vehicleInStorage.getUserId()!= null) {
     			SysUser sysUser = sysUserService.findById(vehicleInStorage.getUserId());
     			if(sysUser != null) {
-    				vehicleInStorage.setOperator(sysUser.getName());
+    				vehicleInStorage.setOperator(sysUser.getRealName());
     			}
     		}
     	}

@@ -51,7 +51,7 @@ public class VehicleInStorageController {
 	
 	@Log("导出车辆数据")
 	@PreAuthorize("hasAuthority('entry:vehicle:view')")	  
-	@PostMapping(value="/exportVehicleExcelFile") 
+	@PostMapping(value="/exportInStorageExcelFile") 
 	public void exportExcelUser(@RequestBody PageRequest pageRequest, HttpServletResponse res) throws IOException  { 
 		  		PageResult pageResult = vehicleInStorageService.findPage(pageRequest);
 		  		vehicleInStorageService.downloadExcel(pageResult.getContent(), res);
