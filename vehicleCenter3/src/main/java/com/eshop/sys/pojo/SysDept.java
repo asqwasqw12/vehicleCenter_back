@@ -5,6 +5,8 @@ import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.List;
 
+import com.eshop.pojo.Client;
+
 
 public class SysDept extends BaseModel {
 	
@@ -45,6 +47,10 @@ public class SysDept extends BaseModel {
     private String parentName;
     // 非数据库字段
     private Integer level;
+    //非数据库字段
+    private Client client;
+    //非数据库字段
+    private SysUser sysUser;
     
 	public String getName() {
 		return name;
@@ -282,5 +288,19 @@ public class SysDept extends BaseModel {
 	}
 	public void setFax(String fax) {
 		this.fax = fax;
+	}
+	
+	public Client getClient() {
+		return client;
+	}
+	public void setClient(Client client) {
+		this.client = client;
+	}
+	
+	public SysUser getSysUser() {
+		return sysUser;
+	}
+	public void setSysUser(SysUser sysUser) {
+		this.sysUser = sysUser;
 	}
 }

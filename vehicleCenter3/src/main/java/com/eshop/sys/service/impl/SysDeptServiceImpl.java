@@ -13,8 +13,12 @@ import org.springframework.stereotype.Service;
 
 import com.eshop.common.DateTimeUtils;
 import com.eshop.common.FileUtil;
+import com.eshop.dao.ClientMapper;
+import com.eshop.pojo.Client;
 import com.eshop.sys.dao.SysDeptMapper;
+import com.eshop.sys.dao.SysUserMapper;
 import com.eshop.sys.pojo.SysDept;
+import com.eshop.sys.pojo.SysUser;
 import com.eshop.sys.service.SysDeptService;
 
 @Service
@@ -22,6 +26,9 @@ public class SysDeptServiceImpl implements SysDeptService {
 
 	@Autowired
 	private SysDeptMapper sysDeptMapper;
+	
+	@Autowired
+	private ClientMapper clientMapper;
 
 	@Override
 	public int save(SysDept record) {
@@ -67,6 +74,19 @@ public class SysDeptServiceImpl implements SysDeptService {
 		findChildren(sysDepts, depts);
 		return sysDepts;
 	}
+	
+	//查询客户的部门树
+	/*
+	 * @Override public List<SysDept> findUserTree() { List<SysDept> sysDepts = new
+	 * ArrayList<>(); List<SysDept> depts = sysDeptMapper.findAll(); List<Client>
+	 * clientList = clientMapper.findPage(); for(Client client : clientList) {
+	 * SysDept temp = new SysDept(); temp.setId(client.getId());
+	 * temp.setName(client.getName()); depts.add(temp); } for (SysDept dept : depts)
+	 * { if (dept.getParentId() == null || dept.getParentId() == 0) {
+	 * dept.setLevel(0); sysDepts.add(dept); }
+	 * 
+	 * } findChildren(sysDepts, depts); return sysDepts; }
+	 */
 	
 	@Override
 	public List<SysDept> findTree(String name){

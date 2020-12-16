@@ -56,5 +56,7 @@ public interface SysUserService extends CurdService<SysUser> {
 	//下载excel文件
 	void downloadExcel(List<?> records, HttpServletResponse response) throws IOException;
 	
+	
+	
 
 }

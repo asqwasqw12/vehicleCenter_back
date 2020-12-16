@@ -22,5 +22,7 @@ public interface ClientMapper {
     List<Client> findPageByParams(Map<String,Object> params);
     
     List<Client> findByCompanyId(Long companyId);
+    
+    List<Client> findPage();
 
 }

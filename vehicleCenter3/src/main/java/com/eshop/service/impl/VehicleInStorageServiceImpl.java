@@ -23,8 +23,6 @@ import com.eshop.pojo.Vehicle;
 import com.eshop.pojo.VehicleInStorage;
 import com.eshop.service.VehicleInStorageService;
 import com.eshop.service.VehicleService;
-import com.eshop.sys.pojo.SysDept;
-import com.eshop.sys.pojo.SysRoleMenu;
 import com.eshop.sys.pojo.SysUser;
 import com.eshop.sys.service.SysUserService;
 import com.github.pagehelper.PageHelper;

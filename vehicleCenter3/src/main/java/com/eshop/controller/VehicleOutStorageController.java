@@ -16,43 +16,44 @@ import com.eshop.aop.Log;
 import com.eshop.common.HttpResult;
 import com.eshop.common.page.PageRequest;
 import com.eshop.common.page.PageResult;
-import com.eshop.pojo.VehicleInStorage;
-import com.eshop.service.VehicleInStorageService;
+import com.eshop.pojo.VehicleOutStorage;
+import com.eshop.service.VehicleOutStorageService;
 
 @RestController
-@RequestMapping("/inStorage")
-public class VehicleInStorageController {
+@RequestMapping("/outStorage")
+public class VehicleOutStorageController {
 	
 	@Autowired
-	private VehicleInStorageService vehicleInStorageService;
+	private VehicleOutStorageService vehicleOutStorageService;
 	
 	@Log("保存入库车辆")
 	@PostMapping(value="/save")
-	public HttpResult save(@RequestBody List<VehicleInStorage> records) {
-		return HttpResult.ok(vehicleInStorageService.save(records));
+	public HttpResult save(@RequestBody List<VehicleOutStorage> records) {
+		return HttpResult.ok(vehicleOutStorageService.save(records));
 	}
 	
 	
 	@Log("删除入库车辆")
 	@PreAuthorize("hasAuthority('entry:inStorage:delete')")
 	@PostMapping(value="/delete")
-	public HttpResult delete(@RequestBody List<VehicleInStorage> records) {
-		return HttpResult.ok(vehicleInStorageService.delete(records));
+	public HttpResult delete(@RequestBody List<VehicleOutStorage> records) {
+		return HttpResult.ok(vehicleOutStorageService.delete(records));
 	}
 	
 	@Log("查找入库车辆") 
 	@PreAuthorize("hasAuthority('entry:inStorage:view')")
 	@PostMapping(value="/findPage") 
 	public HttpResult findPage(@RequestBody PageRequest pageRequest) {
-		  return HttpResult.ok(vehicleInStorageService.findPage(pageRequest));
+		  return HttpResult.ok(vehicleOutStorageService.findPage(pageRequest));
 	}
 	
 	@Log("导出车辆数据")
 	@PreAuthorize("hasAuthority('entry:vehicle:view')")	  
 	@PostMapping(value="/exportInStorageExcelFile") 
 	public void exportExcelUser(@RequestBody PageRequest pageRequest, HttpServletResponse res) throws IOException  { 
-		  		PageResult pageResult = vehicleInStorageService.findPage(pageRequest);
-		  		vehicleInStorageService.downloadExcel(pageResult.getContent(), res);
+		  		PageResult pageResult = vehicleOutStorageService.findPage(pageRequest);
+		  		vehicleOutStorageService.downloadExcel(pageResult.getContent(), res);
 	     }
+
 
 }

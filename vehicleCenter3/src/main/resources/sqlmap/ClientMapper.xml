@@ -17,7 +17,7 @@
     <result column="birthday" jdbcType="TIMESTAMP" property="birthday" />
     <result column="constellation" jdbcType="VARCHAR" property="constellation" />
     <result column="upper_contact_id" jdbcType="BIGINT" property="upperContactId" />
-    <result column="company_id" jdbcType="BIGINT" property="CompanyId" />
+    <result column="company_id" jdbcType="BIGINT" property="companyId" />
     <result column="remarks" jdbcType="LONGVARCHAR" property="remarks" />
     <result column="create_by" jdbcType="VARCHAR" property="createBy" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
