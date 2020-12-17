@@ -1,7 +1,9 @@
-package com.eshop.jt808.server;
+package com.eshop.gateway.server;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+
+import com.eshop.jt808.server.JT808ChannelInitializer;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -43,7 +45,7 @@ public class NettyTcpServer {
 		 ServerBootstrap serverBootstrap = new ServerBootstrap();
 		 serverBootstrap.group(bossGroup,workerGroup)
 		 .channel(NioServerSocketChannel.class)
-		 .childHandler(jt808ChannelInitializer)
+		 .childHandler(jt808ChannelInitializer)  //使用jt808协议handler
 		 .option(ChannelOption.SO_BACKLOG,1024)   //服务端可连接队列数，对应TCP/IP协议listen函数中backlog参数
 		 .childOption(ChannelOption.TCP_NODELAY,true)	//立即写出
 		 .childOption(ChannelOption.SO_KEEPALIVE,true);	//长连接

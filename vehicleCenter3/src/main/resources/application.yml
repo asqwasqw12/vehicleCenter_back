@@ -1,6 +1,7 @@
 netty:
   port: 80
-  read-timeout: 15 #读超时 15分钟
+  jt808-read-timeout: 15 #读超时 15分钟
+  gb32960-read-timeout: 5 #读超时5分钟‘
   threads:
     boss: 1
     worker: 4
