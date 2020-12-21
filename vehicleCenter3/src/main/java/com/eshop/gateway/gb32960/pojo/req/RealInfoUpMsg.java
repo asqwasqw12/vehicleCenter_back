@@ -1,15 +1,29 @@
 package com.eshop.gateway.gb32960.pojo.req;
 
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
+import com.eshop.gateway.gb32960.config.gb32960Const;
+import com.eshop.gateway.gb32960.pojo.AlarmData;
 import com.eshop.gateway.gb32960.pojo.DataPacket;
+import com.eshop.gateway.gb32960.pojo.DriveMotorData;
+import com.eshop.gateway.gb32960.pojo.EngineData;
+import com.eshop.gateway.gb32960.pojo.ExtremeData;
+import com.eshop.gateway.gb32960.pojo.FuelCellData;
+import com.eshop.gateway.gb32960.pojo.LocationData;
+import com.eshop.gateway.gb32960.pojo.RunData;
+import com.eshop.gateway.gb32960.pojo.SubSystemTemperature;
+import com.eshop.gateway.gb32960.pojo.SubSystemVoltageData;
+
+import io.netty.buffer.ByteBuf;
 
 public class RealInfoUpMsg extends DataPacket{
 	
 	private ZonedDateTime sampleTime;//采样时间
 
-	//整车数据
-    private VehicleData vehicleData;
+	//整车运行数据
+    private RunData runData;
 
     //驱动电机个数
     private Short driveMotorCount;
@@ -44,24 +58,20 @@ public class RealInfoUpMsg extends DataPacket{
     //可充电储能装置温度数据列表
     private List<SubSystemTemperature> subSystemTemperatures;
 
-    public static BeanTime getProducer() {
-        return producer;
+    public void setSampleTime(ZonedDateTime sampleTime) {
+  	  this.sampleTime = sampleTime;
     }
 
-    public BeanTime getBeanTime() {
-        return beanTime;
+    public ZonedDateTime getSampleTime() {
+  	  return this.sampleTime;
     }
 
-    public void setBeanTime(BeanTime beanTime) {
-        this.beanTime = beanTime;
+    public RunData getRunData() {
+        return runData;
     }
 
-    public VehicleData getVehicleData() {
-        return vehicleData;
-    }
-
-    public void setVehicleData(VehicleData vehicleData) {
-        this.vehicleData = vehicleData;
+    public void setRunData(RunData runData) {
+        this.runData = runData;
     }
 
     public Short getDriveMotorCount() {
@@ -152,16 +162,305 @@ public class RealInfoUpMsg extends DataPacket{
         this.subSystemTemperatures = subSystemTemperatures;
     }
 
+    public RealInfoUpMsg(ByteBuf byteBuf) {
+    	super(byteBuf);
+    }
+    
     @Override
     public void parseBody() {
+    	
+    	this.sampleTime = ZonedDateTime.of((this.payload.readByte()+ 2000),this.payload.readByte(),this.payload.readByte(),
+        		this.payload.readByte(),this.payload.readByte(),this.payload.readByte(),0,gb32960Const.ZONE_UTC8);
+ 
 
-        RealTimeData realTimeData = new RealTimeData();
-        BeanTime beanTime = producer.decode(byteBuf);
-        realTimeData.setBeanTime(beanTime);
-        while (byteBuf.isReadable()) {
-            decodeByType(byteBuf, realTimeData);
-        }
-        return realTimeData;
+    	//
+    	try {
+            //中断标识
+        	Boolean interrupt = false;
+    		while(payload.readableBytes()>0) {
+    			int infoType = payload.readUnsignedByte(); //获取信息类型
+    			switch(infoType) {
+    			case 0x01:
+    				interrupt = parseRunData(payload); //解析整车数据
+    				break;
+    			case 0x02:
+    				interrupt = parseDriveMotorData(payload); //解析驱动电机数据
+    				break;
+    			case 0x03:
+    				interrupt = parseFuelCellData(payload);  //解析燃料电池数据
+    			case 0x04:
+    				interrupt = parseEngineData(payload); //解析发动机数据
+    				break;
+    			case 0x05:
+    				interrupt = parseLoactionData(payload); //解析车辆位置数据
+    				break;
+    			case 0x06:
+    				interrupt = parseExtremeData(payload); //解析极值数据
+    				break;
+    			case 0x07:
+    				interrupt = parseAlarmData(payload); //解析报警数据
+    				break;
+    			case 0x08:
+    				interrupt = parseStorageVoltage(payload); //解析可充电储能装置电压数据
+    				break;
+    			case 0x09:
+    				interrupt = parseStorageTemp(payload); //解析可充电储能装置温度数据
+    			default:									
+    					if(payload.readableBytes() > 2 ) {
+    						int length = payload.readUnsignedShort();
+    						if(payload.readableBytes() < length ) {
+    							interrupt = true;
+    							break;
+    						}
+    						payload.readBytes(new byte[length]);	//解析自定义数据
+    					}
+    				break;
+    			}
+    		}    		
+    	}catch(Exception e) {
+    		e.printStackTrace();
+    	}
     }
-	
+    
+  //解析整车数据
+    private Boolean parseRunData(ByteBuf buf) {
+    	//整车数据20字节，小于20字节直接返回
+    	if(buf.readableBytes() <20) {
+    		return true;
+    	}
+    	runData.setVin(header.getVin());
+    	runData.setRunStatus(buf.readUnsignedByte());
+    	runData.setChargeStatus(buf.readUnsignedByte());
+    	runData.setOperationMode(buf.readUnsignedByte());
+    	runData.setSpeed(buf.readUnsignedShort());
+    	runData.setMileAge(buf.readUnsignedInt());
+    	runData.setTotalVoltage(buf.readUnsignedShort());
+    	runData.setTotalCurrent(buf.readUnsignedShort());
+    	runData.setSoc(buf.readUnsignedByte());
+    	runData.setDcStatus(buf.readUnsignedByte());
+    	runData.setGears(buf.readUnsignedByte());
+    	runData.setInsulationResistance(buf.readUnsignedShort());
+    	runData.setThrottle(buf.readUnsignedByte());
+    	runData.setBrake(buf.readUnsignedByte());
+    	return false;
+    }
+    
+    //解析驱动电机数据
+    private Boolean parseDriveMotorData(ByteBuf buf){
+    	
+    	Short count = buf.readUnsignedByte();
+    	if(count >253 || (buf.readableBytes() < count *12 ) || count == 0 ) {
+    		return true;
+    	}
+    	List<DriveMotorData> list = new ArrayList<DriveMotorData>();
+    	for(int i=0;i<count;i++) {
+    		DriveMotorData data = new DriveMotorData();
+    		data.setVin(header.getVin());
+    		data.setNum(buf.readUnsignedByte());
+    		data.setStatus(buf.readUnsignedByte());
+    		data.setControllerTemperature(buf.readUnsignedByte());
+    		data.setSpeed(buf.readUnsignedShort());
+    		data.setTorque(buf.readUnsignedShort());
+    		data.setTemperature(buf.readUnsignedByte());
+    		data.setControllerInputVoltage(buf.readUnsignedShort());
+    		data.setControllerBusCurrent(buf.readUnsignedShort());
+    		list.add(data);
+    	}
+    	driveMotorDatas = list;
+    	return false;
+    }
+    
+   //解析燃料电池数据
+    private Boolean parseFuelCellData(ByteBuf buf){
+    	if(buf.readableBytes() <18) {
+    		return true;
+    	}
+    	fuelCellData.setVoltage(buf.readUnsignedShort());
+    	fuelCellData.setCurrent(buf.readUnsignedShort());
+    	fuelCellData.setFuelConsumption(buf.readUnsignedShort());
+    	int count =  buf.readUnsignedShort();
+    	fuelCellData.setTemperatureProbeCount(count);
+        List<Short> list = new ArrayList<Short>();
+    	for(int i= 0 ;i<count;i++) {
+    		list.add(buf.readUnsignedByte());
+    	}
+    	fuelCellData.setProbeTemperature(list);
+    	fuelCellData.setHydrogenSystemMaxTemperature(buf.readUnsignedShort());
+    	fuelCellData.setHydrogenSystemTemperatureProbeNum(buf.readUnsignedByte());
+    	fuelCellData.setHydrogenSystemMaxConcentration(buf.readUnsignedShort());
+    	fuelCellData.setHydrogenSystemConcentrationProbeNum(buf.readUnsignedByte());
+    	fuelCellData.setHydrogenSystemMaxPressure(buf.readUnsignedShort());
+    	fuelCellData.setHydrogenSystemPressureProbeNum(buf.readUnsignedByte());
+    	fuelCellData.setDcStatus(buf.readUnsignedByte());
+    	return false;
+    }
+    
+   //解析发动机数据
+   private Boolean parseEngineData(ByteBuf buf){
+	   if(buf.readableBytes() <5) {
+   		return true;
+   	}
+	   engineData.setStatus(buf.readUnsignedByte());
+	   engineData.setCrankshaftSpeed(buf.readUnsignedShort());
+	   engineData.setFuelConsumption(buf.readUnsignedShort());
+	   return false;
+    }
+   
+ //解析车辆位置数据
+   private Boolean parseLoactionData(ByteBuf buf){
+	   if(buf.readableBytes() <9) {
+	   		return true;
+	   	}
+	   locationData.setStatus(buf.readUnsignedByte());
+	   locationData.setLongitude(buf.readUnsignedInt());
+	   locationData.setLatitude(buf.readUnsignedInt());
+	   
+	   
+	 //定位状态，bit0,0:有效定位，1：无效定位，bit1,0:北纬，1南纬，bit2,0:东经，1：西经
+	   if((locationData.getStatus() & 0x01)>0) {
+		   locationData.setValid(true);
+	   }else {
+		   locationData.setValid(false);
+	   }
+	   locationData.setLongitudeDataType(locationData.getStatus() & 0x04);
+	   locationData.setLatitudeDataType(locationData.getStatus() & 0x02);
+	   return false;
+   }
+   
+ //解析极值数据
+   private Boolean parseExtremeData(ByteBuf buf){
+	   if(buf.readableBytes() <14) {
+	   		return true;
+	   	}
+	   extremeData.setMaxVoltageSystemNum(buf.readUnsignedByte());
+	   extremeData.setMaxVoltageBatteryNum(buf.readUnsignedByte());
+	   extremeData.setBatteryMaxVoltage(buf.readUnsignedShort());
+	   extremeData.setMinVoltageSystemNum(buf.readUnsignedByte());
+	   extremeData.setMinVoltageBatteryNum(buf.readUnsignedByte());
+	   extremeData.setBatteryMinVoltage(buf.readUnsignedShort());
+	   extremeData.setMaxTemperatureSystemNum(buf.readUnsignedByte());
+	   extremeData.setMaxTemperatureNum(buf.readUnsignedByte());
+	   extremeData.setMaxTemperature(buf.readUnsignedByte());
+	   extremeData.setMinTemperatureSystemNum(buf.readUnsignedByte());
+	   extremeData.setMinTemperatureNum(buf.readUnsignedByte());
+	   extremeData.setMinTemperature(buf.readUnsignedByte());
+	   return false;
+	   
+   }
+   
+ //解析报警数据
+   private Boolean parseAlarmData(ByteBuf buf){
+	   alarmData.setLevel(buf.readUnsignedByte());
+	   Long generalAlarm = buf.readUnsignedInt();
+	   alarmData.setAlarmInfo(generalAlarm);
+	   parseGeneralAlarm(generalAlarm);//解析通过报警信息
+	   
+	   //可充电储能装置故障列表
+	   alarmData.setDeviceFailureCount(buf.readUnsignedByte());
+	   List<Long> deviceFailureCodeList = new ArrayList<Long>();
+	   for(int i= 0 ; i< alarmData.getDeviceFailureCount();i++) {
+		   deviceFailureCodeList.add(buf.readUnsignedInt());
+	   }
+	   alarmData.setDeviceFailureCodes( deviceFailureCodeList);
+	   
+	   //驱动电机故障列表
+	   alarmData.setDriveMotorFailureCount(buf.readUnsignedByte());
+	   List<Long> driveMotorFailureCodeList = new ArrayList<Long>();
+	   for(int i= 0 ; i< alarmData.getDriveMotorFailureCount();i++) {
+	    	driveMotorFailureCodeList.add(buf.readUnsignedInt());
+		   }
+	   alarmData.setDriveMotorFailureCodes(driveMotorFailureCodeList);
+	   
+	   //发动机故障列表
+	   alarmData.setEngineFailureCount(buf.readUnsignedByte());
+	   List<Long> engineFailureCodeList = new ArrayList<Long>();
+	   for(int i=0; i< alarmData.getEngineFailureCount();i++) {
+		   engineFailureCodeList.add(buf.readUnsignedInt());
+	   }
+	   alarmData.setEngineFailureCodes(engineFailureCodeList);
+	   
+	   //其他故障列表
+	   alarmData.setOtherFailure(buf.readUnsignedByte());
+	   List<Long> otherFailureCodeList = new ArrayList<>();
+	   for (int i=0; i< alarmData.getOtherFailure();i++) {
+		   otherFailureCodeList.add(buf.readUnsignedInt());
+	   }
+	   alarmData.setOtherFailureCodes(otherFailureCodeList);
+	   
+	   return false;
+   }
+   
+   private void parseGeneralAlarm(Long generalAlarm) {
+	   alarmData.setTemperatureDifferential((generalAlarm & 0x01)>0);
+	   alarmData.setBatteryHighTemperature(((generalAlarm>>1) & 0x01)>0);
+	   alarmData.setDeviceTypeOverVoltage(((generalAlarm>>2) & 0x01)>0);
+	   alarmData.setDeviceTypeUnderVoltage(((generalAlarm>>3) & 0x01)>0);
+	   alarmData.setSocLow(((generalAlarm>>4) & 0x01)>0);
+	   alarmData.setMonomerBatteryOverVoltage(((generalAlarm>>5) & 0x01)>0);
+	   alarmData.setMonomerBatteryUnderVoltage(((generalAlarm>>6) & 0x01)>0);
+	   alarmData.setSocHigh(((generalAlarm>>7) & 0x01)>0);
+	   alarmData.setSocJump(((generalAlarm>>8) & 0x01)>0);
+	   alarmData.setDeviceTypeDontMatch(((generalAlarm>>9) & 0x01)>0);
+	   alarmData.setInsulation(((generalAlarm>>10) & 0x01)>0);
+	   alarmData.setDcTemperature(((generalAlarm>>11) & 0x01)>0);
+	   alarmData.setBrakingSystem(((generalAlarm>>12) & 0x01)>0);
+	   alarmData.setDcStatus(((generalAlarm>>13) & 0x01)>0);
+	   alarmData.setDriveMotorControllerTemperature(((generalAlarm>>14) & 0x01)>0);
+	   alarmData.setHighPressureInterlock(((generalAlarm>>15) & 0x01)>0);
+	   alarmData.setDriveMotorTemperature(((generalAlarm>>16) & 0x01)>0);
+	   alarmData.setDeviceTypeOverFilling(((generalAlarm>>17) & 0x01)>0);
+	   
+   }
+ //解析可充电储能装置电压数据
+   private Boolean parseStorageVoltage(ByteBuf buf){
+
+	   Short count = buf.readUnsignedByte();
+   	if(count >250 || count == 0 ) {
+   		return true;
+   	}
+   	
+   	List<SubSystemVoltageData> list = new ArrayList<SubSystemVoltageData>();
+   	for(int i=0;i<count;i++) {
+   		SubSystemVoltageData data= new SubSystemVoltageData();
+   		data.setNum(buf.readUnsignedByte());
+   		data.setVoltage(buf.readUnsignedShort());
+   		data.setCurrent(buf.readUnsignedShort());
+   		data.setCellCount(buf.readUnsignedShort());
+   		data.setBatteryNumber(buf.readUnsignedShort());
+   		data.setBatteryCount(buf.readUnsignedByte());
+   		List<Integer> cellVoltagesList = new ArrayList<Integer>();
+   		for(int j = 0; j<data.getBatteryCount();j++) {
+   			cellVoltagesList.add(buf.readUnsignedShort());
+   		}
+   		data.setCellVoltages(cellVoltagesList);  	
+   		list.add(data);
+   	}
+   	subsystemVoltageCount=count;
+   	subSystemVoltageDatas = list;
+   	return false;
+   }
+   
+ //解析可充电储能装置温度数据
+   private Boolean parseStorageTemp(ByteBuf buf) {
+	   
+	   Short count = buf.readUnsignedByte();
+	   	if(count >250 || count == 0 ) {
+	   		return true;
+	   	}
+	   	List<SubSystemTemperature> list = new ArrayList<SubSystemTemperature>();
+	   	for(int i=0;i<count; i++) {
+	   		SubSystemTemperature data = new SubSystemTemperature();
+	   		data.setNum(buf.readUnsignedByte());
+	   		data.setTemperatureProbeCount(buf.readUnsignedShort());
+	   		List<Short> probeList = new ArrayList<Short>();
+	   		for(int j=0; j<data.getTemperatureProbeCount();j++) {
+	   			probeList.add(buf.readUnsignedByte());
+	   		}
+	   		data.setProbeTemperatures(probeList);
+	   		list.add(data);
+	   	}
+	    subsystemTemperatureCount = count;
+	    subSystemTemperatures = list;
+	    return false;
+   }
 }

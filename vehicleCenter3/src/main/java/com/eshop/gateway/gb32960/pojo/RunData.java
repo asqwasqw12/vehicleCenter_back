@@ -1,5 +1,6 @@
 package com.eshop.gateway.gb32960.pojo;
 
+import java.time.ZonedDateTime;
 import java.util.Date;
 
 public class RunData {
@@ -52,6 +53,9 @@ public class RunData {
     private Short brake;
     
     private Date createTime;	//创建时间
+    
+	//数据采集时间
+	private ZonedDateTime sampleTime;//采样时间
     
     public void setId(Long id) {
     	this.id = id;
@@ -197,6 +201,13 @@ public class RunData {
 		this.createTime = createTime;
 	}
 
+	  public void setSampleTime(ZonedDateTime sampleTime) {
+		  this.sampleTime = sampleTime;
+	  }
+
+	  public ZonedDateTime getSampleTime() {
+		  return this.sampleTime;
+	  }
    // public Integer getReserve() {
    //     return reserve;
    // }

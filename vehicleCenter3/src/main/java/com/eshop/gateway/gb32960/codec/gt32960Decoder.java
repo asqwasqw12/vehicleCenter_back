@@ -5,12 +5,11 @@ import java.util.List;
 import com.eshop.common.ProtocolParseUtil;
 import com.eshop.gateway.gb32960.config.gb32960Const;
 import com.eshop.gateway.gb32960.pojo.DataPacket;
-import com.eshop.jt808.config.JT808Const;
-import com.eshop.jt808.pojo.req.AuthMsg;
-import com.eshop.jt808.pojo.req.CancellationMsg;
-import com.eshop.jt808.pojo.req.HeartBeatMsg;
-import com.eshop.jt808.pojo.req.LocationMsg;
-import com.eshop.jt808.pojo.req.RegisterMsg;
+import com.eshop.gateway.gb32960.pojo.req.PlatformLoginMsg;
+import com.eshop.gateway.gb32960.pojo.req.PlatformLogoutMsg;
+import com.eshop.gateway.gb32960.pojo.req.RealInfoUpMsg;
+import com.eshop.gateway.gb32960.pojo.req.VehicleLoginMsg;
+import com.eshop.gateway.gb32960.pojo.req.VehicleLogoutMsg;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
@@ -68,25 +67,23 @@ public class gt32960Decoder extends ReplayingDecoder<Void>{
 	
     public DataPacket parse(ByteBuf bb) {
         DataPacket packet = null;
-        byte requestId = bb.getByte(bb.readerIndex());
+        Short requestId = bb.getUnsignedByte(bb.readerIndex());
         switch (requestId) {
             case gb32960Const.VEHICLE_LOGIN:  //车辆登入
-                packet = new HeartBeatMsg(bb);
+                packet = new VehicleLoginMsg(bb);
                 break;
             case gb32960Const.REAL_INFO_UP: //实时信息上报
-                packet = new LocationMsg(bb);
-                break;
             case gb32960Const.REISSUE_INFO_UP: //补发信息上报
-                packet = new RegisterMsg(bb);
+                packet = new RealInfoUpMsg(bb);
                 break;
             case gb32960Const.VEHICLE_LOGOUT:  //车辆登出
-                packet = new AuthMsg(bb);
+                packet = new VehicleLogoutMsg(bb);
                 break;
             case gb32960Const.PLATFORM_LOGIN: //平台登入
-                packet = new CancellationMsg(bb);
+                packet = new PlatformLoginMsg(bb);
                 break;
             case gb32960Const.PLATFORM_LOGOUT: //平台登出
-                packet = new CancellationMsg(bb);
+                packet = new PlatformLogoutMsg(bb);
                 break;
             default:
                 packet = new DataPacket(bb);

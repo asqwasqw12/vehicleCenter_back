@@ -2,6 +2,7 @@ package com.eshop.gateway.gb32960.pojo;
 
 import java.time.ZonedDateTime;
 import java.util.Date;
+import java.util.List;
 
 public class VehicleRealTimeData {
 	
@@ -17,7 +18,7 @@ public class VehicleRealTimeData {
 	private ZonedDateTime sampleTime;//采样时间
 
     //整车数据
-    private VehicleData vehicleData;
+    private RunData runData;
 
     //驱动电机个数
     private Short driveMotorCount;
@@ -86,24 +87,20 @@ public class VehicleRealTimeData {
 	   return this.vin;
   }
 
-    public static BeanTime getProducer() {
-        return producer;
+  
+  public void setSampleTime(ZonedDateTime sampleTime) {
+	  this.sampleTime = sampleTime;
+  }
+
+  public ZonedDateTime getSampleTime() {
+	  return this.sampleTime;
+  }
+    public RunData getRunData() {
+        return runData;
     }
 
-    public BeanTime getBeanTime() {
-        return beanTime;
-    }
-
-    public void setBeanTime(BeanTime beanTime) {
-        this.beanTime = beanTime;
-    }
-
-    public VehicleData getVehicleData() {
-        return vehicleData;
-    }
-
-    public void setVehicleData(VehicleData vehicleData) {
-        this.vehicleData = vehicleData;
+    public void setRunData(RunData runData) {
+        this.runData = runData;
     }
 
     public Short getDriveMotorCount() {

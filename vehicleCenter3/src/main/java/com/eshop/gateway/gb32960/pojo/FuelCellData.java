@@ -1,5 +1,6 @@
 package com.eshop.gateway.gb32960.pojo;
 
+import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -51,6 +52,9 @@ public class FuelCellData {
     
     private Date createTime;	//创建时间
     
+	//数据采集时间
+	private ZonedDateTime sampleTime;//采样时间
+    
     public void setId(Long id) {
     	this.id = id;
     }
@@ -93,5 +97,109 @@ public class FuelCellData {
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
 	}
+	
+	  public void setSampleTime(ZonedDateTime sampleTime) {
+		  this.sampleTime = sampleTime;
+	  }
+
+	  public ZonedDateTime getSampleTime() {
+		  return this.sampleTime;
+	  }
+	
+	public Integer getVoltage() {
+        return voltage;
+    }
+
+    public void setVoltage(Integer voltage) {
+        this.voltage = voltage;
+    }
+
+    public Integer getCurrent() {
+        return current;
+    }
+
+    public void setCurrent(Integer current) {
+        this.current = current;
+    }
+
+    public Integer getFuelConsumption() {
+        return fuelConsumption;
+    }
+
+    public void setFuelConsumption(Integer fuelConsumption) {
+        this.fuelConsumption = fuelConsumption;
+    }
+
+    public Integer getTemperatureProbeCount() {
+        return temperatureProbeCount;
+    }
+
+    public void setTemperatureProbeCount(Integer temperatureProbeCount) {
+        this.temperatureProbeCount = temperatureProbeCount;
+    }
+
+    public List<Short> getProbeTemperature() {
+        return probeTemperature;
+    }
+
+    public void setProbeTemperature(List<Short> probeTemperature) {
+        this.probeTemperature = probeTemperature;
+    }
+
+    public Integer getHydrogenSystemMaxTemperature() {
+        return hydrogenSystemMaxTemperature;
+    }
+
+    public void setHydrogenSystemMaxTemperature(Integer hydrogenSystemMaxTemperature) {
+        this.hydrogenSystemMaxTemperature = hydrogenSystemMaxTemperature;
+    }
+
+    public Short getHydrogenSystemTemperatureProbeNum() {
+        return hydrogenSystemTemperatureProbeNum;
+    }
+
+    public void setHydrogenSystemTemperatureProbeNum(Short hydrogenSystemTemperatureProbeNum) {
+        this.hydrogenSystemTemperatureProbeNum = hydrogenSystemTemperatureProbeNum;
+    }
+
+    public Integer getHydrogenSystemMaxConcentration() {
+        return hydrogenSystemMaxConcentration;
+    }
+
+    public void setHydrogenSystemMaxConcentration(Integer hydrogenSystemMaxConcentration) {
+        this.hydrogenSystemMaxConcentration = hydrogenSystemMaxConcentration;
+    }
+
+    public Short getHydrogenSystemConcentrationProbeNum() {
+        return hydrogenSystemConcentrationProbeNum;
+    }
+
+    public void setHydrogenSystemConcentrationProbeNum(Short hydrogenSystemConcentrationProbeNum) {
+        this.hydrogenSystemConcentrationProbeNum = hydrogenSystemConcentrationProbeNum;
+    }
+
+    public Integer getHydrogenSystemMaxPressure() {
+        return hydrogenSystemMaxPressure;
+    }
+
+    public void setHydrogenSystemMaxPressure(Integer hydrogenSystemMaxPressure) {
+        this.hydrogenSystemMaxPressure = hydrogenSystemMaxPressure;
+    }
+
+    public Short getHydrogenSystemPressureProbeNum() {
+        return hydrogenSystemPressureProbeNum;
+    }
+
+    public void setHydrogenSystemPressureProbeNum(Short hydrogenSystemPressureProbeNum) {
+        this.hydrogenSystemPressureProbeNum = hydrogenSystemPressureProbeNum;
+    }
+
+    public Short getDcStatus() {
+        return dcStatus;
+    }
+
+    public void setDcStatus(Short dcStatus) {
+        this.dcStatus = dcStatus;
+    }
 
 }

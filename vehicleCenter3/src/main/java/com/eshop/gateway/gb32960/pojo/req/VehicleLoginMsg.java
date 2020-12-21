@@ -11,26 +11,26 @@ import io.netty.buffer.ByteBuf;
 
 public class VehicleLoginMsg extends DataPacket{
 	
-	private ZonedDateTime sampleTime;//采样时间
-	private short flowId;   //流水号    
+	private ZonedDateTime loginTime;//采样时间
+	private Integer flowId;   //流水号    
     private  String iccid;//ICCID    
-    private byte count;//可充电储能子系统数   
-    private byte length;//可充电子系统编码长度  
+    private Short count;//可充电储能子系统数   
+    private Short length;//可充电子系统编码长度  
     private List<String> codes; //可充电储能系统编码集合,长度等于count x length
     
-    public void setSampleTime(ZonedDateTime sampleTime) {
-    	this.sampleTime=sampleTime;
+    public void setLoginTime(ZonedDateTime loginTime) {
+    	this.loginTime=loginTime;
     }
 	
-    public ZonedDateTime getSampleTime() {
-    	return sampleTime;
+    public ZonedDateTime getLoginTime() {
+    	return loginTime;
     }
     
-    public void setFlowId(short flowId) {
+    public void setFlowId(Integer flowId) {
     	this.flowId = flowId;
     }
     
-    public short getFlowId() {
+    public Integer getFlowId() {
     	return flowId;
     }
     
@@ -42,19 +42,19 @@ public class VehicleLoginMsg extends DataPacket{
     	return iccid;
     }
     
-    public void setLength(byte length) {
+    public void setLength(Short length) {
     	 this.length = length;
     }
     
-    public byte getLength() {
+    public Short getLength() {
     	return length;
     }
 
-    public void setCount(byte count) {
+    public void setCount(Short count) {
     	this.count = count;
     }
     
-    public byte getCount() {
+    public Short getCount() {
     	return count;
     }
     
@@ -73,12 +73,12 @@ public class VehicleLoginMsg extends DataPacket{
     
     @Override
     public void parseBody() {
-    	this.sampleTime = ZonedDateTime.of((this.payload.readByte()+ 2000),this.payload.readByte(),this.payload.readByte(),
+    	this.loginTime = ZonedDateTime.of((this.payload.readByte()+ 2000),this.payload.readByte(),this.payload.readByte(),
         		this.payload.readByte(),this.payload.readByte(),this.payload.readByte(),0,gb32960Const.ZONE_UTC8);
-    	this.flowId = this.payload.readShort();
+    	this.flowId = this.payload.readUnsignedShort();
     	this.iccid = this.payload.readCharSequence(20, gb32960Const.ASCII_CHARSET).toString();
-    	this.count = this.payload.readByte();
-    	this.length = this.payload.readByte();
+    	this.count = this.payload.readUnsignedByte();
+    	this.length = this.payload.readUnsignedByte();
     	if(this.count>0 && this.length>0) {
     		List<String> codeList = new ArrayList<>();
     		for(int i=0;i<this.count;i++) {

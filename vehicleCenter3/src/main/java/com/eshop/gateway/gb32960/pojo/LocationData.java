@@ -1,5 +1,6 @@
 package com.eshop.gateway.gb32960.pojo;
 
+import java.time.ZonedDateTime;
 import java.util.Date;
 
 public class LocationData {
@@ -23,11 +24,14 @@ public class LocationData {
     
     private Date createTime;	//创建时间
     
+	//数据采集时间
+	private ZonedDateTime sampleTime;//采样时间
+    
     
     //非数据库数据   
     private Boolean valid;//是否有效定位  
-    private Short longitudeDataType; //经度类型，0：东经，1：西经  
-    private Short latitudeDataType;//纬度类型，0：北纬，1：南纬
+    private Integer longitudeDataType; //经度类型，0：东经，1：西经  
+    private Integer latitudeDataType;//纬度类型，0：北纬，1：南纬
 
  
 	
@@ -95,19 +99,19 @@ public class LocationData {
       this.valid = valid;
   }
   
-  public short getLongitudeDataType() {
+  public Integer getLongitudeDataType() {
       return longitudeDataType;
   }
 
-  public void setLongitudeDataType(Short longitudeDataType) {
+  public void setLongitudeDataType(Integer longitudeDataType) {
       this.longitudeDataType = longitudeDataType;
   }
 
-  public short getLatitudeDataType() {
+  public Integer getLatitudeDataType() {
       return latitudeDataType;
   }
 
-  public void setLatitudeDataType(Short latitudeDataType) {
+  public void setLatitudeDataType(Integer latitudeDataType) {
       this.latitudeDataType = latitudeDataType;
   }
 
@@ -118,4 +122,12 @@ public class LocationData {
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
 	}
+	
+	  public void setSampleTime(ZonedDateTime sampleTime) {
+		  this.sampleTime = sampleTime;
+	  }
+
+	  public ZonedDateTime getSampleTime() {
+		  return this.sampleTime;
+	  }
 }
