@@ -12,15 +12,15 @@ import io.netty.util.AttributeKey;
 	public abstract class BaseHandler<T> extends SimpleChannelInboundHandler<T>{
 
 		//消息流水号
-	    private static final AttributeKey<Short> SERIAL_NUMBER = AttributeKey.newInstance("serialNumber");
+	    private static final AttributeKey<Integer> SERIAL_NUMBER = AttributeKey.newInstance("serialNumber");
 	    
 	    /**
 	     * 递增获取流水号
 	     * @return
 	     */
-	    public short getSerialNumber(Channel channel){
-	        Attribute<Short> flowIdAttr = channel.attr(SERIAL_NUMBER);
-	        Short flowId = flowIdAttr.get();
+	    public Integer getSerialNumber(Channel channel){
+	        Attribute<Integer> flowIdAttr = channel.attr(SERIAL_NUMBER);
+	        Integer flowId = flowIdAttr.get();
 	        if (flowId == null) {
 	            flowId = 0;
 	        } else {

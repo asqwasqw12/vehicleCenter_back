@@ -56,6 +56,12 @@ public class VehicleServiceImpl implements VehicleService {
 	public Vehicle findById(Long id) {
 		return vehicleMapper.selectByPrimaryKey(id);
 	}
+	
+	@Override
+  	public Vehicle findByVinAndIccid(String vin,String iccid) {
+  		return vehicleMapper.findByVinAndIccid(vin,iccid);
+  	}
+
 
 	@Override
 	public List<String> findAllNames(){

@@ -3,25 +3,25 @@ package com.eshop.gateway.gb32960.pojo;
 public class DataHeader {
 	public static final int HEADER_LENGTH = 22;
 	
-	private byte requestType; //命令标识
-	private byte responseTag; //应答标志
+	private Short requestType; //命令标识
+	private Short responseTag; //应答标志
 	private String vin;  //车辆唯一识别码
-	private byte encrypTionType; //加密方式，0x01:数据不加密，0x02:数据经过RSA算法加密；0x03:数据经过AES128位算法加密；0XFE:表示异常，0xFF:表示无效
-	private short payloadLength; //数据单元长度
+	private Short encrypTionType; //加密方式，0x01:数据不加密，0x02:数据经过RSA算法加密；0x03:数据经过AES128位算法加密；0XFE:表示异常，0xFF:表示无效
+	private Integer payloadLength; //数据单元长度
 	
-	public void setRequestType(byte requestType) {
+	public void setRequestType(Short requestType) {
 		this.requestType = requestType;
 	}
 	
-	public byte getRequestType() {
+	public Short getRequestType() {
 		return requestType;
 	}
 	
-	public void setResponseTag(byte responseTag) {
+	public void setResponseTag(Short responseTag) {
 		this.responseTag = responseTag;
 	}
 
-	public byte getResponseTag() {
+	public Short getResponseTag() {
 		return responseTag;
 	}
 	
@@ -33,19 +33,19 @@ public class DataHeader {
 		return vin;
 	}
 	
-	public void  setEncrypTionType(byte encrypTionType) {
+	public void  setEncrypTionType(Short encrypTionType) {
 		this.encrypTionType = encrypTionType;		
 	}
 	
-	public byte getEncrypTionType() {
+	public Short getEncrypTionType() {
 		return encrypTionType;
 	}
 	
-	public void setPayloadLength(short payloadLength) {
+	public void setPayloadLength(Integer payloadLength) {
 		this.payloadLength = payloadLength;
 	}
 	
-	public short getPayloadLength() {
+	public Integer getPayloadLength() {
 		return payloadLength;
 	}
 }

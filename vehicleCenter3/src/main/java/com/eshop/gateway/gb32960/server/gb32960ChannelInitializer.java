@@ -6,13 +6,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import com.eshop.gateway.gb32960.codec.gb32960Decoder;
+import com.eshop.gateway.gb32960.codec.gb32960Encoder;
+import com.eshop.gateway.gb32960.handler.HeartBeatMsgHandler;
+import com.eshop.gateway.gb32960.handler.PlatformLoginMsgHandler;
+import com.eshop.gateway.gb32960.handler.PlatformLogoutMsgHandler;
+import com.eshop.gateway.gb32960.handler.RealInfoUpMsgHandler;
+import com.eshop.gateway.gb32960.handler.VehicleLoginMsgHandler;
+import com.eshop.gateway.gb32960.handler.VehicleLogoutMsgHandler;
 
-
-import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.SocketChannel;
-import io.netty.handler.codec.DelimiterBasedFrameDecoder;
 import io.netty.handler.timeout.IdleStateHandler;
 import io.netty.util.concurrent.EventExecutorGroup;
 
@@ -25,21 +30,24 @@ public class gb32960ChannelInitializer extends ChannelInitializer<SocketChannel>
     @Autowired
     @Qualifier("businessGroup")
     private EventExecutorGroup businessGroup;
+    
+    @Autowired 
+    private PlatformLoginMsgHandler platformLoginMsgHandler;
 
-    @Autowired
-    private AuthMsgHandler authMsgHandler;
+    @Autowired 
+    private PlatformLogoutMsgHandler platformLogoutMsgHandler;
 
     @Autowired
     private HeartBeatMsgHandler heartBeatMsgHandler;
 
     @Autowired
-    private LocationMsgHandler locationMsgHandler;
+    private RealInfoUpMsgHandler realInfoUpMsgHandler;
 
     @Autowired
-    private CancellationMsgHandler cancellationMsgHandler;
-
+    private VehicleLoginMsgHandler vehicleLoginMsgHandler;
+    
     @Autowired
-    private RegisterMsgHandler registerMsgHandler;
+    private VehicleLogoutMsgHandler vehicleLogoutMsgHandler;
     
     @Override
     protected void initChannel(SocketChannel ch) throws Exception {
@@ -49,11 +57,12 @@ public class gb32960ChannelInitializer extends ChannelInitializer<SocketChannel>
         // gb32960协议
         pipeline.addLast(new gb32960Decoder()); //解码器
         pipeline.addLast(new gb32960Encoder()); //编码器
-        pipeline.addLast(heartBeatMsgHandler);
-        pipeline.addLast(businessGroup, locationMsgHandler);//因为locationMsgHandler中涉及到数据库操作，所以放入businessGroup
-        pipeline.addLast(authMsgHandler);
-        pipeline.addLast(registerMsgHandler);
-        pipeline.addLast(cancellationMsgHandler);
+        pipeline.addLast(platformLoginMsgHandler); //平台登入处理器
+        pipeline.addLast(platformLogoutMsgHandler); //平台登出处理器
+        pipeline.addLast(heartBeatMsgHandler); //心跳处理器
+        pipeline.addLast(businessGroup, realInfoUpMsgHandler);//因为locationMsgHandler中涉及到数据库操作，所以放入businessGroup
+        pipeline.addLast(vehicleLoginMsgHandler); //车辆登入处理器
+        pipeline.addLast(vehicleLogoutMsgHandler); //车辆登出处理器
 
   }
 }

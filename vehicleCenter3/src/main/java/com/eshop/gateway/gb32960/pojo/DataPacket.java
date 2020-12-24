@@ -44,14 +44,14 @@ public class DataPacket {
 	    }
 	 
 	 protected void parseHead() {
-	        header.setRequestType(payload.readByte()); //读取命令标识
-	        header.setResponseTag(payload.readByte()); //读取应答标志
+	        header.setRequestType(payload.readUnsignedByte()); //读取命令标识
+	        header.setResponseTag(payload.readUnsignedByte()); //读取应答标志
 	        header.setVin(payload.readCharSequence(17, gb32960Const.ASCII_CHARSET).toString());  //读取vin码
-	        header.setEncrypTionType(payload.readByte()); //读取加密方式
-	        header.setPayloadLength(payload.readShort()); //读取数据包体
+	        header.setEncrypTionType(payload.readUnsignedByte()); //读取加密方式
+	        header.setPayloadLength(payload.readUnsignedShort()); //读取数据包体
 	    }
 	 
-	 /**
+	    /**
 	     * 请求报文重写
 	     */
 	    protected void parseBody() {
@@ -64,10 +64,12 @@ public class DataPacket {
 	     */
 	    public ByteBuf toByteBufMsg() {
 	        ByteBuf bb = ByteBufAllocator.DEFAULT.heapBuffer();//在gb32960Encoder escape()方法处回收
-	        bb.writeShort(0);//先占2字节用来写requestType和responseTag，gb32960Encoder中覆盖回来
-	        bb.writeBytes(this.header.getVin().getBytes(gb32960Const.ASCII_CHARSET));
-	        bb.writeByte(header.getEncrypTionType());
-	        bb.writeShort(0);//先占2字节用来写payloadLength,gb32960Encoder中覆盖回来
+	        bb.writeShort(0x2323);//起始符
+	        bb.writeByte(header.getRequestType());//命令标志
+	        bb.writeByte(header.getResponseTag());//应答标志
+	        bb.writeBytes(header.getVin().getBytes(gb32960Const.ASCII_CHARSET));//vin
+	        bb.writeByte(header.getEncrypTionType());//加密方式
+	        bb.writeShort(header.getPayloadLength());//长度
 	        return bb;
 	    }
 	    

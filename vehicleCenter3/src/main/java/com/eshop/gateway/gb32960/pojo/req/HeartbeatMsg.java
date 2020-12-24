@@ -5,9 +5,9 @@ import com.eshop.gateway.gb32960.pojo.DataPacket;
 
 import io.netty.buffer.ByteBuf;
 
-public class HeartbeatMsg extends DataPacket{
+public class HeartBeatMsg extends DataPacket{
 	
-    public HeartbeatMsg(ByteBuf byteBuf) {
+    public HeartBeatMsg(ByteBuf byteBuf) {
     	super(byteBuf);
     }
     

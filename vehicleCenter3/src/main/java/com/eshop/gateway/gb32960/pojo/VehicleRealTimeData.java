@@ -51,7 +51,7 @@ public class VehicleRealTimeData {
     private Short subsystemTemperatureCount;
 
     //可充电储能装置温度数据列表
-    private List<SubSystemTemperature> subSystemTemperatures;
+    private List<SubSystemTemperatureData> subSystemTemperatures;
     
     private Date createTime;	//创建时间
     
@@ -183,11 +183,11 @@ public class VehicleRealTimeData {
         this.subsystemTemperatureCount = subsystemTemperatureCount;
     }
 
-    public List<SubSystemTemperature> getSubSystemTemperatures() {
+    public List<SubSystemTemperatureData> getSubSystemTemperatures() {
         return subSystemTemperatures;
     }
 
-    public void setSubSystemTemperatures(List<SubSystemTemperature> subSystemTemperatures) {
+    public void setSubSystemTemperatures(List<SubSystemTemperatureData> subSystemTemperatures) {
         this.subSystemTemperatures = subSystemTemperatures;
     }
     

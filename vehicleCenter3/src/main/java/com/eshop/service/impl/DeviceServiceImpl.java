@@ -18,6 +18,7 @@ import com.eshop.common.page.PageRequest;
 import com.eshop.common.page.PageResult;
 import com.eshop.dao.DeviceMapper;
 import com.eshop.pojo.Device;
+import com.eshop.pojo.Vehicle;
 import com.eshop.service.DeviceService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -53,7 +54,8 @@ public class DeviceServiceImpl implements DeviceService {
 	public Device findById(Long id) {
 		return deviceMapper.selectByPrimaryKey(id);
 	}
-
+	
+	
 	
 	  @Override 
 	  public PageResult findPage(PageRequest pageRequest) { 

@@ -17,11 +17,8 @@ import io.netty.buffer.ByteBufUtil;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ReplayingDecoder;
 import io.netty.util.ReferenceCountUtil;
-import lombok.extern.slf4j.Slf4j;
 
-
-public class gt32960Decoder extends ReplayingDecoder<Void>{
-	
+public class gb32960Decoder extends ReplayingDecoder<Void>{
 	@Override
     protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) {
         System.out.println("decode<<<<< ip:"+ctx.channel().remoteAddress()+"hex:"+ByteBufUtil.hexDump(in));
@@ -36,8 +33,7 @@ public class gt32960Decoder extends ReplayingDecoder<Void>{
 		DataPacket msg = decode(in);
         if (msg != null) {
             out.add(msg);
-        }
-		
+        }		
     }	
 	
 	private DataPacket decode(ByteBuf in) {
@@ -92,5 +88,4 @@ public class gt32960Decoder extends ReplayingDecoder<Void>{
         packet.parse();
         return packet;
     }
-
 }

@@ -1,5 +1,6 @@
 package com.eshop.pojo;
 
+import java.util.List;
 
 public class Vehicle extends BasePojo {
 	private String name;	//名称
@@ -15,6 +16,25 @@ public class Vehicle extends BasePojo {
     private String status;		//资产状态
     private String purchaseWay;	//购买方式
     private Byte  manufactureStatus;//制造状态，0-在制，1-入库，2-出库
+    
+    //按照gb32960新增
+    private String iccid; //车辆终端所使用SIM卡ICCID编号
+    private Integer energyType;//0：纯电，1：插电混动，2：燃料电池，3：燃油，4：燃气
+    private Integer maxSpeed;//最高车速
+    private Integer maxRange;//续驶里程
+    private String  transmissionRatio;//各档位传动比
+    private Integer chargeDeviceCount;//可充电储能装置数量
+    private Integer driveMotorCount;//驱动电机数量
+    //如果是燃油车
+    private String engineId;//发动机编号
+    private String oilType;//燃油类型
+    private String oilLabel;//燃油标号
+    private Float maxPower;//最大输出功率
+    private Float maxTorque;//最大扭矩
+    //非数据库
+    private List<ChargeDevice> chargeDevices;//可充电储能装置列表
+    private List<DriveMotor> driveMotors;//驱动电机列表
+    
     //非数据库
     private String ownerCompanyName;//所属机构名称
     private String userCompanyName;	//使用机构名称
@@ -139,4 +159,117 @@ public class Vehicle extends BasePojo {
     public Byte getManufactureStatus() {
     	return  manufactureStatus;
     }
+    
+    public void setIccid(String iccid) {
+    	this.iccid = iccid;
+    }
+    
+    public String getIccid() {
+    	return iccid;
+    }
+    
+    public void setEnergyType(Integer eneryType) {
+    	this.energyType = eneryType;
+    }
+    
+    public Integer getEnergyType() {
+    	return energyType;
+    }
+    
+    public void setMaxSpeed(Integer maxSpeed) {
+    	this.maxSpeed = maxSpeed;
+    }
+    
+    public Integer getMaxSpeed() {
+    	return maxSpeed;
+    }
+    
+    public void setMaxRange(Integer maxRange) {
+    	this.maxRange = maxRange;
+    }
+    
+    public Integer getMaxRange() {
+    	return maxRange;
+    }
+    
+    public void setTransmissionRatio(String transmissionRatio) {
+    	this.transmissionRatio = transmissionRatio;
+    }
+    
+    public String getTransmissionRatio() {
+    	return transmissionRatio;
+    }
+    
+    public void setChargeDeviceCount(Integer chargeDeviceCount) {
+    	this.chargeDeviceCount = chargeDeviceCount;
+    }
+    
+    public Integer getChargeDeviceCount() {
+    	return chargeDeviceCount;
+    }
+    
+    public void setDriveMotorCount(Integer driveMotorCount) {
+    	this.driveMotorCount = driveMotorCount;
+    }
+    
+    public Integer getDriveMotorCount() {
+    	return driveMotorCount;
+    }
+    
+    public void setEngineId(String engineId) {
+    	this.engineId = engineId;
+    }
+    
+    public String getEngineId() {
+    	return engineId;
+    }
+    
+    public void setOilType(String oilType) {
+    	this.oilType = oilType;
+    }
+    
+    public String getOilType() {
+    	return oilType;
+    }
+    
+    public void setOilLabel(String oilLabel) {
+    	this.oilLabel = oilLabel;
+    }
+    
+    public String getOilLabel() {
+    	return oilLabel;
+    }
+    
+    public void setMaxPower(Float maxPower) {
+    	this.maxPower = maxPower;
+    }
+    
+    public Float getMaxPower() {
+    	return maxPower;
+    }
+    
+    public void setMaxTorque(Float maxTorque) {
+    	this.maxTorque = maxTorque;
+    }
+    
+    public Float getMaxTorque() {
+    	return maxTorque;
+    }
+    
+    public void setChargeDevices(List<ChargeDevice> chargeDevices) {
+    	this.chargeDevices = chargeDevices;
+    }
+    
+    public List<ChargeDevice> getChargeDevices() {
+    	return chargeDevices;
+    }
+    
+    public void setDriveMotors(List<DriveMotor> driveMotors) {
+    	this.driveMotors = driveMotors;
+    }
+    
+    public List<DriveMotor> getDriveMotors() {
+    	return driveMotors;
+    }
+    
 }

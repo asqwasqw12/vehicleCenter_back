@@ -40,13 +40,19 @@ public class NettyTcpServer {
 	 @Autowired
 	private JT808ChannelInitializer jt808ChannelInitializer;
 	 
+	 @Autowired
+	private JT808ChannelInitializer gb32960ChannelInitializer;
+	 
 	 @PostConstruct
 	 public void start() throws InterruptedException {
 		 ServerBootstrap serverBootstrap = new ServerBootstrap();
 		 serverBootstrap.group(bossGroup,workerGroup)
 		 .channel(NioServerSocketChannel.class)
-		 .childHandler(jt808ChannelInitializer)  //使用jt808协议handler
+		// .childHandler(jt808ChannelInitializer)  //使用jt808协议handler
+		 .childHandler(gb32960ChannelInitializer)  //使用gb32960协议handler
 		 .option(ChannelOption.SO_BACKLOG,1024)   //服务端可连接队列数，对应TCP/IP协议listen函数中backlog参数
+		 .option(ChannelOption.SO_RCVBUF, 16 * 1024) //TCP接收缓冲区大小
+         .option(ChannelOption.SO_SNDBUF, 16 * 1024) //TCP发送缓冲区大小
 		 .childOption(ChannelOption.TCP_NODELAY,true)	//立即写出
 		 .childOption(ChannelOption.SO_KEEPALIVE,true);	//长连接
 		 ResourceLeakDetector.setLevel(ResourceLeakDetector.Level.SIMPLE);	////内存泄漏检测 开发推荐PARANOID 线上SIMPLE

@@ -3,6 +3,8 @@ package com.eshop.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.eshop.pojo.Vehicle;
 
 public interface VehicleMapper {
@@ -14,6 +16,8 @@ public interface VehicleMapper {
     int insertSelective(Vehicle record);
 
     Vehicle selectByPrimaryKey(Long id);
+    
+    Vehicle findByVinAndIccid(@Param("vin")String vin,@Param("iccid")String iccid);
 
     int updateByPrimaryKeySelective(Vehicle record);
 

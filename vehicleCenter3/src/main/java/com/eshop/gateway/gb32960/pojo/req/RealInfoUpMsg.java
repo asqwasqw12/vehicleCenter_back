@@ -13,7 +13,7 @@ import com.eshop.gateway.gb32960.pojo.ExtremeData;
 import com.eshop.gateway.gb32960.pojo.FuelCellData;
 import com.eshop.gateway.gb32960.pojo.LocationData;
 import com.eshop.gateway.gb32960.pojo.RunData;
-import com.eshop.gateway.gb32960.pojo.SubSystemTemperature;
+import com.eshop.gateway.gb32960.pojo.SubSystemTemperatureData;
 import com.eshop.gateway.gb32960.pojo.SubSystemVoltageData;
 
 import io.netty.buffer.ByteBuf;
@@ -56,7 +56,7 @@ public class RealInfoUpMsg extends DataPacket{
     private Short subsystemTemperatureCount;
 
     //可充电储能装置温度数据列表
-    private List<SubSystemTemperature> subSystemTemperatures;
+    private List<SubSystemTemperatureData> subSystemTemperatures;
 
     public void setSampleTime(ZonedDateTime sampleTime) {
   	  this.sampleTime = sampleTime;
@@ -154,11 +154,11 @@ public class RealInfoUpMsg extends DataPacket{
         this.subsystemTemperatureCount = subsystemTemperatureCount;
     }
 
-    public List<SubSystemTemperature> getSubSystemTemperatures() {
+    public List<SubSystemTemperatureData> getSubSystemTemperatures() {
         return subSystemTemperatures;
     }
 
-    public void setSubSystemTemperatures(List<SubSystemTemperature> subSystemTemperatures) {
+    public void setSubSystemTemperatures(List<SubSystemTemperatureData> subSystemTemperatures) {
         this.subSystemTemperatures = subSystemTemperatures;
     }
 
@@ -447,9 +447,9 @@ public class RealInfoUpMsg extends DataPacket{
 	   	if(count >250 || count == 0 ) {
 	   		return true;
 	   	}
-	   	List<SubSystemTemperature> list = new ArrayList<SubSystemTemperature>();
+	   	List<SubSystemTemperatureData> list = new ArrayList<SubSystemTemperatureData>();
 	   	for(int i=0;i<count; i++) {
-	   		SubSystemTemperature data = new SubSystemTemperature();
+	   		SubSystemTemperatureData data = new SubSystemTemperatureData();
 	   		data.setNum(buf.readUnsignedByte());
 	   		data.setTemperatureProbeCount(buf.readUnsignedShort());
 	   		List<Short> probeList = new ArrayList<Short>();
