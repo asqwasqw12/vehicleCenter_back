@@ -6,16 +6,16 @@ import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
 import io.netty.util.ReferenceCountUtil;
 
-public class DataPacket {
+public class GB32960DataPacket {
 	
-	protected DataHeader header ; //数据包头
+	protected GB32960DataHeader header ; //数据包头
 	protected ByteBuf payload; //数据包
 	
-	public void setHeader(DataHeader header) {
+	public void setHeader(GB32960DataHeader header) {
 		this.header = header;
 	}
 	
-	public DataHeader getHeader() {
+	public GB32960DataHeader getHeader() {
 		return header;
 	}
 	
@@ -23,10 +23,10 @@ public class DataPacket {
 		this.payload = payload;
 	}
 	
-	public DataPacket() {
+	public GB32960DataPacket() {
     }
  
- public DataPacket(ByteBuf payload) {
+ public GB32960DataPacket(ByteBuf payload) {
         this.payload = payload;
     }
 	

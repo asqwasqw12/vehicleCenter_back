@@ -3,6 +3,7 @@ package com.eshop.gateway.gb32960.handler;
 import java.time.ZonedDateTime;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.eshop.gateway.gb32960.config.ChannelManager;
 import com.eshop.gateway.gb32960.pojo.req.VehicleLoginMsg;
@@ -10,7 +11,10 @@ import com.eshop.gateway.gb32960.res.CommonRespMsg;
 import com.eshop.service.VehicleService;
 
 import io.netty.channel.ChannelHandlerContext;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
+@Component
 public class VehicleLoginMsgHandler extends BaseHandler<VehicleLoginMsg>{
 	
 	@Autowired

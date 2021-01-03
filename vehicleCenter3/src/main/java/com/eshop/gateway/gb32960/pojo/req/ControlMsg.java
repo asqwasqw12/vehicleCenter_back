@@ -5,11 +5,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.eshop.gateway.gb32960.config.gb32960Const;
-import com.eshop.gateway.gb32960.pojo.DataPacket;
+import com.eshop.gateway.gb32960.pojo.GB32960DataPacket;
 
 import io.netty.buffer.ByteBuf;
 
-public class ControlMsg extends DataPacket {
+public class ControlMsg extends GB32960DataPacket {
 	private ZonedDateTime sampleTime;//命令控制时间
 	
 	private Short orderId; //命令ID

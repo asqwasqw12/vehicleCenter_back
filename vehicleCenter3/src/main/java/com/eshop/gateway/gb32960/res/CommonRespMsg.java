@@ -2,11 +2,11 @@ package com.eshop.gateway.gb32960.res;
 
 import java.time.ZonedDateTime;
 
-import com.eshop.gateway.gb32960.pojo.DataPacket;
+import com.eshop.gateway.gb32960.pojo.GB32960DataPacket;
 
 import io.netty.buffer.ByteBuf;
 
-public class CommonRespMsg extends DataPacket{
+public class CommonRespMsg extends GB32960DataPacket{
 	
 	public static final short SUCCESS = 01;//成功/确认
     public static final short FAILURE = 02;//错误
@@ -42,7 +42,7 @@ public class CommonRespMsg extends DataPacket{
         return bb;
     }
 
-	public static CommonRespMsg success(DataPacket msg, Integer flowId,ZonedDateTime requestTime) {
+	public static CommonRespMsg success(GB32960DataPacket msg, Integer flowId,ZonedDateTime requestTime) {
     	CommonRespMsg resp = new CommonRespMsg();
     	resp.getHeader().setRequestType(msg.getHeader().getRequestType());
         resp.getHeader().setResponseTag(SUCCESS);//设置应答标志
@@ -53,7 +53,7 @@ public class CommonRespMsg extends DataPacket{
         return resp;
     }
     
-    public static CommonRespMsg failure(DataPacket msg, Integer flowId,ZonedDateTime requestTime) {
+    public static CommonRespMsg failure(GB32960DataPacket msg, Integer flowId,ZonedDateTime requestTime) {
     	CommonRespMsg resp = new CommonRespMsg();
     	resp.getHeader().setRequestType(msg.getHeader().getRequestType());
         resp.getHeader().setResponseTag(FAILURE);//设置应答标志
@@ -64,7 +64,7 @@ public class CommonRespMsg extends DataPacket{
         return resp;
     }
     
-    public static CommonRespMsg vinRepeat(DataPacket msg, Integer flowId,ZonedDateTime requestTime) {
+    public static CommonRespMsg vinRepeat(GB32960DataPacket msg, Integer flowId,ZonedDateTime requestTime) {
     	CommonRespMsg resp = new CommonRespMsg();
     	resp.getHeader().setRequestType(msg.getHeader().getRequestType());
         resp.getHeader().setResponseTag(VIN_REPEAT);//设置应答标志

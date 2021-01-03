@@ -6,6 +6,7 @@ import sun.nio.cs.ext.GB18030;
 
 import com.google.common.base.Charsets;
 
+@SuppressWarnings("restriction")
 public class gb32960Const {
 	
 
@@ -31,7 +32,7 @@ public class gb32960Const {
     
 	 //默认英文字符集为ASCII
     public static final Charset ASCII_CHARSET = Charsets.US_ASCII;
-    //默认中文字符集为ASCII
+    //默认中文字符集为GBK
     public static final Charset CHINESE_CHARSET = new GB18030();
 
 

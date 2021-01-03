@@ -1,5 +1,6 @@
 package com.eshop.jt808.handler;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import com.eshop.jt808.pojo.req.HeartBeatMsg;
@@ -12,7 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 //@Description: 心跳消息->CommonResp
 
 @Slf4j
-@Component
+@Component("jt808Handler")
 @ChannelHandler.Sharable
 public class HeartBeatMsgHandler extends BaseHandler<HeartBeatMsg> {
 	

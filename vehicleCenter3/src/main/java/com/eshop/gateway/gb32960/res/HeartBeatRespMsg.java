@@ -2,11 +2,11 @@ package com.eshop.gateway.gb32960.res;
 
 import java.time.ZonedDateTime;
 
-import com.eshop.gateway.gb32960.pojo.DataPacket;
+import com.eshop.gateway.gb32960.pojo.GB32960DataPacket;
 
 import io.netty.buffer.ByteBuf;
 
-public class HeartBeatRespMsg extends DataPacket{
+public class HeartBeatRespMsg extends GB32960DataPacket{
 	
 	public static final short SUCCESS = 01;//成功/确认
     public static final short FAILURE = 02;//错误
@@ -25,7 +25,7 @@ public class HeartBeatRespMsg extends DataPacket{
         return bb;
     }
 
-    public static HeartBeatRespMsg success(DataPacket msg) {
+    public static HeartBeatRespMsg success(GB32960DataPacket msg) {
     	HeartBeatRespMsg resp = new HeartBeatRespMsg();
     	resp.getHeader().setRequestType(msg.getHeader().getRequestType());
         resp.getHeader().setResponseTag(SUCCESS);//设置应答标志

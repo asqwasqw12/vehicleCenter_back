@@ -1,11 +1,14 @@
 package com.eshop.gateway.gb32960.handler;
 
+import org.springframework.stereotype.Component;
+
 import com.eshop.gateway.gb32960.pojo.req.PlatformLogoutMsg;
 
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
+@Component
 public class PlatformLogoutMsgHandler extends BaseHandler<PlatformLogoutMsg>{
 	
 	    @Override

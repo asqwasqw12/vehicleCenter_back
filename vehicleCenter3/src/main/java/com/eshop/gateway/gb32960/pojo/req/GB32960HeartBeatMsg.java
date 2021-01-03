@@ -1,13 +1,12 @@
 package com.eshop.gateway.gb32960.pojo.req;
 
-
-import com.eshop.gateway.gb32960.pojo.DataPacket;
+import com.eshop.gateway.gb32960.pojo.GB32960DataPacket;
 
 import io.netty.buffer.ByteBuf;
 
-public class HeartBeatMsg extends DataPacket{
+public class GB32960HeartBeatMsg extends GB32960DataPacket{
 	
-    public HeartBeatMsg(ByteBuf byteBuf) {
+    public GB32960HeartBeatMsg(ByteBuf byteBuf) {
     	super(byteBuf);
     }
     

@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.eshop.common.ProtocolParseUtil;
 import com.eshop.gateway.gb32960.config.gb32960Const;
-import com.eshop.gateway.gb32960.pojo.DataPacket;
+import com.eshop.gateway.gb32960.pojo.GB32960DataPacket;
 import com.eshop.gateway.gb32960.pojo.req.PlatformLoginMsg;
 import com.eshop.gateway.gb32960.pojo.req.PlatformLogoutMsg;
 import com.eshop.gateway.gb32960.pojo.req.RealInfoUpMsg;
@@ -30,13 +30,13 @@ public class gb32960Decoder extends ReplayingDecoder<Void>{
         	return;
         }
         
-		DataPacket msg = decode(in);
+        GB32960DataPacket msg = decode(in);
         if (msg != null) {
             out.add(msg);
         }		
     }	
 	
-	private DataPacket decode(ByteBuf in) {
+	private GB32960DataPacket decode(ByteBuf in) {
 		
         in.markReaderIndex();//标记缓存的读索引
         in.readerIndex(in.readerIndex()+20);
@@ -61,8 +61,8 @@ public class gb32960Decoder extends ReplayingDecoder<Void>{
 		
 	}
 	
-    public DataPacket parse(ByteBuf bb) {
-        DataPacket packet = null;
+    public GB32960DataPacket parse(ByteBuf bb) {
+    	GB32960DataPacket packet = null;
         Short requestId = bb.getUnsignedByte(bb.readerIndex());
         switch (requestId) {
             case gb32960Const.VEHICLE_LOGIN:  //车辆登入
@@ -82,7 +82,7 @@ public class gb32960Decoder extends ReplayingDecoder<Void>{
                 packet = new PlatformLogoutMsg(bb);
                 break;
             default:
-                packet = new DataPacket(bb);
+                packet = new GB32960DataPacket(bb);
                 break;
         }
         packet.parse();

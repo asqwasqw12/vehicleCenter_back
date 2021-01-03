@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 @Configuration
-@MapperScan(basePackages = {"com.eshop.dao","com.eshop.jt808.dao","com.eshop.sys.dao"})  //扫描DAO
+@MapperScan(basePackages = {"com.eshop.dao","com.eshop.jt808.dao","com.eshop.sys.dao","com.eshop.gateway.gb32960.dao"})  //扫描DAO
 public class MybatisConfig {
   @Autowired
   private DataSource dataSource;

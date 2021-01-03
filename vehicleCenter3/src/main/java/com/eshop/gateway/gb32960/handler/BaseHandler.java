@@ -1,5 +1,5 @@
 package com.eshop.gateway.gb32960.handler;
-import com.eshop.gateway.gb32960.pojo.DataPacket;
+import com.eshop.gateway.gb32960.pojo.GB32960DataPacket;
 
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
@@ -30,7 +30,7 @@ import io.netty.util.AttributeKey;
 	        return flowId;
 	    }
 	    
-	    public void write(ChannelHandlerContext ctx, DataPacket msg) {
+	    public void write(ChannelHandlerContext ctx, GB32960DataPacket msg) {
 	        ctx.writeAndFlush(msg).addListener(future -> {
 	            if (!future.isSuccess()) {
 	                //log.error("发送失败", future.cause());

@@ -6,7 +6,7 @@ import java.util.List;
 
 import com.eshop.gateway.gb32960.config.gb32960Const;
 import com.eshop.gateway.gb32960.pojo.AlarmData;
-import com.eshop.gateway.gb32960.pojo.DataPacket;
+import com.eshop.gateway.gb32960.pojo.GB32960DataPacket;
 import com.eshop.gateway.gb32960.pojo.DriveMotorData;
 import com.eshop.gateway.gb32960.pojo.EngineData;
 import com.eshop.gateway.gb32960.pojo.ExtremeData;
@@ -18,7 +18,7 @@ import com.eshop.gateway.gb32960.pojo.SubSystemVoltageData;
 
 import io.netty.buffer.ByteBuf;
 
-public class RealInfoUpMsg extends DataPacket{
+public class RealInfoUpMsg extends GB32960DataPacket{
 	
 	private ZonedDateTime sampleTime;//采样时间
 

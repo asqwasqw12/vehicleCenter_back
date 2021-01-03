@@ -28,7 +28,12 @@ public interface VehicleService extends CurdService<Vehicle>{
   	//查询车辆
   	Vehicle findByVinAndIccid(String vin,String iccid);
   	
+    //查询车辆
+  	Vehicle findByVin(String vin);
+  	
   	//查询车辆名称和型号
   	List<Map<String,Object>> findNamesAndType();
+  	
+   
 
 }

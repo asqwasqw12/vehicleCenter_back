@@ -37,6 +37,7 @@ public class JT808ChannelInitializer extends ChannelInitializer<SocketChannel> {
     private AuthMsgHandler authMsgHandler;
 
     @Autowired
+    @Qualifier("jt808Handler")
     private HeartBeatMsgHandler heartBeatMsgHandler;
 
     @Autowired

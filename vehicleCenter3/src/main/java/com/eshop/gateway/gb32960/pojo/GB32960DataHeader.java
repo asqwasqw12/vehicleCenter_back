@@ -1,7 +1,8 @@
 package com.eshop.gateway.gb32960.pojo;
 
-public class DataHeader {
-	public static final int HEADER_LENGTH = 22;
+public class GB32960DataHeader {
+
+public static final int HEADER_LENGTH = 22;
 	
 	private Short requestType; //命令标识
 	private Short responseTag; //应答标志

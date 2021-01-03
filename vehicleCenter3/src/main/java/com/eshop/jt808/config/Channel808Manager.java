@@ -14,8 +14,8 @@ import io.netty.util.AttributeKey;
 import io.netty.util.concurrent.GlobalEventExecutor;
 
 @Component
-public class ChannelManager {
-	private static final AttributeKey<String> TERMINAL_PHONE = AttributeKey.newInstance("terminalPhone");
+public class Channel808Manager {
+	private static final AttributeKey<String> TERMINAL_PHONE = AttributeKey.newInstance("jt808TerminalPhone");
 
     private ChannelGroup channelGroup = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
 

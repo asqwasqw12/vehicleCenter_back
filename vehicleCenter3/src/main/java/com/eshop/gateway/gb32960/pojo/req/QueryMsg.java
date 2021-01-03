@@ -5,11 +5,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.eshop.gateway.gb32960.config.gb32960Const;
-import com.eshop.gateway.gb32960.pojo.DataPacket;
+import com.eshop.gateway.gb32960.pojo.GB32960DataPacket;
 
 import io.netty.buffer.ByteBuf;
 
-public class QueryMsg extends DataPacket{
+public class QueryMsg extends GB32960DataPacket{
 	
 	private ZonedDateTime sampleTime;//参数查询时间
 	

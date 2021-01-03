@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.eshop.gateway.gb32960.dao.LocationDataMapper">
+<resultMap id="BaseResultMap" type="com.eshop.gateway.gb32960.pojo.LocationData">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="vehicle_id" jdbcType="BIGINT" property="vehicleId" />
+    <result column="terminal_phone" jdbcType="VARCHAR" property="terminalPhone" />
+    <result column="vin" jdbcType="INTEGER" property="vin" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="latitude" jdbcType="FLOAT" property="latitude" />
+    <result column="longitude" jdbcType="FLOAT" property="longitude" />
+    <result column="sample_time" jdbcType="TIMESTAMP" property="sampleTime" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, vehicle_id, terminal_phone, vin, status, latitude, longitude, sample_time, create_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ter_location_data
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from ter_location_data
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.eshop.gateway.gb32960.pojo.LocationData">
+    insert into ter_location_data (id, vehicle_id, terminal_phone, vin, status, latitude, longitude, sample_time, create_time
+      )
+    values (#{id,jdbcType=BIGINT}, #{vehicleId,jdbcType=BIGINT}, #{terminalPhone,jdbcType=VARCHAR}, 
+      #{vin,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{latitude,jdbcType=FLOAT}, 
+      #{longitude,jdbcType=FLOAT}, #{sampleTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP }
+      )
+  </insert>
+  
+  <insert id="insertSelective" parameterType="com.eshop.gateway.gb32960.pojo.LocationData">
+    insert into ter_location_data
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="vehicleId != null">
+        vehicle_id,
+      </if>
+      <if test="terminalPhone != null">
+        terminal_phone,
+      </if>
+      <if test="vin != null">
+        vin,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="latitude != null">
+        latitude,
+      </if>
+      <if test="longitude != null">
+        longitude,
+      </if>
+      <if test="sampleTime != null">
+        sample_time,
+      </if>
+      <if test="createTime != null">
+       create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="vehicleId != null">
+        #{vehicleId,jdbcType=BIGINT},
+      </if>
+      <if test="terminalPhone != null">
+        #{terminalPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="vin != null">
+        #{vin,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="latitude != null">
+        #{latitude,jdbcType=FLOAT},
+      </if>
+      <if test="longitude != null">
+        #{longitude,jdbcType=FLOAT},
+      </if>
+      <if test="sampleTime != null">
+        #{sampleTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP },
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.eshop.gateway.gb32960.pojo.LocationData">
+    update ter_location_data
+    <set>
+      <if test="vehicleId != null">
+       vehicle_id = #{vehicleId,jdbcType=BIGINT},
+      </if>
+      <if test="terminalPhone != null">
+       terminal_phone = #{terminalPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="vin != null">
+        vin = #{vin,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="latitude != null">
+        latitude = #{latitude,jdbcType=FLOAT},
+      </if>
+      <if test="longitude != null">
+       longitude =  #{longitude,jdbcType=FLOAT},
+      </if>
+      <if test="sampleTime != null">
+        time = #{sampleTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null">
+       createTime = #{createTime,jdbcType=TIMESTAMP },
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <update id="updateByPrimaryKey" parameterType="com.eshop.gateway.gb32960.pojo.LocationData">
+    update ter_location_data
+    set  vehicle_id = #{vehicleId,jdbcType=BIGINT},
+      	 terminal_phone = #{terminalPhone,jdbcType=VARCHAR},
+         vin = #{vin,jdbcType=VARCHAR},
+         status = #{status,jdbcType=INTEGER},
+         latitude = #{latitude,jdbcType=FLOAT},
+         longitude =  #{longitude,jdbcType=FLOAT},
+         sampleTime = #{sampleTime,jdbcType=TIMESTAMP },
+         createTime = #{createTime,jdbcType=TIMESTAMP }
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <select id="findAll" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ter_location_data
+  </select>
+  
+  <select id="findByVehicleId" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ter_location_data
+    where vehicle_id = #{vehicleId,jdbcType=BIGINT}
+  </select>
+</mapper>

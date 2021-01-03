@@ -1,8 +1,8 @@
 package com.eshop.gateway.gb32960.res;
 
-import com.eshop.gateway.gb32960.pojo.DataPacket;
+import com.eshop.gateway.gb32960.pojo.GB32960DataPacket;
 
-public class PlatformLoginRespMsg extends DataPacket {
+public class PlatformLoginRespMsg extends GB32960DataPacket {
 	
 	public static final short SUCCESS = 01;//成功/确认
     public static final short FAILURE = 02;//错误
@@ -19,7 +19,7 @@ public class PlatformLoginRespMsg extends DataPacket {
         this.header.setResponseTag((short) 0x05);//设置命令标识
     }
 
-    public static PlatformLoginRespMsg success(DataPacket msg, Integer flowId) {
+    public static PlatformLoginRespMsg success(GB32960DataPacket msg, Integer flowId) {
     	PlatformLoginRespMsg resp = new PlatformLoginRespMsg();
         resp.getHeader().setResponseTag(SUCCESS);//设置应答标志
         resp.getHeader().setVin(msg.getHeader().getVin()); //设置唯一识别码
@@ -28,7 +28,7 @@ public class PlatformLoginRespMsg extends DataPacket {
         return resp;
     }
     
-    public static PlatformLoginRespMsg failure(DataPacket msg, Integer flowId) {
+    public static PlatformLoginRespMsg failure(GB32960DataPacket msg, Integer flowId) {
     	PlatformLoginRespMsg resp = new PlatformLoginRespMsg();
         resp.getHeader().setResponseTag(FAILURE);//设置应答标志
         resp.getHeader().setVin(msg.getHeader().getVin()); //设置唯一识别码

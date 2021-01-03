@@ -61,6 +61,12 @@ public class VehicleServiceImpl implements VehicleService {
   	public Vehicle findByVinAndIccid(String vin,String iccid) {
   		return vehicleMapper.findByVinAndIccid(vin,iccid);
   	}
+	
+	//查询车辆
+	@Override
+  	public Vehicle findByVin(String vin) {
+  		return vehicleMapper.findByVin(vin);
+  	}
 
 
 	@Override
