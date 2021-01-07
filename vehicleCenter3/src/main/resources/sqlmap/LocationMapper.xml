@@ -154,7 +154,7 @@
         time = #{time,jdbcType=VARCHAR},
       </if>
       <if test="createTime != null">
-       createTime = #{createTime,jdbcType=TIMESTAMP },
+       create_time = #{createTime,jdbcType=TIMESTAMP },
       </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
@@ -172,7 +172,7 @@
          speed = #{speed,jdbcType=SMALLINT},
          direction = #{direction,jdbcType=SMALLINT},
          time = #{time,jdbcType=VARCHAR},
-         createTime = #{createTime,jdbcType=TIMESTAMP }
+         create_time = #{createTime,jdbcType=TIMESTAMP }
     where id = #{id,jdbcType=BIGINT}
   </update>
   

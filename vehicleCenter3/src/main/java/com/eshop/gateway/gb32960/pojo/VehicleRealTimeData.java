@@ -1,5 +1,6 @@
 package com.eshop.gateway.gb32960.pojo;
 
+import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.List;
@@ -15,7 +16,7 @@ public class VehicleRealTimeData {
 	private String vin; //车辆唯一识别码
 
 	//数据采集时间
-	private ZonedDateTime sampleTime;//采样时间
+	private LocalDateTime sampleTime;//采样时间
 
     //整车数据
     private RunData runData;
@@ -88,11 +89,11 @@ public class VehicleRealTimeData {
   }
 
   
-  public void setSampleTime(ZonedDateTime sampleTime) {
+  public void setSampleTime(LocalDateTime sampleTime) {
 	  this.sampleTime = sampleTime;
   }
 
-  public ZonedDateTime getSampleTime() {
+  public LocalDateTime getSampleTime() {
 	  return this.sampleTime;
   }
     public RunData getRunData() {

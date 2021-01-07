@@ -5,6 +5,9 @@ import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.ArrayUtils;
+import org.apache.tomcat.util.buf.StringUtils;
+
 import com.eshop.gateway.gb32960.config.gb32960Const;
 import com.eshop.gateway.gb32960.pojo.AlarmData;
 import com.eshop.gateway.gb32960.pojo.GB32960DataPacket;
@@ -383,34 +386,77 @@ public class RealInfoUpMsg extends GB32960DataPacket{
 	   //可充电储能装置故障列表
 	   alarmData.setDeviceFailureCount(buf.readUnsignedByte());
 	   List<Long> deviceFailureCodeList = new ArrayList<Long>();
+	   StringBuffer deviceFailureCodes = new StringBuffer();
 	   for(int i= 0 ; i< alarmData.getDeviceFailureCount();i++) {
-		   deviceFailureCodeList.add(buf.readUnsignedInt());
+		   Long alarmCode = buf.readUnsignedInt();
+		   deviceFailureCodeList.add(alarmCode);
+		   deviceFailureCodes.append(alarmCode);
+		   deviceFailureCodes.append(",");
 	   }
-	   alarmData.setDeviceFailureCodes( deviceFailureCodeList);
-	   
+	   if(deviceFailureCodeList.size()>0) {
+		   alarmData.setDeviceFailureCodeList( deviceFailureCodeList);
+		   alarmData.setDeviceFailureCodes(deviceFailureCodes.toString());
+		   //String deviceFailuerCodes = new String();
+		   //deviceFailuerCodes = ArrayUtils.toString(deviceFailureCodeList,",");//数组转为字符串
+		   //alarmData.setDeviceFailureCodes(deviceFailuerCodes);
+		   
+	   }
 	   //驱动电机故障列表
 	   alarmData.setDriveMotorFailureCount(buf.readUnsignedByte());
 	   List<Long> driveMotorFailureCodeList = new ArrayList<Long>();
+	   StringBuffer driveMotorFailureCodes = new StringBuffer();
 	   for(int i= 0 ; i< alarmData.getDriveMotorFailureCount();i++) {
-	    	driveMotorFailureCodeList.add(buf.readUnsignedInt());
+		    Long alarmCode = buf.readUnsignedInt();
+	    	driveMotorFailureCodeList.add(alarmCode);
+	    	driveMotorFailureCodes.append(alarmCode);
+	    	driveMotorFailureCodes.append(",");
 		   }
-	   alarmData.setDriveMotorFailureCodes(driveMotorFailureCodeList);
+	   if(driveMotorFailureCodeList.size()>0) {		   
+		   alarmData.setDriveMotorFailureCodeList(driveMotorFailureCodeList);
+		   alarmData.setDriveMotorFailureCodes(driveMotorFailureCodes.toString());
+		   //String driveMotorFailureCodes = new String();
+		   //driveMotorFailureCodes = ArrayUtils.toString(driveMotorFailureCodeList,",");//数组转为字符串
+		   //alarmData.setDriveMotorFailureCodes(driveMotorFailureCodes);
+	   }
+	   
 	   
 	   //发动机故障列表
 	   alarmData.setEngineFailureCount(buf.readUnsignedByte());
 	   List<Long> engineFailureCodeList = new ArrayList<Long>();
+	   StringBuffer engineFailureCodes = new StringBuffer();
 	   for(int i=0; i< alarmData.getEngineFailureCount();i++) {
-		   engineFailureCodeList.add(buf.readUnsignedInt());
+		   Long alarmCode = buf.readUnsignedInt();
+		   engineFailureCodeList.add(alarmCode);
+		   engineFailureCodes.append(alarmCode);
+		   engineFailureCodes.append(",");
 	   }
-	   alarmData.setEngineFailureCodes(engineFailureCodeList);
+	   if(engineFailureCodeList.size()>0) {
+		   alarmData.setEngineFailureCodeList(engineFailureCodeList);
+		   alarmData.setEngineFailureCodes(engineFailureCodes.toString());
+		  // String engineFailureCodes = new String();
+		  //engineFailureCodes = ArrayUtils.toString(engineFailureCodeList,","); //数组转为字符串
+		  // alarmData.setEngineFailureCodes(engineFailureCodes);
+	   }
+	   
 	   
 	   //其他故障列表
-	   alarmData.setOtherFailure(buf.readUnsignedByte());
+	   alarmData.setOtherFailureCount(buf.readUnsignedByte());
 	   List<Long> otherFailureCodeList = new ArrayList<>();
-	   for (int i=0; i< alarmData.getOtherFailure();i++) {
-		   otherFailureCodeList.add(buf.readUnsignedInt());
+	   StringBuffer otherFailureCodes = new StringBuffer();
+	   for (int i=0; i< alarmData.getOtherFailureCount();i++) {
+		   Long alarmCode = buf.readUnsignedInt();
+		   otherFailureCodeList.add(alarmCode);
+		   otherFailureCodes.append(alarmCode);
+		   otherFailureCodes.append(",");
 	   }
-	   alarmData.setOtherFailureCodes(otherFailureCodeList);
+	   if(otherFailureCodeList.size()>0) {
+		   alarmData.setOtherFailureCodeList(otherFailureCodeList);
+		   alarmData.setOtherFailureCodes(otherFailureCodes.toString());
+		   //String otherFailureCodes = new String();
+		   //otherFailureCodes = ArrayUtils.toString(otherFailureCodeList,","); //数组转为字符串
+		   //alarmData.setOtherFailureCodes(otherFailureCodes);
+	   }
+	  
 	   this.alarmData = alarmData;
 	   return false;
    }

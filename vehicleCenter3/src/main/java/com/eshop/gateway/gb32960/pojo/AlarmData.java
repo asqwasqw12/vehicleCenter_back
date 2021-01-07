@@ -1,5 +1,6 @@
 package com.eshop.gateway.gb32960.pojo;
 
+import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.List;
@@ -17,7 +18,7 @@ public class AlarmData {
 	private Date createTime;	//创建时间
 	
 	//数据采集时间
-	private ZonedDateTime sampleTime;//采样时间
+	private LocalDateTime sampleTime;//采样时间
 	
 	
 	//报警等级,有效值范围：0-3,0：表示无故障，1：表示一级故障，2：表示2级故障，3：表示3级故障，为最高级别故障，OxFE:表示异常，0xFF：表示无效
@@ -26,6 +27,36 @@ public class AlarmData {
     //通用报警标志
     private Long alarmInfo;
 
+
+    //可储能装置故障总数
+    private Short deviceFailureCount;
+    
+    //可储能装置故障信息列表，分隔符为,
+    private String deviceFailureCodes;
+   
+
+    //驱动电机故障总数
+    private Short driveMotorFailureCount;
+    
+  //驱动电机故障信息列表，分隔符为,
+    private String driveMotorFailureCodes;
+   
+
+    //发动机故障总数
+    private Short engineFailureCount;
+    
+  //发动机故障信息列表,分隔符为,
+    private String engineFailureCodes;
+   
+
+    //其他故障总数
+    private Short otherFailureCount;
+    
+  //其他故障信息列表,分隔符为,
+    private String otherFailureCodes;
+    
+    
+   //非数据库属性
     /**
      * 温度差异报警
      */
@@ -120,36 +151,6 @@ public class AlarmData {
      * 车载储能装置过充报警
      */
     private Boolean deviceTypeOverFilling;
-
-    //可储能装置故障总数
-    private Short deviceFailureCount;
-    
-    //可储能装置故障信息列表，分隔符为,
-    private String deviceFailureCodes;
-   
-
-    //驱动电机故障总数
-    private Short driveMotorFailureCount;
-    
-  //驱动电机故障信息列表，分隔符为,
-    private String driveMotorFailureCodes;
-   
-
-    //发动机故障总数
-    private Short engineFailureCount;
-    
-  //发动机故障信息列表,分隔符为,
-    private String engineFailureCodes;
-   
-
-    //其他故障总数
-    private Short otherFailure;
-    
-  //其他故障信息列表,分隔符为,
-    private String otherFailureCodes;
-    
-    
-   //非数据库属性
   //可储能装置故障信息列表,数组
     private List<Long> deviceFailureCodeList;
   //驱动电机故障信息列表
@@ -202,11 +203,11 @@ public class AlarmData {
 		this.createTime = createTime;
 	}
 	
-	  public void setSampleTime(ZonedDateTime sampleTime) {
+	  public void setSampleTime(LocalDateTime sampleTime) {
 		  this.sampleTime = sampleTime;
 	  }
 
-	  public ZonedDateTime getSampleTime() {
+	  public LocalDateTime getSampleTime() {
 		  return this.sampleTime;
 	  }
 	
@@ -450,12 +451,12 @@ public class AlarmData {
         this.engineFailureCodeList = engineFailureCodeList;
     }
 
-    public Short getOtherFailure() {
-        return otherFailure;
+    public Short getOtherFailureCount() {
+        return otherFailureCount;
     }
 
-    public void setOtherFailure(Short otherFailure) {
-        this.otherFailure = otherFailure;
+    public void setOtherFailureCount(Short otherFailureCount) {
+        this.otherFailureCount = otherFailureCount;
     }
 
     public String getOtherFailureCodes() {

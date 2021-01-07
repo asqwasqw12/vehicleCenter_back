@@ -10,41 +10,44 @@
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="level" jdbcType="SMALLINT" property="level" />
     <result column="alarm_info" jdbcType="BIGINT" property="alarmInfo" />
-    <result column="temperature_differential" jdbcType="BOOLEAN" property="temperatureDifferential" />
-    <result column="battery_high_temperature" jdbcType="BOOLEAN" property="batteryHighTemperature" />
-    <result column="device_type_over_voltage" jdbcType="BOOLEAN" property="deviceTypeOverVoltage" />
-    <result column="device_type_under_voltage" jdbcType="BOOLEAN" property="deviceTypeUnderVoltage" />
-    <result column="soc_low" jdbcType="BOOLEAN" property="socLow" />
-    <result column="monomer_battery_over_voltage" jdbcType="BOOLEAN" property="monomerBatteryOverVoltage" />
-    <result column="monomer_battery_under_voltage" jdbcType="BOOLEAN" property="monomerBatteryUnderVoltage" />
-    <result column="soc_high" jdbcType="BOOLEAN" property="socHigh" />
-    <result column="soc_jump" jdbcType="BOOLEAN" property="socJump" />
-    
+    <result column="device_failure_count" jdbcType="SMALLINT" property="deviceFailureCount" />
+    <result column="device_failure_codes" jdbcType="VARCHAR" property="deviceFailureCodes" />
+    <result column="drive_motor_failure_count" jdbcType="SMALLINT" property="driveMotorFailureCount" />
+    <result column="drive_motor_failure_codes" jdbcType="VARCHAR" property="driveMotorFailureCodes" />
+    <result column="engine_failure_count" jdbcType="SMALLINT" property="engineFailureCount" />
+    <result column="engine_failure_codes" jdbcType="VARCHAR" property="engineFailureCodes" />
+    <result column="other_failure_count" jdbcType="SMALLINT" property="otherFailureCount" />
+    <result column="other_failure_codes" jdbcType="VARCHAR" property="otherFailureCodes" />   
   </resultMap>
   <sql id="Base_Column_List">
-    id, vehicle_id, terminal_phone, vin, status, latitude, longitude, sample_time, create_time
+    id, vehicle_id, terminal_phone, vin, sample_time, create_time,level,alarm_info,device_failure_count,device_failure_codes,drive_motor_failure_count,drive_motor_failure_codes,
+    engine_failure_count,engine_failure_codes,other_failure_count,other_failure_codes
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from ter_Alarm_data
+    from ter_alarm_data
     where id = #{id,jdbcType=BIGINT}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from ter_Alarm_data
+    delete from ter_alarm_data
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.eshop.gateway.gb32960.pojo.AlarmData">
-    insert into ter_Alarm_data (id, vehicle_id, terminal_phone, vin, status, latitude, longitude, sample_time, create_time
+    insert into ter_alarm_data (id, vehicle_id, terminal_phone, vin, sample_time, create_time,
+    level,alarm_info,device_failure_count,device_failure_codes,drive_motor_failure_count,drive_motor_failure_codes,
+    engine_failure_count,engine_failure_codes,other_failure_count,other_failure_codes
       )
     values (#{id,jdbcType=BIGINT}, #{vehicleId,jdbcType=BIGINT}, #{terminalPhone,jdbcType=VARCHAR}, 
-      #{vin,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{latitude,jdbcType=FLOAT}, 
-      #{longitude,jdbcType=FLOAT}, #{sampleTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP }
+      #{vin,jdbcType=VARCHAR}, #{sampleTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP },
+      #{level,jdbcType=SMALLINT},#{alarmInfo,jdbcType=BIGINT},#{deviceFailureCount,jdbcType=SMALLINT},#{deviceFailureCodes,jdbcType=VARCHAR},
+      #{driveMotorFailureCount,jdbcType=SMALLINT},#{driveMotorFailureCodes,jdbcType=VARCHAR},#{engineFailureCount,jdbcType=SMALLINT},#{engineFailureCodes,jdbcType=VARCHAR},
+      #{otherFailureCount,jdbcType=SMALLINT},#{otherFailureCodes,jdbcType=VARCHAR}
       )
   </insert>
   
   <insert id="insertSelective" parameterType="com.eshop.gateway.gb32960.pojo.AlarmData">
-    insert into ter_Alarm_data
+    insert into ter_alarm_data
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
@@ -58,21 +61,42 @@
       <if test="vin != null">
         vin,
       </if>
-      <if test="status != null">
-        status,
-      </if>
-      <if test="latitude != null">
-        latitude,
-      </if>
-      <if test="longitude != null">
-        longitude,
-      </if>
       <if test="sampleTime != null">
         sample_time,
       </if>
       <if test="createTime != null">
        create_time,
       </if>
+      <if test="level != null">
+        level,
+      </if>
+      <if test="alarmInfo != null">
+        alarm_info,
+      </if>
+      <if test="deviceFailureCount != null">
+        device_failure_count,
+      </if>
+      <if test="deviceFailureCodes != null">
+        device_failure_codes,
+      </if>
+      <if test="driveMotorFailureCount != null">
+        drive_motor_failure_count,
+      </if>
+      <if test="driveMotorFailureCodes != null">
+        drive_motor_failure_codes,
+      </if>
+      <if test="engineFailureCount != null">
+        engine_failure_count,
+      </if>
+      <if test="iengineFailureCodes != null">
+        engine_failure_codes,
+      </if>
+      <if test="otherFailureCount != null">
+        other_failure_count,
+      </if>
+      <if test="otherFailureCodes != null">
+        other_failure_codes
+      </if>     
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -87,26 +111,47 @@
       <if test="vin != null">
         #{vin,jdbcType=VARCHAR},
       </if>
-      <if test="status != null">
-        #{status,jdbcType=INTEGER},
-      </if>
-      <if test="latitude != null">
-        #{latitude,jdbcType=FLOAT},
-      </if>
-      <if test="longitude != null">
-        #{longitude,jdbcType=FLOAT},
-      </if>
       <if test="sampleTime != null">
         #{sampleTime,jdbcType=TIMESTAMP },
       </if>
       <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP },
       </if>
+      <if test="level != null">
+        #{level,jdbcType=SMALLINT },
+      </if>
+      <if test="alarmInfo != null">
+        #{alarmInfo,jdbcType=BIGINT },
+      </if>
+      <if test="deviceFailureCount != null">
+        #{deviceFailureCount,jdbcType=SMALLINT },
+      </if>
+      <if test="deviceFailureCodes != null">
+        #{deviceFailureCodes,jdbcType=VARCHAR },
+      </if>
+      <if test="driveMotorFailureCount != null">
+        #{driveMotorFailureCount,jdbcType=SMALLINT },
+      </if>
+      <if test="driveMotorFailureCodes != null">
+        #{driveMotorFailureCodes,jdbcType=VARCHAR },
+      </if>
+      <if test="engineFailureCount != null">
+        #{engineFailureCount,jdbcType=SMALLINT },
+      </if>
+      <if test="iengineFailureCodes != null">
+        #{engineFailureCodes,jdbcType=VARCHAR },
+      </if>
+      <if test="otherFailureCount != null">
+        #{otherFailureCount,jdbcType=SMALLINT },
+      </if>
+      <if test="otherFailureCodes != null">
+        #{otherFailureCodes,jdbcType=VARCHAR }
+      </if>   
     </trim>
   </insert>
   
   <update id="updateByPrimaryKeySelective" parameterType="com.eshop.gateway.gb32960.pojo.AlarmData">
-    update ter_Alarm_data
+    update ter_alarm_data
     <set>
       <if test="vehicleId != null">
        vehicle_id = #{vehicleId,jdbcType=BIGINT},
@@ -117,48 +162,76 @@
       <if test="vin != null">
         vin = #{vin,jdbcType=VARCHAR},
       </if>
-      <if test="status != null">
-        status = #{status,jdbcType=INTEGER},
-      </if>
-      <if test="latitude != null">
-        latitude = #{latitude,jdbcType=FLOAT},
-      </if>
-      <if test="longitude != null">
-       longitude =  #{longitude,jdbcType=FLOAT},
-      </if>
       <if test="sampleTime != null">
-        time = #{sampleTime,jdbcType=TIMESTAMP },
+        sample_time = #{sampleTime,jdbcType=TIMESTAMP },
       </if>
       <if test="createTime != null">
-       createTime = #{createTime,jdbcType=TIMESTAMP },
+       create_time = #{createTime,jdbcType=TIMESTAMP },
       </if>
+      <if test="level != null">
+       level = #{level,jdbcType=SMALLINT },
+      </if>
+      <if test="alarmInfo != null">
+       alarm_info = #{alarmInfo,jdbcType=BIGINT },
+      </if>
+      <if test="deviceFailureCount != null">
+       device_failure_count = #{deviceFailureCount,jdbcType=SMALLINT },
+      </if>
+      <if test="deviceFailureCodes != null">
+       device_failure_codes = #{deviceFailureCodes,jdbcType=VARCHAR },
+      </if>
+      <if test="driveMotorFailureCount != null">
+        drive_motor_failure_count = #{driveMotorFailureCount,jdbcType=SMALLINT },
+      </if>
+      <if test="driveMotorFailureCodes != null">
+       drive_motor_failure_codes = #{driveMotorFailureCodes,jdbcType=VARCHAR },
+      </if>
+      <if test="engineFailureCount != null">
+        engine_failure_count = #{engineFailureCount,jdbcType=SMALLINT },
+      </if>
+      <if test="iengineFailureCodes != null">
+        iengine_failure_codes = #{engineFailureCodes,jdbcType=VARCHAR },
+      </if>
+      <if test="otherFailureCount != null">
+        other_failure_count = #{otherFailureCount,jdbcType=SMALLINT },
+      </if>
+      <if test="otherFailureCodes != null">
+        other_failure_codes = #{otherFailureCodes,jdbcType=VARCHAR }
+      </if>   
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
   
   <update id="updateByPrimaryKey" parameterType="com.eshop.gateway.gb32960.pojo.AlarmData">
-    update ter_Alarm_data
+    update ter_alarm_data
     set  vehicle_id = #{vehicleId,jdbcType=BIGINT},
       	 terminal_phone = #{terminalPhone,jdbcType=VARCHAR},
          vin = #{vin,jdbcType=VARCHAR},
-         status = #{status,jdbcType=INTEGER},
-         latitude = #{latitude,jdbcType=FLOAT},
-         longitude =  #{longitude,jdbcType=FLOAT},
-         sampleTime = #{sampleTime,jdbcType=TIMESTAMP },
-         createTime = #{createTime,jdbcType=TIMESTAMP }
+         sample_time = #{sampleTime,jdbcType=TIMESTAMP },
+         create_time = #{createTime,jdbcType=TIMESTAMP },
+       	level = #{level,jdbcType=SMALLINT },
+       	alarm_info = #{alarmInfo,jdbcType=BIGINT },
+       	device_failure_count = #{deviceFailureCount,jdbcType=SMALLINT },
+       	device_failure_codes = #{deviceFailureCodes,jdbcType=VARCHAR },
+        drive_motor_failure_count = #{driveMotorFailureCount,jdbcType=SMALLINT },
+       	drive_motor_failure_codes = #{driveMotorFailureCodes,jdbcType=VARCHAR },
+        engine_failure_count = #{engineFailureCount,jdbcType=SMALLINT },
+        iengine_failure_codes = #{engineFailureCodes,jdbcType=VARCHAR },
+        other_failure_count = #{otherFailureCount,jdbcType=SMALLINT },
+        other_failure_codes = #{otherFailureCodes,jdbcType=VARCHAR }
     where id = #{id,jdbcType=BIGINT}
   </update>
   
   <select id="findAll" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from ter_Alarm_data
+    from ter_alarm_data
   </select>
   
   <select id="findByVehicleId" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from ter_Alarm_data
+    from ter_alarm_data
     where vehicle_id = #{vehicleId,jdbcType=BIGINT}
   </select>
 </mapper>

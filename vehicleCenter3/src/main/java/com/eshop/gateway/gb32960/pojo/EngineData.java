@@ -1,5 +1,6 @@
 package com.eshop.gateway.gb32960.pojo;
 
+import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.Date;
 
@@ -16,7 +17,7 @@ public class EngineData {
 	private Date createTime;	//创建时间
 	
 	//数据采集时间
-	private ZonedDateTime sampleTime;//采样时间
+	private LocalDateTime sampleTime;//采样时间
 	
 	//发动机状态,01:启动状态，02：关闭状态，FE:表示异常，FF:表示无效
     private Short Status;
@@ -94,11 +95,11 @@ public class EngineData {
 		this.createTime = createTime;
 	}
 	
-	  public void setSampleTime(ZonedDateTime sampleTime) {
+	  public void setSampleTime(LocalDateTime sampleTime) {
 		  this.sampleTime = sampleTime;
 	  }
 
-	  public ZonedDateTime getSampleTime() {
+	  public LocalDateTime getSampleTime() {
 		  return this.sampleTime;
 	  }
 	

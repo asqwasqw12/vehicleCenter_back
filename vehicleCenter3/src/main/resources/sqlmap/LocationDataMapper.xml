@@ -118,10 +118,10 @@
        longitude =  #{longitude,jdbcType=FLOAT},
       </if>
       <if test="sampleTime != null">
-        time = #{sampleTime,jdbcType=TIMESTAMP },
+        sample_time = #{sampleTime,jdbcType=TIMESTAMP },
       </if>
       <if test="createTime != null">
-       createTime = #{createTime,jdbcType=TIMESTAMP },
+       create_time = #{createTime,jdbcType=TIMESTAMP },
       </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
@@ -135,8 +135,8 @@
          status = #{status,jdbcType=INTEGER},
          latitude = #{latitude,jdbcType=FLOAT},
          longitude =  #{longitude,jdbcType=FLOAT},
-         sampleTime = #{sampleTime,jdbcType=TIMESTAMP },
-         createTime = #{createTime,jdbcType=TIMESTAMP }
+         sample_time = #{sampleTime,jdbcType=TIMESTAMP },
+         create_time = #{createTime,jdbcType=TIMESTAMP }
     where id = #{id,jdbcType=BIGINT}
   </update>
   

@@ -1,5 +1,6 @@
 package com.eshop.gateway.gb32960.pojo;
 
+import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.Date;
 
@@ -16,7 +17,7 @@ public class DriveMotorData {
 	private Date createTime;	//创建时间
 	
 	//数据采集时间
-	private ZonedDateTime sampleTime;//采样时间
+	private LocalDateTime sampleTime;//采样时间
 	
 	 //驱动电机序号,有效值范围：0-253
     private Short num;
@@ -85,11 +86,11 @@ public class DriveMotorData {
 		this.createTime = createTime;
 	}
 	
-	  public void setSampleTime(ZonedDateTime sampleTime) {
+	  public void setSampleTime(LocalDateTime sampleTime) {
 		  this.sampleTime = sampleTime;
 	  }
 
-	  public ZonedDateTime getSampleTime() {
+	  public LocalDateTime getSampleTime() {
 		  return this.sampleTime;
 	  }
 	
