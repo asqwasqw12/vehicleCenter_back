@@ -1,5 +1,6 @@
 package com.eshop.gateway.gb32960.pojo.req;
 
+import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,11 +17,14 @@ import com.eshop.gateway.gb32960.pojo.RunData;
 import com.eshop.gateway.gb32960.pojo.SubSystemTemperatureData;
 import com.eshop.gateway.gb32960.pojo.SubSystemVoltageData;
 
+import cn.hutool.core.date.DateTime;
 import io.netty.buffer.ByteBuf;
 
 public class RealInfoUpMsg extends GB32960DataPacket{
 	
-	private ZonedDateTime sampleTime;//采样时间
+	private LocalDateTime sampleTime;//采样时间
+	
+	private ZonedDateTime sampleZonedTime;//采样时间
 
 	//整车运行数据
     private RunData runData;
@@ -58,14 +62,22 @@ public class RealInfoUpMsg extends GB32960DataPacket{
     //可充电储能装置温度数据列表
     private List<SubSystemTemperatureData> subSystemTemperatures;
 
-    public void setSampleTime(ZonedDateTime sampleTime) {
+    public void setSampleTime(LocalDateTime sampleTime) {
   	  this.sampleTime = sampleTime;
     }
 
-    public ZonedDateTime getSampleTime() {
+    public LocalDateTime getSampleTime() {
   	  return this.sampleTime;
     }
 
+    public void setSampleZonedTime(ZonedDateTime sampleZonedTime) {
+    	  this.sampleZonedTime = sampleZonedTime;
+      }
+
+      public ZonedDateTime getSampleZonedTime() {
+    	  return this.sampleZonedTime;
+      }
+    
     public RunData getRunData() {
         return runData;
     }
@@ -169,9 +181,9 @@ public class RealInfoUpMsg extends GB32960DataPacket{
     @Override
     public void parseBody() {
     	
-    	this.sampleTime = ZonedDateTime.of((this.payload.readByte()+ 2000),this.payload.readByte(),this.payload.readByte(),
+    	this.sampleZonedTime = ZonedDateTime.of((this.payload.readByte()+ 2000),this.payload.readByte(),this.payload.readByte(),
         		this.payload.readByte(),this.payload.readByte(),this.payload.readByte(),0,gb32960Const.ZONE_UTC8);
- 
+    	this.sampleTime = sampleZonedTime.toLocalDateTime();
 
     	//
     	try {
@@ -228,6 +240,7 @@ public class RealInfoUpMsg extends GB32960DataPacket{
     	if(buf.readableBytes() <20) {
     		return true;
     	}
+    	RunData runData =new RunData();
     	runData.setVin(header.getVin());
     	runData.setRunStatus(buf.readUnsignedByte());
     	runData.setChargeStatus(buf.readUnsignedByte());
@@ -242,6 +255,7 @@ public class RealInfoUpMsg extends GB32960DataPacket{
     	runData.setInsulationResistance(buf.readUnsignedShort());
     	runData.setThrottle(buf.readUnsignedByte());
     	runData.setBrake(buf.readUnsignedByte());
+    	this.runData = runData;
     	return false;
     }
     
@@ -275,6 +289,7 @@ public class RealInfoUpMsg extends GB32960DataPacket{
     	if(buf.readableBytes() <18) {
     		return true;
     	}
+    	FuelCellData fuelCellData = new FuelCellData();
     	fuelCellData.setVoltage(buf.readUnsignedShort());
     	fuelCellData.setCurrent(buf.readUnsignedShort());
     	fuelCellData.setFuelConsumption(buf.readUnsignedShort());
@@ -292,6 +307,7 @@ public class RealInfoUpMsg extends GB32960DataPacket{
     	fuelCellData.setHydrogenSystemMaxPressure(buf.readUnsignedShort());
     	fuelCellData.setHydrogenSystemPressureProbeNum(buf.readUnsignedByte());
     	fuelCellData.setDcStatus(buf.readUnsignedByte());
+    	this.fuelCellData = fuelCellData;
     	return false;
     }
     
@@ -300,9 +316,11 @@ public class RealInfoUpMsg extends GB32960DataPacket{
 	   if(buf.readableBytes() <5) {
    		return true;
    	}
+	   EngineData engineData = new EngineData();
 	   engineData.setStatus(buf.readUnsignedByte());
 	   engineData.setCrankshaftSpeed(buf.readUnsignedShort());
 	   engineData.setFuelConsumption(buf.readUnsignedShort());
+	   this.engineData = engineData;
 	   return false;
     }
    
@@ -311,6 +329,9 @@ public class RealInfoUpMsg extends GB32960DataPacket{
 	   if(buf.readableBytes() <9) {
 	   		return true;
 	   	}
+	   LocationData locationData = new LocationData();
+	   locationData.setVin(header.getVin());
+	   locationData.setSampleTime(sampleTime);
 	   locationData.setStatus(buf.readUnsignedByte());
 	   locationData.setLongitude(buf.readUnsignedInt());
 	   locationData.setLatitude(buf.readUnsignedInt());
@@ -324,6 +345,7 @@ public class RealInfoUpMsg extends GB32960DataPacket{
 	   }
 	   locationData.setLongitudeDataType(locationData.getStatus() & 0x04);
 	   locationData.setLatitudeDataType(locationData.getStatus() & 0x02);
+	   this.locationData = locationData;
 	   return false;
    }
    
@@ -332,6 +354,7 @@ public class RealInfoUpMsg extends GB32960DataPacket{
 	   if(buf.readableBytes() <14) {
 	   		return true;
 	   	}
+	   ExtremeData extremeData = new ExtremeData();
 	   extremeData.setMaxVoltageSystemNum(buf.readUnsignedByte());
 	   extremeData.setMaxVoltageBatteryNum(buf.readUnsignedByte());
 	   extremeData.setBatteryMaxVoltage(buf.readUnsignedShort());
@@ -344,16 +367,18 @@ public class RealInfoUpMsg extends GB32960DataPacket{
 	   extremeData.setMinTemperatureSystemNum(buf.readUnsignedByte());
 	   extremeData.setMinTemperatureNum(buf.readUnsignedByte());
 	   extremeData.setMinTemperature(buf.readUnsignedByte());
+	   this.extremeData = extremeData;
 	   return false;
 	   
    }
    
  //解析报警数据
    private Boolean parseAlarmData(ByteBuf buf){
+	   AlarmData alarmData = new AlarmData();
 	   alarmData.setLevel(buf.readUnsignedByte());
 	   Long generalAlarm = buf.readUnsignedInt();
 	   alarmData.setAlarmInfo(generalAlarm);
-	   parseGeneralAlarm(generalAlarm);//解析通过报警信息
+	   parseGeneralAlarm(generalAlarm,alarmData);//解析通过报警信息
 	   
 	   //可充电储能装置故障列表
 	   alarmData.setDeviceFailureCount(buf.readUnsignedByte());
@@ -386,11 +411,11 @@ public class RealInfoUpMsg extends GB32960DataPacket{
 		   otherFailureCodeList.add(buf.readUnsignedInt());
 	   }
 	   alarmData.setOtherFailureCodes(otherFailureCodeList);
-	   
+	   this.alarmData = alarmData;
 	   return false;
    }
    
-   private void parseGeneralAlarm(Long generalAlarm) {
+   private void parseGeneralAlarm(Long generalAlarm,AlarmData alarmData) {
 	   alarmData.setTemperatureDifferential((generalAlarm & 0x01)>0);
 	   alarmData.setBatteryHighTemperature(((generalAlarm>>1) & 0x01)>0);
 	   alarmData.setDeviceTypeOverVoltage(((generalAlarm>>2) & 0x01)>0);

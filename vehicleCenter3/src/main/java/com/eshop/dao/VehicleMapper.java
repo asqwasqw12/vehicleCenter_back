@@ -17,7 +17,7 @@ public interface VehicleMapper {
 
     Vehicle selectByPrimaryKey(Long id);
     
-    Vehicle findByVinAndIccid(@Param("vin")String vin,@Param("iccid")String iccid);
+   // Vehicle findByVinAndIccid(@Param("vin")String vin,@Param("iccid")String iccid);
     
     Vehicle findByVin(@Param("vin")String vin);
 

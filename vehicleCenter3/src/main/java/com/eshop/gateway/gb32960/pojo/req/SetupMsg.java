@@ -1,5 +1,6 @@
 package com.eshop.gateway.gb32960.pojo.req;
 
+import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,17 +12,17 @@ import io.netty.buffer.ByteBuf;
 
 public class SetupMsg extends GB32960DataPacket {
 	
-	private ZonedDateTime sampleTime;//参数设置时间
+	private LocalDateTime sampleTime;//参数设置时间
 	
 	private Short parameterCount; //参数总数
 	
 	private List<Short> parameterIds; //参数ID列表
 	
-	 public void setSampleTime(ZonedDateTime sampleTime) {
+	 public void setSampleTime(LocalDateTime sampleTime) {
 	    	this.sampleTime=sampleTime;
 	    }
 		
-	    public ZonedDateTime getSampleTime() {
+	    public LocalDateTime getSampleTime() {
 	    	return sampleTime;
 	    }
 	
@@ -50,7 +51,7 @@ public class SetupMsg extends GB32960DataPacket {
     public void parseBody() {
     	
     	sampleTime = ZonedDateTime.of((this.payload.readByte()+ 2000),this.payload.readByte(),this.payload.readByte(),
-        		this.payload.readByte(),this.payload.readByte(),this.payload.readByte(),0,gb32960Const.ZONE_UTC8);
+        		this.payload.readByte(),this.payload.readByte(),this.payload.readByte(),0,gb32960Const.ZONE_UTC8).toLocalDateTime();
     	parameterCount = payload.readUnsignedByte();
     	List<Short> list= new ArrayList<Short>();
     	for(int i=0;i<parameterCount;i++) {

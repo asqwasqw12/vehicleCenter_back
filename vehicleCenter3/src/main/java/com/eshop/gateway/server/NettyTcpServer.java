@@ -40,8 +40,8 @@ public class NettyTcpServer {
     @Qualifier("businessGroup")
     private EventExecutorGroup businessGroup;
 	
-	//@Autowired
-	//private JT808ChannelInitializer jt808ChannelInitializer;
+	@Autowired
+	private JT808ChannelInitializer jt808ChannelInitializer;
 	 
 	@Autowired
 	private GB32960ChannelInitializer gb32960ChannelInitializer;

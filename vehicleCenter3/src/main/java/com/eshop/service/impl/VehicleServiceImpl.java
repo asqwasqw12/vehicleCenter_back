@@ -57,10 +57,10 @@ public class VehicleServiceImpl implements VehicleService {
 		return vehicleMapper.selectByPrimaryKey(id);
 	}
 	
-	@Override
-  	public Vehicle findByVinAndIccid(String vin,String iccid) {
-  		return vehicleMapper.findByVinAndIccid(vin,iccid);
-  	}
+	/*
+	 * @Override public Vehicle findByVinAndIccid(String vin,String iccid) { return
+	 * vehicleMapper.findByVinAndIccid(vin,iccid); }
+	 */
 	
 	//查询车辆
 	@Override

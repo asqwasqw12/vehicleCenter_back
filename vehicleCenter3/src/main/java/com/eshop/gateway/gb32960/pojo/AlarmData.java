@@ -123,27 +123,41 @@ public class AlarmData {
 
     //可储能装置故障总数
     private Short deviceFailureCount;
-
-    //可储能装置故障信息列表
-    private List<Long> deviceFailureCodes;
+    
+    //可储能装置故障信息列表，分隔符为,
+    private String deviceFailureCodes;
+   
 
     //驱动电机故障总数
     private Short driveMotorFailureCount;
-
-    //驱动电机故障信息列表
-    private List<Long> driveMotorFailureCodes;
+    
+  //驱动电机故障信息列表，分隔符为,
+    private String driveMotorFailureCodes;
+   
 
     //发动机故障总数
     private Short engineFailureCount;
-
-    //发动机故障信息列表
-    private List<Long> engineFailureCodes;
+    
+  //发动机故障信息列表,分隔符为,
+    private String engineFailureCodes;
+   
 
     //其他故障总数
     private Short otherFailure;
-
+    
+  //其他故障信息列表,分隔符为,
+    private String otherFailureCodes;
+    
+    
+   //非数据库属性
+  //可储能装置故障信息列表,数组
+    private List<Long> deviceFailureCodeList;
+  //驱动电机故障信息列表
+    private List<Long> driveMotorFailureCodeList;
+    //发动机故障信息列表
+    private List<Long> engineFailureCodeList;
     //其他故障信息列表
-    private List<Long> otherFailureCodes;
+    private List<Long> otherFailureCodeList;
 	
 	public void setId(Long id) {
     	this.id = id;
@@ -372,12 +386,20 @@ public class AlarmData {
         this.deviceFailureCount = deviceFailureCount;
     }
 
-    public List<Long> getDeviceFailureCodes() {
+    public String getDeviceFailureCodes() {
         return deviceFailureCodes;
     }
 
-    public void setDeviceFailureCodes(List<Long> deviceFailureCodes) {
+    public void setDeviceFailureCodes(String deviceFailureCodes) {
         this.deviceFailureCodes = deviceFailureCodes;
+    }
+    
+    public List<Long> getDeviceFailureCodeList() {
+        return deviceFailureCodeList;
+    }
+
+    public void setDeviceFailureCodeList(List<Long> deviceFailureCodeList) {
+        this.deviceFailureCodeList = deviceFailureCodeList;
     }
 
     public Short getDriveMotorFailureCount() {
@@ -388,12 +410,20 @@ public class AlarmData {
         this.driveMotorFailureCount = driveMotorFailureCount;
     }
 
-    public List<Long> getDriveMotorFailureCodes() {
+    public String getDriveMotorFailureCodes() {
         return driveMotorFailureCodes;
     }
 
-    public void setDriveMotorFailureCodes(List<Long> driveMotorFailureCodes) {
+    public void setDriveMotorFailureCodes(String driveMotorFailureCodes) {
         this.driveMotorFailureCodes = driveMotorFailureCodes;
+    }
+    
+    public List<Long> getDriveMotorFailureCodeList() {
+        return driveMotorFailureCodeList;
+    }
+
+    public void setDriveMotorFailureCodeList(List<Long> driveMotorFailureCodeList) {
+        this.driveMotorFailureCodeList = driveMotorFailureCodeList;
     }
 
     public Short getEngineFailureCount() {
@@ -404,12 +434,20 @@ public class AlarmData {
         this.engineFailureCount = engineFailureCount;
     }
 
-    public List<Long> getEngineFailureCodes() {
+    public String getEngineFailureCodes() {
         return engineFailureCodes;
     }
 
-    public void setEngineFailureCodes(List<Long> engineFailureCodes) {
+    public void setEngineFailureCodes(String engineFailureCodes) {
         this.engineFailureCodes = engineFailureCodes;
+    }
+    
+    public List<Long> getEngineFailureCodeList() {
+        return engineFailureCodeList;
+    }
+
+    public void setEngineFailureCodeList(List<Long> engineFailureCodeList) {
+        this.engineFailureCodeList = engineFailureCodeList;
     }
 
     public Short getOtherFailure() {
@@ -420,12 +458,20 @@ public class AlarmData {
         this.otherFailure = otherFailure;
     }
 
-    public List<Long> getOtherFailureCodes() {
+    public String getOtherFailureCodes() {
         return otherFailureCodes;
     }
 
-    public void setOtherFailureCodes(List<Long> otherFailureCodes) {
+    public void setOtherFailureCodes(String otherFailureCodes) {
         this.otherFailureCodes = otherFailureCodes;
+    }
+    
+    public List<Long> getOtherFailureCodeList() {
+        return otherFailureCodeList;
+    }
+
+    public void setOtherFailureCodeList(List<Long> otherFailureCodeList) {
+        this.otherFailureCodeList = otherFailureCodeList;
     }
 
 }

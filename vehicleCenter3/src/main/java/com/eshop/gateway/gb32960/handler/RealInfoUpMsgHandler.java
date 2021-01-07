@@ -1,5 +1,6 @@
 package com.eshop.gateway.gb32960.handler;
 
+import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.Date;
 
@@ -15,12 +16,14 @@ import com.eshop.gateway.gb32960.service.LocationDataService;
 import com.eshop.pojo.Vehicle;
 import com.eshop.service.VehicleService;
 
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.nio.NioEventLoopGroup;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Component
+@ChannelHandler.Sharable
 public class RealInfoUpMsgHandler extends BaseHandler<RealInfoUpMsg>{
 	
 	@Autowired
@@ -45,7 +48,7 @@ public class RealInfoUpMsgHandler extends BaseHandler<RealInfoUpMsg>{
 		System.out.println("LocationMsgHandler.msg:"+msg.toString());
 		
 		Vehicle vehicle = vehicleService.findByVin(msg.getHeader().getVin());
-		ZonedDateTime  sampleTime = msg.getSampleTime();
+		LocalDateTime  sampleTime = msg.getSampleTime();
 		
 		if(vehicle != null) {
 			Long vehicleId = vehicle.getId();

@@ -12,7 +12,7 @@ import io.netty.buffer.ByteBufAllocator;
 import io.netty.util.ReferenceCountUtil;
 
 public class DataPacket {
-	protected DataHeader header = new DataHeader(); //消息头
+	 protected DataHeader header = new DataHeader(); //消息头
 	 protected ByteBuf payload; //消息体
 	 
 	 public void setHeader(DataHeader header) {

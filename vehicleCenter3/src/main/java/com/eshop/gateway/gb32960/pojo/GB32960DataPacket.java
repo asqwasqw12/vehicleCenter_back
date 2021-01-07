@@ -7,8 +7,7 @@ import io.netty.buffer.ByteBufAllocator;
 import io.netty.util.ReferenceCountUtil;
 
 public class GB32960DataPacket {
-	
-	protected GB32960DataHeader header ; //数据包头
+	protected GB32960DataHeader header = new GB32960DataHeader(); //数据包头
 	protected ByteBuf payload; //数据包
 	
 	public void setHeader(GB32960DataHeader header) {
@@ -64,12 +63,16 @@ public class GB32960DataPacket {
 	     */
 	    public ByteBuf toByteBufMsg() {
 	        ByteBuf bb = ByteBufAllocator.DEFAULT.heapBuffer();//在gb32960Encoder escape()方法处回收
-	        bb.writeShort(0x2323);//起始符
+	        
+	        //bb.writeByte(0x23);//起始符
+	        bb.writeShort(gb32960Const.START_SYMBOL);//起始符
 	        bb.writeByte(header.getRequestType());//命令标志
 	        bb.writeByte(header.getResponseTag());//应答标志
 	        bb.writeBytes(header.getVin().getBytes(gb32960Const.ASCII_CHARSET));//vin
 	        bb.writeByte(header.getEncrypTionType());//加密方式
+	        System.out.println("length="+header.getPayloadLength());
 	        bb.writeShort(header.getPayloadLength());//长度
+	        //bb.writeInt(header.getPayloadLength());//长度
 	        return bb;
 	    }
 	    

@@ -21,11 +21,13 @@ import io.netty.util.ReferenceCountUtil;
 public class gb32960Decoder extends ReplayingDecoder<Void>{
 	@Override
     protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) {
-        System.out.println("decode<<<<< ip:"+ctx.channel().remoteAddress()+"hex:"+ByteBufUtil.hexDump(in));
+        //System.out.println("decode<<<<< ip:"+ctx.channel().remoteAddress()+"hex:"+ByteBufUtil.hexDump(in));
+        System.out.println("decode<<<<< ip:"+ctx.channel().remoteAddress()+"hex:"+ByteBufUtil.hexDump(this.internalBuffer()));
         if (in.readableBytes() < 25) { //包头最小长度
             return;
         }
         if (in.readUnsignedShort()!= gb32960Const.START_SYMBOL) {
+        	in.skipBytes(this.actualReadableBytes());//丢弃
         	ctx.close();
         	return;
         }
@@ -53,6 +55,7 @@ public class gb32960Decoder extends ReplayingDecoder<Void>{
         if (pkgCheckSum != calCheckSum) {
             //log.warn("校验码错误,pkgCheckSum:{},calCheckSum:{}", pkgCheckSum, calCheckSum);
             System.out.println("校验码错误,pkgCheckSum:"+pkgCheckSum+",calCheckSum:"+ calCheckSum);
+            in.skipBytes(length+23); //丢弃
             ReferenceCountUtil.safeRelease(escape);
             return null;
         }

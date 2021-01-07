@@ -11,7 +11,6 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import com.alibaba.fastjson.JSONObject;
-import com.eshop.jt808.pojo.Location;
 import com.eshop.jt808.service.LocationInRedisService;
 import com.eshop.modules.websocket.WebsocketServer;
 import com.eshop.pojo.VehicleStatus;
@@ -32,7 +31,7 @@ public class ScheduleTask {
     public void printXXXXXXX(){
         try{
             //Thread.sleep(5000);  //睡眠5秒
-            logger.info(Thread.currentThread().getName()); //打印当前线程名字
+            //logger.info(Thread.currentThread().getName()); //打印当前线程名字
             String Strfilter = null;
             //List<Location> list1 = locationInRedisService.getAll(Strfilter);
             List<VehicleStatus> list = vehicleStatusInRedisService.getAll(Strfilter);
@@ -48,7 +47,7 @@ public class ScheduleTask {
     public void printYYYYYYY(){
         try{
             Thread.sleep(5000);
-            logger.info(Thread.currentThread().getName());
+           // logger.info(Thread.currentThread().getName());
  
         }catch (Exception e){
             logger.error(e.getMessage());

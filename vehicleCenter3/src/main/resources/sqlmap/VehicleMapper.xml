@@ -20,10 +20,24 @@
     <result column="purchase_way" jdbcType="VARCHAR" property="purchaseWay" />
     <result column="user_company_id" jdbcType="BIGINT" property="userCompanyId" />
     <result column="owner_company_id" jdbcType="BIGINT" property="ownerCompanyId" />
+    <result column="iccid" jdbcType="VARCHAR" property="iccid" />
+    <result column="energy_type" jdbcType="INTEGER" property="energyType" />
+    <result column="max_speed" jdbcType="INTEGER" property="maxSpeed" />
+    <result column="max_range" jdbcType="INTEGER" property="maxRange" />
+    <result column="transmission_ratio" jdbcType="VARCHAR" property="transmissionRatio" />
+    <result column="charge_device_count" jdbcType="INTEGER" property="chargeDeviceCount" />
+    <result column="drive_motor_count" jdbcType="INTEGER" property="driveMotorCount" />
+    <result column="engine_id" jdbcType="VARCHAR" property="engineId" />
+    <result column="oil_type" jdbcType="VARCHAR" property="oilType" />
+    <result column="oil_label" jdbcType="VARCHAR" property="oilLabel" />
+    <result column="max_power" jdbcType="FLOAT" property="maxPower" />
+    <result column="max_torque" jdbcType="FLOAT" property="maxTorque" />
   </resultMap>
   <sql id="Base_Column_List">
     id, name, type, vin, license,company_num,chassis,configure, create_by, create_time, last_update_by, 
-    last_update_time,brand,status,manufacture_status,purchase_way,user_company_id,owner_company_id
+    last_update_time,brand,status,manufacture_status,purchase_way,user_company_id,owner_company_id,iccid,
+    energy_type,max_speed,max_range,transmission_ratio,charge_device_count,drive_motor_count,engine_id,
+    oil_type,oil_label,max_power,max_torque
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
@@ -42,13 +56,27 @@
   		</if>
   	</where> 
   </select>
+  <select id="findByVin" parameterType="java.lang.String" resultMap="BaseResultMap">
+  	select
+  	<include refid="Base_Column_List" />
+  	from vehicle
+  	where vin = #{vin,jdbcType=VARCHAR}
+  </select>
+  <select id="findByIccid" parameterType="java.lang.String" resultMap="BaseResultMap">
+  	select
+  	<include refid="Base_Column_List" />
+  	from vehicle
+  	where iccid = #{iccid,jdbcType=VARCHAR}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from vehicle
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.eshop.pojo.Vehicle">
     insert into vehicle (id, name, type, vin, license,company_num,chassis,configure, create_by, create_time, last_update_by, 
-    last_update_time,brand,status,manufacture_status,purchase_way,user_company_id,owner_company_id
+    last_update_time,brand,status,manufacture_status,purchase_way,user_company_id,owner_company_id,iccid,
+    energy_type,max_speed,max_range,transmission_ratio,charge_device_count,drive_motor_count,engine_id,
+    oil_type,oil_label,max_power,max_torque
       )
     values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR},
       #{type,jdbcType=VARCHAR}, #{vin,jdbcType=VARCHAR}, #{license,jdbcType=VARCHAR}, #{companyNum,jdbcType=VARCHAR}, 
@@ -57,6 +85,12 @@
       #{lastUpdateTime,jdbcType=TIMESTAMP},
        #{brand,jdbcType=VARCHAR},#{status,jdbcType=VARCHAR},#{manufactureStatus,jdbcType=TINYINT},#{puerchaseWay,jdbcType=VARCHAR},
        #{userCompanyId,jdbcType=BIGINT},#{ownerCompanyId,jdbcType=BIGINT},
+       #{iccid,jdbcType=VARCHAR},#{energyType,jdbcType=INTEGER},
+       #{maxSpeed,jdbcType=INTEGER},#{maxRange,jdbcType=INTEGER},
+       #{transmissionRatio,jdbcType=VARCHAR},#{chargeDeviceCount,jdbcType=INTEGER},
+       #{driveMotorCount,jdbcType=INTEGER},#{engineId,jdbcType=VARCHAR},
+       #{oilType,jdbcType=VARCHAR},#{oilLabel,jdbcType=VARCHAR},
+       #{maxPower,jdbcType=FLOAT},#{maxTorque,jdbcType=FLOAT}
       )
   </insert>
   
@@ -117,6 +151,42 @@
       <if test="ownerCompanyId != null">
         owner_company_id,
       </if>
+      <if test="iccid != null">
+        iccid,
+      </if>
+      <if test="energyType != null">
+        energy_type,
+      </if>
+      <if test="maxSpeed != null">
+        max_speed,
+      </if>
+      <if test="maxRange != null">
+        max_range,
+      </if>
+      <if test="transmissionRatio != null">
+        transmission_ratio,
+      </if>
+      <if test="chargeDeviceCount != null">
+        charge_device_count,
+      </if>
+      <if test="driveMotorCount != null">
+        drive_motor_count,
+      </if>
+      <if test="engineId != null">
+        engine_id,
+      </if>
+      <if test="oilType != null">
+        oil_type,
+      </if>
+      <if test="oilLabel != null">
+        oil_label,
+      </if>
+      <if test="maxPower != null">
+        max_power,
+      </if>
+      <if test="maxTorque != null">
+        max_torque
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -173,6 +243,42 @@
       <if test="ownerCompanyId != null">
         #{ownerCompanyId,jdbcType=BIGINT},
       </if>
+      <if test="iccid != null">
+        #{iccid,jdbcType=VARCHAR},
+      </if>
+      <if test="energyType != null">
+        #{energyType,jdbcType=INTEGER},
+      </if>
+      <if test="maxSpeed != null">
+        #{maxSpeed,jdbcType=INTEGER},
+      </if>
+      <if test="maxRange != null">
+        #{maxRange,jdbcType=INTEGER},
+      </if>
+      <if test="transmissionRatio != null">
+        #{transmissionRatio,jdbcType=VARCHAR},
+      </if>
+      <if test="chargeDeviceCount != null">
+        #{chargeDeviceCount,jdbcType=INTEGER},
+      </if>
+      <if test="driveMotorCount != null">
+        #{driveMotorCount,jdbcType=INTEGER},
+      </if>
+      <if test="engineId != null">
+        #{engineId,jdbcType=VARCHAR},
+      </if>
+      <if test="oilType != null">
+        #{oilType,jdbcType=VARCHAR},
+      </if>
+      <if test="oilLabel != null">
+        #{oilLabel,jdbcType=VARCHAR},
+      </if>
+      <if test="maxPower != null">
+        #{maxPower,jdbcType=FLOAT},
+      </if>
+      <if test="maxTorque != null">
+        #{maxTorque,jdbcType=FLOAT}
+      </if>
     </trim>
   </insert>
   
@@ -228,7 +334,43 @@
         user_company_id = #{userCompanyId,jdbcType=BIGINT},
       </if>
        <if test="ownerCompanyId != null">
-        owner_company_id = #{ownerCompanyId,jdbcType=BIGINT}
+        owner_company_id = #{ownerCompanyId,jdbcType=BIGINT},
+      </if>
+      <if test="iccid != null">
+        iccid = #{iccid,jdbcType=VARCHAR},
+      </if>
+      <if test="energyType != null">
+        energy_type = #{energyType,jdbcType=INTEGER},
+      </if>
+      <if test="maxSpeed != null">
+        max_speed = #{maxSpeed,jdbcType=INTEGER},
+      </if>
+      <if test="maxRange != null">
+       max_range = #{maxRange,jdbcType=INTEGER},
+      </if>
+      <if test="transmissionRatio != null">
+        transmission_ratio = #{transmissionRatio,jdbcType=VARCHAR},
+      </if>
+      <if test="chargeDeviceCount != null">
+        charge_device_count = #{chargeDeviceCount,jdbcType=INTEGER},
+      </if>
+      <if test="driveMotorCount != null">
+        drive_motor_count = #{driveMotorCount,jdbcType=INTEGER},
+      </if>
+      <if test="engineId != null">
+       engine_id = #{engineId,jdbcType=VARCHAR},
+      </if>
+      <if test="oilType != null">
+        oil_type = #{oilType,jdbcType=VARCHAR},
+      </if>
+      <if test="oilLabel != null">
+        oil_label = #{oilLabel,jdbcType=VARCHAR},
+      </if>
+      <if test="maxPower != null">
+        max_power = #{maxPower,jdbcType=FLOAT},
+      </if>
+      <if test="maxTorque != null">
+        max_torque = #{maxTorque,jdbcType=FLOAT}
       </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
@@ -252,7 +394,19 @@
       manufacture_status = #{manufactureStatus,jdbcType=TINYINT},
       purchase_way = #{purchaseWay,jdbcType=VARCHAR},
       user_company_id = #{userCompanyId,jdbcType=BIGINT},
-      owner_company_id = #{ownerCompanyId,jdbcType=BIGINT}
+      owner_company_id = #{ownerCompanyId,jdbcType=BIGINT},
+      iccid = #{iccid,jdbcType=VARCHAR},
+      energy_type = #{energyType,jdbcType=INTEGER},
+      max_speed = #{maxSpeed,jdbcType=INTEGER},
+      max_range = #{maxRange,jdbcType=INTEGER},
+      transmission_ratio = #{transmissionRatio,jdbcType=VARCHAR},
+      charge_device_count = #{chargeDeviceCount,jdbcType=INTEGER},
+      drive_motor_count = #{driveMotorCount,jdbcType=INTEGER},
+      engine_id = #{engineId,jdbcType=VARCHAR},
+      oil_type = #{oilType,jdbcType=VARCHAR},
+      oil_label = #{oilLabel,jdbcType=VARCHAR},
+      max_power = #{maxPower,jdbcType=FLOAT},
+      max_torque = #{maxTorque,jdbcType=FLOAT}
     where id = #{id,jdbcType=BIGINT}
   </update>
   <select id="findPage" resultMap="BaseResultMap">
@@ -318,6 +472,42 @@
     	<if test="lastUpdateBy != null and lastUpdateBy !=''">
         	and v.last_update_by LIKE CONCAT(CONCAT('%',#{lastUpdateBy}),'%')
     	</if>
+    	<if test="iccid !=null and iccid !=''">
+  			and v.iccid LIKE CONCAT(CONCAT('%',#{iccid}),'%')
+  		</if>
+  		<if test="energyType !=null and energyType !=''">
+  			and  v.energy_type = #{energyType,jdbcType=INTEGER}
+  		</if>
+  		<if test="maxSpeed !=null and maxSpeed !=''">
+  			and v.max_speed >= #{maxSpeed,jdbcType=INTEGER}
+  		</if>
+  		<if test="maxRange !=null and maxRange !=''">
+  			and v.max_range >= #{maxRange,jdbcType=INTEGER}
+  		</if>
+  		<if test="transmissionRatio !=null and transmissionRatio !=''">
+  			and v.transmission_ratio LIKE CONCAT(CONCAT('%',#{transmissionRatio}),'%')
+  		</if>
+  		<if test="chargeDeviceCount !=null and chargeDeviceCount !=''">
+  			and v.charge_device_count >= #{chargeDeviceCount,jdbcType=INTEGER}
+  		</if>
+  		<if test="driveMotorCount !=null and driveMotorCount !=''">
+  			and v.drive_motor_count >= #{driveMotorCount,jdbcType=INTEGER}
+  		</if>
+  		<if test="engineId !=null and engineId !=''">
+  			and v.engine_id LIKE CONCAT(CONCAT('%',#{engineId}),'%')
+  		</if>
+  		<if test="oilType !=null and oilType !=''">
+  			and v.oil_type LIKE CONCAT(CONCAT('%',#{oilType}),'%')
+  		</if>
+  		<if test="oilLabel !=null and oilLabel !=''">
+  			and v.oil_label LIKE CONCAT(CONCAT('%',#{oilLabel}),'%')
+  		</if>
+  		<if test="maxPower !=null and maxPower !=''">
+  			and v.max_power >= #{maxPower,jdbcType=FLOAT}
+  		</if>
+  		<if test="maxTorque !=null and maxTorque !=''">
+  			and v.max_torque >= #{maxTorque,jdbcType=FLOAT}
+  		</if>
     </where>
   </select>
 
