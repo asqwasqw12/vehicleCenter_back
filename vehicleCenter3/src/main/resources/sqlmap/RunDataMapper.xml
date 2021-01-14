@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.eshop.gateway.gb32960.dao.RunDataMapper">
+<resultMap id="BaseResultMap" type="com.eshop.gateway.gb32960.pojo.RunData">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="vehicle_id" jdbcType="BIGINT" property="vehicleId" />
+    <result column="terminal_phone" jdbcType="VARCHAR" property="terminalPhone" />
+    <result column="vin" jdbcType="VARCHAR" property="vin" />
+    <result column="sample_time" jdbcType="TIMESTAMP" property="sampleTime" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="run_status" jdbcType="SMALLINT" property="runStatus" />
+    <result column="charge_status" jdbcType="SMALLINT" property="chargeStatus" />
+    <result column="operation_mode" jdbcType="SMALLINT" property="operationMode" />
+    <result column="speed" jdbcType="INTEGER" property="speed" />
+    <result column="mile_age" jdbcType="BIGINT" property="mileAge" />
+    <result column="total_voltage" jdbcType="INTEGER" property="totalVoltage" />
+    <result column="total_current" jdbcType="INTEGER" property="totalCurrent" />
+    <result column="soc" jdbcType="SMALLINT" property="soc" />
+    <result column="dc_status" jdbcType="SMALLINT" property="dcStatus" />
+    <result column="gears" jdbcType="SMALLINT" property="gears" />
+    <result column="insulation_resistance" jdbcType="INTEGER" property="insulationResistance" />
+    <result column="throttle" jdbcType="SMALLINT" property="throttle" />
+    <result column="brake" jdbcType="SMALLINT" property="brake" />
+</resultMap>
+  <sql id="Base_Column_List">
+    id, vehicle_id, terminal_phone, vin, sample_time, create_time,
+    run_status,charge_status,operation_mode,speed,mile_age,total_voltage,
+    total_current,soc,dc_status,gears,insulation_resistance,throttle,brake
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ter_run_data
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from ter_run_data
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.eshop.gateway.gb32960.pojo.RunData">
+    insert into ter_run_data (id, vehicle_id, terminal_phone, vin, sample_time, create_time,
+    run_status,charge_status,operation_mode,speed,mile_age,total_voltage,
+    total_current,soc,dc_status,gears,insulation_resistance,throttle,brake
+      )
+    values (#{id,jdbcType=BIGINT}, #{vehicleId,jdbcType=BIGINT}, #{terminalPhone,jdbcType=VARCHAR}, 
+      #{vin,jdbcType=VARCHAR}, #{sampleTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP },
+      #{runStatus,jdbcType=SMALLINT},#{chargeStatus,jdbcType=SMALLINT},#{operationMode,jdbcType=SMALLINT},
+      #{speed,jdbcType=INTEGER},#{mileAge,jdbcType=BIGINT },#{totalVoltage,jdbcType=INTEGER},
+      #{totalCurrent,jdbcType=INTEGER},#{soc,jdbcType=SMALLINT},#{dcStatus,jdbcType=SMALLINT },
+      #{gears,jdbcType=SMALLINT},#{insulationResistance,jdbcType=INTEGER},#{throttle,jdbcType=SMALLINT},#{brake,jdbcType=SMALLINT}
+      )
+  </insert>
+  
+  <insert id="insertSelective" parameterType="com.eshop.gateway.gb32960.pojo.RunData">
+    insert into ter_run_data
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="vehicleId != null">
+        vehicle_id,
+      </if>
+      <if test="terminalPhone != null">
+        terminal_phone,
+      </if>
+      <if test="vin != null">
+        vin,
+      </if>
+      <if test="sampleTime != null">
+        sample_time,
+      </if>
+      <if test="createTime != null">
+       create_time,
+      </if>
+      <if test="runStatus != null">
+        run_status,
+      </if>
+      <if test="chargeStatus != null">
+        charge_status,
+      </if>
+      <if test="operationMode != null">
+        operation_mode,
+      </if>
+  	  <if test="speed != null">
+        speed,
+      </if>
+      <if test="mileAge != null">
+        mile_age,
+      </if>
+      <if test="totalVoltage != null">
+        total_voltage,
+      </if>
+      <if test="totalCurrent != null">
+       total_current,
+      </if>
+      <if test="soc != null">
+       soc,
+      </if>
+      <if test="dcStatus != null">
+        dc_status,
+      </if>
+      <if test="gears != null">
+       gears,
+      </if>
+      <if test="insulationResistance != null">
+        insulation_resistance,
+      </if>
+      <if test="throttle != null">
+        throttle,
+      </if>
+      <if test="brake != null">
+        brake
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="vehicleId != null">
+        #{vehicleId,jdbcType=BIGINT},
+      </if>
+      <if test="terminalPhone != null">
+        #{terminalPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="vin != null">
+        #{vin,jdbcType=VARCHAR},
+      </if>
+      <if test="sampleTime != null">
+        #{sampleTime,jdbcType=TIMESTAMP },
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP },
+      </if>
+      <if test="runStatus != null">
+        #{runStatus,jdbcType=SMALLINT },
+      </if>
+      <if test="chargeStatus != null">
+        #{chargeStatus,jdbcType=SMALLINT },
+      </if>
+      <if test="operationMode != null">
+        #{operationMode,jdbcType=SMALLINT },
+      </if>
+      <if test="speed != null">
+        #{speed,jdbcType=INTEGER },
+      </if>
+      <if test="mileAge != null">
+        #{mileAge,jdbcType=BIGINT },
+      </if>
+      <if test="totalVoltage != null">
+        #{totalVoltage,jdbcType=INTEGER },
+      </if>
+      <if test="totalCurrent != null">
+        #{totalCurrent,jdbcType=INTEGER },
+      </if>
+      <if test="soc != null">
+        #{soc,jdbcType=SMALLINT },
+      </if>
+      <if test="dcStatus != null">
+        #{dcStatus,jdbcType=SMALLINT },
+      </if>
+      <if test="gears != null">
+        #{gears,jdbcType=SMALLINT },
+      </if>
+      <if test="insulationResistance != null">
+        #{insulationResistance,jdbcType=INTEGER },
+      </if>
+      <if test="throttle != null">
+        #{throttle,jdbcType=SMALLINT },
+      </if>
+      <if test="brake != null">
+        #{brake,jdbcType=SMALLINT }
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.eshop.gateway.gb32960.pojo.RunData">
+    update ter_run_data
+    <set>
+      <if test="vehicleId != null">
+       vehicle_id = #{vehicleId,jdbcType=BIGINT},
+      </if>
+      <if test="terminalPhone != null">
+       terminal_phone = #{terminalPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="vin != null">
+        vin = #{vin,jdbcType=VARCHAR},
+      </if>
+      <if test="sampleTime != null">
+        sample_time = #{sampleTime,jdbcType=TIMESTAMP },
+      </if>
+      <if test="createTime != null">
+       create_time = #{createTime,jdbcType=TIMESTAMP },
+      </if>
+	  <if test="runStatus != null">
+       run_status = #{runStatus,jdbcType=SMALLINT },
+      </if>
+      <if test="chargeStatus != null">
+       charge_status = #{chargeStatus,jdbcType=SMALLINT },
+      </if>
+      <if test="operationMode != null">
+       operation_mode = #{operationMode,jdbcType=SMALLINT },
+      </if>
+      <if test="speed != null">
+       speed = #{speed,jdbcType=INTEGER },
+      </if>
+      <if test="mileAge != null">
+       mile_age = #{mileAge,jdbcType=BIGINT },
+      </if>
+      <if test="totalVoltage != null">
+       total_voltage = #{totalVoltage,jdbcType=INTEGER },
+      </if>
+      <if test="totalCurrent != null">
+       total_current = #{totalCurrent,jdbcType=INTEGER },
+      </if>
+      <if test="soc != null">
+       soc = #{soc,jdbcType=SMALLINT },
+      </if>
+      <if test="dcStatus != null">
+       dc_status = #{dcStatus,jdbcType=SMALLINT },
+      </if>
+      <if test="gears != null">
+       gears = #{gears,jdbcType=SMALLINT },
+      </if>
+      <if test="insulationResistance != null">
+       insulation_resistance = #{insulationResistance,jdbcType=INTEGER },
+      </if>
+      <if test="throttle != null">
+       throttle = #{throttle,jdbcType=SMALLINT },
+      </if>
+      <if test="brake != null">
+       brake = #{brake,jdbcType=SMALLINT }
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <update id="updateByPrimaryKey" parameterType="com.eshop.gateway.gb32960.pojo.RunData">
+    update ter_run_data
+    set  vehicle_id = #{vehicleId,jdbcType=BIGINT},
+       terminal_phone = #{terminalPhone,jdbcType=VARCHAR},
+       vin = #{vin,jdbcType=VARCHAR},
+       sample_time = #{sampleTime,jdbcType=TIMESTAMP },
+       create_time = #{createTime,jdbcType=TIMESTAMP },
+       run_status = #{runStatus,jdbcType=SMALLINT },
+       charge_status = #{chargeStatus,jdbcType=SMALLINT },
+       operation_mode = #{operationMode,jdbcType=SMALLINT },
+       speed = #{speed,jdbcType=INTEGER },
+       mile_age = #{mileAge,jdbcType=BIGINT },
+       total_voltage = #{totalVoltage,jdbcType=INTEGER },
+       total_current = #{totalCurrent,jdbcType=INTEGER },
+       soc = #{soc,jdbcType=SMALLINT },
+       dc_status = #{dcStatus,jdbcType=SMALLINT },
+       gears = #{gears,jdbcType=SMALLINT },
+       insulation_resistance = #{insulationResistance,jdbcType=INTEGER },
+       throttle = #{throttle,jdbcType=SMALLINT },
+       brake = #{brake,jdbcType=SMALLINT }
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <select id="findAll" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ter_run_data
+  </select>
+  
+  <select id="findByVehicleId" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ter_run_data
+    where vehicle_id = #{vehicleId,jdbcType=BIGINT}
+  </select>
+</mapper>

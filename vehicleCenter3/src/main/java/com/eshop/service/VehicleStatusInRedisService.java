@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 
 import com.eshop.common.RedisUtils;
 import com.eshop.common.StringUtils;
+import com.eshop.gateway.gb32960.pojo.LocationData;
+import com.eshop.gateway.gb32960.service.LocationDataInRedisService;
 import com.eshop.jt808.pojo.Location;
 import com.eshop.jt808.service.LocationInRedisService;
 import com.eshop.pojo.Vehicle;
@@ -32,15 +34,16 @@ public class VehicleStatusInRedisService {
      * @return /
      */
     public List<VehicleStatus> getAll(String filter){
-        List<String> keys = redisUtils.scan(LocationInRedisService.getLocationKey() + "*");
+        //List<String> keys = redisUtils.scan(LocationInRedisService.getLocationKey() + "*");
+        List<String> keys = redisUtils.scan(LocationDataInRedisService.getLocationKey() + "*");
         Collections.reverse(keys);
         List<VehicleStatus> vehicleStatusList = new ArrayList<>();
         for (String key : keys) {
-        	Location location = (Location) redisUtils.get(key);
-        	Vehicle vehicle = vehicleService.findById(location.getVehicleId());
+        	LocationData locationData = (LocationData) redisUtils.get(key);
+        	Vehicle vehicle = vehicleService.findById(locationData.getVehicleId());
         	VehicleStatus vehicleStatus = new VehicleStatus();
-        	vehicleStatus.setVehicleId(location.getVehicleId());
-        	vehicleStatus.setLocation(location);
+        	vehicleStatus.setVehicleId(locationData.getVehicleId());
+        	vehicleStatus.setLocationData(locationData);
         	if(vehicle !=null) {
         		vehicleStatus.setVehicle(vehicle);
         	}

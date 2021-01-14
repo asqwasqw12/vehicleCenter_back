@@ -5,7 +5,7 @@
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="vehicle_id" jdbcType="BIGINT" property="vehicleId" />
     <result column="terminal_phone" jdbcType="VARCHAR" property="terminalPhone" />
-    <result column="vin" jdbcType="INTEGER" property="vin" />
+    <result column="vin" jdbcType="VARCHAR" property="vin" />
     <result column="sample_time" jdbcType="TIMESTAMP" property="sampleTime" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="num" jdbcType="SMALLINT" property="num" />

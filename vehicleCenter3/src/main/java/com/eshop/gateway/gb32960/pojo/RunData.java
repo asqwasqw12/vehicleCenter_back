@@ -13,6 +13,11 @@ public class RunData {
 	private String terminalPhone; // 终端手机号
 	
 	private String vin; //车辆唯一识别码
+	
+    private Date createTime;	//创建时间
+    
+	//数据采集时间
+	private LocalDateTime sampleTime;//采样时间
 
 	//车辆运行状态,01:车辆启动，02：熄火，03：其他状态，FE:表示异常，FF:表示无效
     private Short runStatus;
@@ -53,10 +58,7 @@ public class RunData {
     //制动踏板，有效值范围：0-100，系数：1%，0：制动关的状态，0x65即“101”表示制动有效状态，FE:表示异常，FF:表示无效
     private Short brake;
     
-    private Date createTime;	//创建时间
     
-	//数据采集时间
-	private LocalDateTime sampleTime;//采样时间
     
     public void setId(Long id) {
     	this.id = id;

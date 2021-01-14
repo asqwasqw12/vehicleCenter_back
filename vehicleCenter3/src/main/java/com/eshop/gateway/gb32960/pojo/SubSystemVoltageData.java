@@ -32,14 +32,18 @@ public class SubSystemVoltageData {
     //单体电池个数
     private Integer cellCount;
 
-    //
+    //电池序号
     private Integer batteryNumber;
 
      //本帧单体电池总数
     private Short batteryCount;
 
     //单体电池电压列表
-    private List<Integer> cellVoltages;
+    private String cellVoltages;
+    
+    //非数据库数据
+    //单体电池电压列表
+    private List<Integer> cellVoltageList;
 	
 	public void setId(Long id) {
     	this.id = id;
@@ -138,12 +142,20 @@ public class SubSystemVoltageData {
         this.batteryCount = batteryCount;
     }
 
-    public List<Integer> getCellVoltages() {
+    public String getCellVoltages() {
         return cellVoltages;
     }
 
-    public void setCellVoltages(List<Integer> cellVoltages) {
+    public void setCellVoltages(String cellVoltages) {
         this.cellVoltages = cellVoltages;
+    }
+    
+    public List<Integer> getCellVoltageList() {
+        return cellVoltageList;
+    }
+
+    public void setCellVoltageList(List<Integer> cellVoltageList) {
+        this.cellVoltageList = cellVoltageList;
     }
 
 }

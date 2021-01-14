@@ -3,11 +3,13 @@ package com.eshop.gateway.gb32960.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.eshop.gateway.gb32960.dao.SubSystemVoltageDataMapper;
 import com.eshop.gateway.gb32960.pojo.SubSystemVoltageData;
 import com.eshop.gateway.gb32960.service.SubSystemVoltageDataService;
 
+@Service
 public class SubSystemVoltageDataServiceImpl implements SubSystemVoltageDataService{
 	@Autowired
 	private SubSystemVoltageDataMapper SubSystemVoltageDataMapper;

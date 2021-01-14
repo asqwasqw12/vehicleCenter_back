@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.eshop.gateway.gb32960.dao.ExtremeDataMapper">
+<resultMap id="BaseResultMap" type="com.eshop.gateway.gb32960.pojo.ExtremeData">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="vehicle_id" jdbcType="BIGINT" property="vehicleId" />
+    <result column="terminal_phone" jdbcType="VARCHAR" property="terminalPhone" />
+    <result column="vin" jdbcType="VARCHAR" property="vin" />
+    <result column="sample_time" jdbcType="TIMESTAMP" property="sampleTime" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="max_voltage_system_num" jdbcType="SMALLINT" property="maxVoltageSystemNum" />
+    <result column="max_voltage_battery_num" jdbcType="SMALLINT" property="maxVoltageBatteryNum" />
+    <result column="battery_max_voltage" jdbcType="INTEGER" property="batteryMaxVoltage" />
+    <result column="min_voltage_system_num" jdbcType="SMALLINT" property="minVoltageSystemNum" />    
+    <result column="min_voltage_battery_num" jdbcType="SMALLINT" property="minVoltageBatteryNum" />
+    <result column="battery_min_voltage" jdbcType="INTEGER" property="batteryMinVoltage" />
+    <result column="max_temperature_system_num" jdbcType="SMALLINT" property="maxTemperatureSystemNum" />
+    <result column="max_temperature_num" jdbcType="SMALLINT" property="maxTemperatureNum" />
+    <result column="max_temperature" jdbcType="SMALLINT" property="maxTemperature" />
+    <result column="min_temperature_system_num" jdbcType="SMALLINT" property="minTemperatureSystemNum" />
+    <result column="min_temperature_num" jdbcType="SMALLINT" property="minTemperatureNum" />
+    <result column="min_temperature" jdbcType="SMALLINT" property="minTemperature" />
+ </resultMap>
+  <sql id="Base_Column_List">
+    id, vehicle_id, terminal_phone, vin, sample_time, create_time,
+    max_voltage_system_num,max_voltage_battery_num,battery_max_voltage,min_voltage_system_num,min_voltage_battery_num,battery_min_voltage,
+    max_temperature_system_num,max_temperature_num,max_temperature,min_temperature_system_num,min_temperature_num,min_temperature
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ter_extreme_data
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from ter_extreme_data
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.eshop.gateway.gb32960.pojo.ExtremeData">
+    insert into ter_extreme_data (id, vehicle_id, terminal_phone, vin, sample_time, create_time,
+    max_voltage_system_num,max_voltage_battery_num,battery_max_voltage,min_voltage_system_num,min_voltage_battery_num,battery_min_voltage,
+    max_temperature_system_num,max_temperature_num,max_temperature,min_temperature_system_num,min_temperature_num,min_temperature
+      )
+    values (#{id,jdbcType=BIGINT}, #{vehicleId,jdbcType=BIGINT}, #{terminalPhone,jdbcType=VARCHAR}, 
+      #{vin,jdbcType=VARCHAR}, #{sampleTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP },
+      #{maxVoltageSystemNum,jdbcType=SMALLINT},#{maxVoltageBatteryNum,jdbcType=SMALLINT},#{batteryMaxVoltage,jdbcType=INTEGER},
+      #{minVoltageSystemNum,jdbcType=SMALLINT},#{minVoltageBatteryNum,jdbcType=SMALLINT},#{batteryMinVoltage,jdbcType=INTEGER},
+      #{maxTemperatureSystemNum,jdbcType=SMALLINT},#{maxTemperatureNum,jdbcType=SMALLINT},#{maxTemperature,jdbcType=SMALLINT},
+      #{minTemperatureSystemNum,jdbcType=SMALLINT},#{minTemperatureNum,jdbcType=SMALLINT},#{minTemperature,jdbcType=SMALLINT}
+      )
+  </insert>
+  
+  <insert id="insertSelective" parameterType="com.eshop.gateway.gb32960.pojo.ExtremeData">
+    insert into ter_extreme_data
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="vehicleId != null">
+        vehicle_id,
+      </if>
+      <if test="terminalPhone != null">
+        terminal_phone,
+      </if>
+      <if test="vin != null">
+        vin,
+      </if>
+      <if test="sampleTime != null">
+        sample_time,
+      </if>
+      <if test="createTime != null">
+       create_time,
+      </if>
+      <if test="maxVoltageSystemNum != null">
+        max_voltage_system_num,
+      </if>
+      <if test="maxVoltageBatteryNum != null">
+        max_voltage_battery_num,
+      </if>
+      <if test="batteryMaxVoltage != null">
+        battery_max_voltage,
+      </if>
+  	  <if test="minVoltageSystemNum != null">
+        min_voltage_system_num,
+      </if>
+      <if test="minVoltageBatteryNum != null">
+        min_voltage_battery_num,
+      </if>
+      <if test="batteryMinVoltage != null">
+        battery_min_voltage,
+      </if>
+      <if test="maxTemperatureSystemNum != null">
+        max_temperature_system_num,
+      </if>
+      <if test="maxTemperatureNum != null">
+        max_temperature_num,
+      </if>
+      <if test="maxTemperature != null">
+        max_temperature,
+      </if>
+      <if test="minTemperatureSystemNum != null">
+        min_temperature_system_num,
+      </if>
+      <if test="minTemperatureNum != null">
+        min_temperature_num,
+      </if>
+      <if test="minTemperature != null">
+        min_temperature
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="vehicleId != null">
+        #{vehicleId,jdbcType=BIGINT},
+      </if>
+      <if test="terminalPhone != null">
+        #{terminalPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="vin != null">
+        #{vin,jdbcType=VARCHAR},
+      </if>
+      <if test="sampleTime != null">
+        #{sampleTime,jdbcType=TIMESTAMP },
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP },
+      </if>
+      <if test="maxVoltageSystemNum != null">
+        #{maxVoltageSystemNum,jdbcType=SMALLINT },
+      </if>
+      <if test="maxVoltageBatteryNum != null">
+        #{maxVoltageBatteryNum,jdbcType=SMALLINT },
+      </if>
+      <if test="batteryMaxVoltage != null">
+        #{batteryMaxVoltage,jdbcType=INTEGER },
+      </if>
+      <if test="minVoltageSystemNum != null">
+        #{minVoltageSystemNum,jdbcType=SMALLINT },
+      </if>
+      <if test="minVoltageBatteryNum != null">
+        #{minVoltageBatteryNum,jdbcType=SMALLINT },
+      </if>
+      <if test="batteryMinVoltage != null">
+        #{batteryMinVoltage,jdbcType=INTEGER },
+      </if>
+      <if test="maxTemperatureSystemNum != null">
+        #{maxTemperatureSystemNum,jdbcType=SMALLINT },
+      </if>
+      <if test="maxTemperatureNum != null">
+        #{maxTemperatureNum,jdbcType=SMALLINT },
+      </if>
+      <if test="maxTemperature != null">
+        #{maxTemperature,jdbcType=SMALLINT },
+      </if>
+      <if test="minTemperatureSystemNum != null">
+        #{minTemperatureSystemNum,jdbcType=SMALLINT },
+      </if>
+      <if test="minTemperatureNum != null">
+        #{minTemperatureNum,jdbcType=SMALLINT },
+      </if>
+      <if test="minTemperature != null">
+        #{minTemperature,jdbcType=SMALLINT }
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.eshop.gateway.gb32960.pojo.ExtremeData">
+    update ter_extreme_data
+    <set>
+      <if test="vehicleId != null">
+       vehicle_id = #{vehicleId,jdbcType=BIGINT},
+      </if>
+      <if test="terminalPhone != null">
+       terminal_phone = #{terminalPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="vin != null">
+        vin = #{vin,jdbcType=VARCHAR},
+      </if>
+      <if test="sampleTime != null">
+        sample_time = #{sampleTime,jdbcType=TIMESTAMP },
+      </if>
+      <if test="createTime != null">
+       create_time = #{createTime,jdbcType=TIMESTAMP },
+      </if>
+	  <if test="maxVoltageSystemNum != null">
+       max_voltage_system_num = #{maxVoltageSystemNum,jdbcType=SMALLINT },
+      </if>
+      <if test="maxVoltageBatteryNum != null">
+       max_voltage_battery_num = #{maxVoltageBatteryNum,jdbcType=SMALLINT },
+      </if>
+      <if test="batteryMaxVoltage != null">
+       battery_max_voltage = #{batteryMaxVoltage,jdbcType=INTEGER },
+      </if>
+      <if test="minVoltageSystemNum != null">
+       min_voltage_system_num = #{minVoltageSystemNum,jdbcType=SMALLINT },
+      </if>
+      <if test="minVoltageBatteryNum != null">
+       min_voltage_battery_num = #{minVoltageBatteryNum,jdbcType=SMALLINT },
+      </if>
+      <if test="batteryMinVoltage != null">
+       battery_min_voltage = #{batteryMinVoltage,jdbcType=INTEGER },
+      </if>
+      <if test="maxTemperatureSystemNum != null">
+       max_temperature_system_num = #{maxTemperatureSystemNum,jdbcType=SMALLINT },
+      </if>
+      <if test="maxTemperatureNum != null">
+       max_temperature_num = #{maxTemperatureNum,jdbcType=SMALLINT },
+      </if>
+      <if test="maxTemperature != null">
+       max_temperature = #{maxTemperature,jdbcType=SMALLINT },
+      </if>
+      <if test="minTemperatureSystemNum != null">
+       min_temperature_system_num = #{minTemperatureSystemNum,jdbcType=SMALLINT },
+      </if>
+      <if test="minTemperatureNum != null">
+       min_temperature_num = #{minTemperatureNum,jdbcType=SMALLINT },
+      </if>
+      <if test="minTemperature != null">
+       min_temperature = #{minTemperature,jdbcType=SMALLINT }
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <update id="updateByPrimaryKey" parameterType="com.eshop.gateway.gb32960.pojo.ExtremeData">
+    update ter_extreme_data
+    set  vehicle_id = #{vehicleId,jdbcType=BIGINT},
+       terminal_phone = #{terminalPhone,jdbcType=VARCHAR},
+       vin = #{vin,jdbcType=VARCHAR},
+       sample_time = #{sampleTime,jdbcType=TIMESTAMP },
+       create_time = #{createTime,jdbcType=TIMESTAMP },
+       max_voltage_system_num = #{maxVoltageSystemNum,jdbcType=SMALLINT },
+       max_voltage_battery_num = #{maxVoltageBatteryNum,jdbcType=SMALLINT },
+       battery_max_voltage = #{batteryMaxVoltage,jdbcType=INTEGER },
+       min_voltage_system_num = #{minVoltageSystemNum,jdbcType=SMALLINT },
+       min_voltage_battery_num = #{minVoltageBatteryNum,jdbcType=SMALLINT },
+       battery_min_voltage = #{batteryMinVoltage,jdbcType=INTEGER },
+       max_temperature_system_num = #{maxTemperatureSystemNum,jdbcType=SMALLINT },
+       max_temperature_num = #{maxTemperatureNum,jdbcType=SMALLINT },
+       max_temperature = #{maxTemperature,jdbcType=SMALLINT },
+       min_temperature_system_num = #{minTemperatureSystemNum,jdbcType=SMALLINT },
+       min_temperature_num = #{minTemperatureNum,jdbcType=SMALLINT },
+       min_temperature = #{minTemperature,jdbcType=SMALLINT }
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <select id="findAll" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ter_extreme_data
+  </select>
+  
+  <select id="findByVehicleId" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ter_extreme_data
+    where vehicle_id = #{vehicleId,jdbcType=BIGINT}
+  </select>
+</mapper>

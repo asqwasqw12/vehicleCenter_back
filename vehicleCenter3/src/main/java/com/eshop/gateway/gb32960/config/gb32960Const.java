@@ -23,6 +23,7 @@ public class gb32960Const {
     public static final short VEHICLE_LOGOUT = 0x04; //车辆登出
     public static final short PLATFORM_LOGIN = 0x05; //平台登入
     public static final short PLATFORM_LOGOUT = 0x06; //平台登出
+    public static final short VEHICLE_HEART_BEAT = 0x07; //心跳
     
     // 应答标志
     public static final short RESPONSE_SUCCESS = 0x01; //接收到的信息正确

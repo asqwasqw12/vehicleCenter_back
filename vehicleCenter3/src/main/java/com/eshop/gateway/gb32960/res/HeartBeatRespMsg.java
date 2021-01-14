@@ -22,6 +22,7 @@ public class HeartBeatRespMsg extends GB32960DataPacket{
     @Override
     public ByteBuf toByteBufMsg() {
         ByteBuf bb = super.toByteBufMsg();
+        bb.writeByte(0x00);//返回数据0x00
         return bb;
     }
 
@@ -31,7 +32,7 @@ public class HeartBeatRespMsg extends GB32960DataPacket{
         resp.getHeader().setResponseTag(SUCCESS);//设置应答标志
         resp.getHeader().setVin(msg.getHeader().getVin()); //设置唯一识别码
         resp.getHeader().setEncrypTionType(ENCRYPTION_NO); //不加密
-        resp.getHeader().setPayloadLength(0); //设置数据长度
+        resp.getHeader().setPayloadLength(1); //设置数据长度
         return resp;
     }
 }

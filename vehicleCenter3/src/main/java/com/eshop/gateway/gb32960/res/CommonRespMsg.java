@@ -20,59 +20,61 @@ public class CommonRespMsg extends GB32960DataPacket{
     public static final short ENCRYPTION_EXCEPTION = 0xFE;//异常
     public static final short ENCRYPTION_INVALID = 0xFE;//无效
     
-    private LocalDateTime requestTime;//报文请求时间
+    private LocalDateTime responseTime;//报文响应时间
     
-    public void setRequestTime(LocalDateTime requestTime) {
-    	this.requestTime=requestTime;
+    public void setResponseTime(LocalDateTime responseTime) {
+    	this.responseTime=responseTime;
     }
 	
-    public LocalDateTime getRequestTime() {
-    	return requestTime;
+    public LocalDateTime getResponseTime() {
+    	return responseTime;
     }
     
     
     @Override
     public ByteBuf toByteBufMsg() {
         ByteBuf bb = super.toByteBufMsg();
-        bb.writeByte(requestTime.getYear()-2000);
-        bb.writeByte(requestTime.getMonthValue());
-        bb.writeByte(requestTime.getDayOfMonth());
-        bb.writeByte(requestTime.getHour());
-        bb.writeByte(requestTime.getMinute());
-        bb.writeByte(requestTime.getSecond());
+		/*
+		 * //设置报文响应时间 bb.writeByte(responseTime.getYear()-2000);
+		 * bb.writeByte(responseTime.getMonthValue());
+		 * bb.writeByte(responseTime.getDayOfMonth());
+		 * bb.writeByte(responseTime.getHour()); bb.writeByte(responseTime.getMinute());
+		 * bb.writeByte(responseTime.getSecond());
+		 */
+        bb.writeByte(0x00);//数据单元为0x00
         return bb;
     }
 
-	public static CommonRespMsg success(GB32960DataPacket msg, Integer flowId,LocalDateTime requestTime) {
+	public static CommonRespMsg success(GB32960DataPacket msg, Integer flowId) {
     	CommonRespMsg resp = new CommonRespMsg();
     	resp.getHeader().setRequestType(msg.getHeader().getRequestType());
         resp.getHeader().setResponseTag(SUCCESS);//设置应答标志
         resp.getHeader().setVin(msg.getHeader().getVin()); //设置唯一识别码
         resp.getHeader().setEncrypTionType(ENCRYPTION_NO); //不加密
-        resp.getHeader().setPayloadLength(6); //设置数据长度
-        resp.setRequestTime(requestTime);//设置报文请求时间
+        resp.getHeader().setPayloadLength(1); //设置数据长度
+        //resp.setResponseTime();//设置报文请求时间
         return resp;
     }
     
-    public static CommonRespMsg failure(GB32960DataPacket msg, Integer flowId,LocalDateTime requestTime) {
+    public static CommonRespMsg failure(GB32960DataPacket msg, Integer flowId) {
     	CommonRespMsg resp = new CommonRespMsg();
     	resp.getHeader().setRequestType(msg.getHeader().getRequestType());
         resp.getHeader().setResponseTag(FAILURE);//设置应答标志
         resp.getHeader().setVin(msg.getHeader().getVin()); //设置唯一识别码
         resp.getHeader().setEncrypTionType(ENCRYPTION_NO); //不加密
-        resp.getHeader().setPayloadLength(6); //设置数据长度
-        resp.setRequestTime(requestTime);//设置报文请求时间
+        resp.getHeader().setPayloadLength(1); //设置数据长度
+        //resp.setResponseTime();//设置报文请求时间
         return resp;
     }
     
-    public static CommonRespMsg vinRepeat(GB32960DataPacket msg, Integer flowId,LocalDateTime requestTime) {
+    public static CommonRespMsg vinRepeat(GB32960DataPacket msg, Integer flowId) {
     	CommonRespMsg resp = new CommonRespMsg();
     	resp.getHeader().setRequestType(msg.getHeader().getRequestType());
         resp.getHeader().setResponseTag(VIN_REPEAT);//设置应答标志
         resp.getHeader().setVin(msg.getHeader().getVin()); //设置唯一识别码
         resp.getHeader().setEncrypTionType(ENCRYPTION_NO); //不加密
-        resp.getHeader().setPayloadLength(6); //设置数据长度
-        resp.setRequestTime(requestTime);//设置报文请求时间
+        resp.getHeader().setPayloadLength(1); //设置数据长度
+        //resp.setResponseTime();//设置报文请求时间
         return resp;
     }
 

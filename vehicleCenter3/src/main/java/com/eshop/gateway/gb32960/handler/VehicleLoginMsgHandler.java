@@ -38,10 +38,10 @@ public class VehicleLoginMsgHandler extends BaseHandler<VehicleLoginMsg>{
 		Vehicle vehicle = null;
 		vehicle = vehicleService.findByVin(vin);
 		if(vehicle !=null && vin.equals(vehicle.getIccid())){
-			CommonRespMsg resp = CommonRespMsg.success(msg, flowId,requestTime);
+			CommonRespMsg resp = CommonRespMsg.success(msg, flowId);
 			write(ctx,resp);
 		}else {
-			CommonRespMsg resp = CommonRespMsg.failure(msg, flowId,requestTime);
+			CommonRespMsg resp = CommonRespMsg.failure(msg, flowId);
 			write(ctx,resp);
 		}
 		

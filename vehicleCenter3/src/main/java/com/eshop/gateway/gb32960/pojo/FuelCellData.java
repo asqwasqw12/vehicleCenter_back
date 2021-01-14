@@ -28,7 +28,7 @@ public class FuelCellData {
     private Integer temperatureProbeCount;
 
     //探针温度值集合
-    private List<Short> probeTemperature;
+    private String probeTemperature;
 
     //氢系统中最高温度
     private Integer hydrogenSystemMaxTemperature;
@@ -55,6 +55,10 @@ public class FuelCellData {
     
 	//数据采集时间
 	private LocalDateTime sampleTime;//采样时间
+	
+	//非数据库属性
+	//探针温度值集合
+    private List<Short> probeTemperatureList;
     
     public void setId(Long id) {
     	this.id = id;
@@ -139,12 +143,20 @@ public class FuelCellData {
         this.temperatureProbeCount = temperatureProbeCount;
     }
 
-    public List<Short> getProbeTemperature() {
+    public String getProbeTemperature() {
         return probeTemperature;
     }
 
-    public void setProbeTemperature(List<Short> probeTemperature) {
+    public void setProbeTemperature(String probeTemperature) {
         this.probeTemperature = probeTemperature;
+    }
+    
+    public List<Short> getProbeTemperatureList() {
+        return probeTemperatureList;
+    }
+
+    public void setProbeTemperatureList(List<Short> probeTemperatureList) {
+        this.probeTemperatureList = probeTemperatureList;
     }
 
     public Integer getHydrogenSystemMaxTemperature() {

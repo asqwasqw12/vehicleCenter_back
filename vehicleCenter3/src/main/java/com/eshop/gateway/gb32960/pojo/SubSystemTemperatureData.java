@@ -25,9 +25,13 @@ Long id; //
 
     //温度探针个数
     private Integer temperatureProbeCount;
-
+    
     //探针温度值列表
-    private List<Short> probeTemperatures;
+    private String probeTemperatures;
+
+    //非数据库数据
+    //探针温度值列表
+    private List<Short> probeTemperatureList;
 	
 	public void setId(Long id) {
     	this.id = id;
@@ -94,11 +98,19 @@ Long id; //
         this.temperatureProbeCount = temperatureProbeCount;
     }
 
-    public List<Short> getProbeTemperatures() {
+    public String getProbeTemperatures() {
         return probeTemperatures;
     }
 
-    public void setProbeTemperatures(List<Short> probeTemperatures) {
+    public void setProbeTemperatures(String probeTemperatures) {
         this.probeTemperatures = probeTemperatures;
+    }
+    
+    public List<Short> getProbeTemperatureList() {
+        return probeTemperatureList;
+    }
+
+    public void setProbeTemperatureList(List<Short> probeTemperatureList) {
+        this.probeTemperatureList = probeTemperatureList;
     }
 }

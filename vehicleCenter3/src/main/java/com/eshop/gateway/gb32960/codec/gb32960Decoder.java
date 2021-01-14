@@ -5,6 +5,7 @@ import java.util.List;
 import com.eshop.common.ProtocolParseUtil;
 import com.eshop.gateway.gb32960.config.gb32960Const;
 import com.eshop.gateway.gb32960.pojo.GB32960DataPacket;
+import com.eshop.gateway.gb32960.pojo.req.GB32960HeartBeatMsg;
 import com.eshop.gateway.gb32960.pojo.req.PlatformLoginMsg;
 import com.eshop.gateway.gb32960.pojo.req.PlatformLogoutMsg;
 import com.eshop.gateway.gb32960.pojo.req.RealInfoUpMsg;
@@ -70,6 +71,9 @@ public class gb32960Decoder extends ReplayingDecoder<Void>{
         switch (requestId) {
             case gb32960Const.VEHICLE_LOGIN:  //车辆登入
                 packet = new VehicleLoginMsg(bb);
+                break;
+            case gb32960Const.VEHICLE_HEART_BEAT:  //车辆心跳
+                packet = new GB32960HeartBeatMsg(bb);
                 break;
             case gb32960Const.REAL_INFO_UP: //实时信息上报
             case gb32960Const.REISSUE_INFO_UP: //补发信息上报

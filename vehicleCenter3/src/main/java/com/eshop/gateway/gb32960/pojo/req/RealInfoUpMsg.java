@@ -19,6 +19,7 @@ import com.eshop.gateway.gb32960.pojo.LocationData;
 import com.eshop.gateway.gb32960.pojo.RunData;
 import com.eshop.gateway.gb32960.pojo.SubSystemTemperatureData;
 import com.eshop.gateway.gb32960.pojo.SubSystemVoltageData;
+import com.eshop.pojo.Vehicle;
 
 import cn.hutool.core.date.DateTime;
 import io.netty.buffer.ByteBuf;
@@ -57,13 +58,13 @@ public class RealInfoUpMsg extends GB32960DataPacket{
     private Short subsystemVoltageCount;
 
     //可充电储能装置电压数据列表
-    private List<SubSystemVoltageData> subSystemVoltageDatas;
+    private List<SubSystemVoltageData> subSystemVoltageDataList;
 
     //可充电储能装置温度数据个数
     private Short subsystemTemperatureCount;
 
     //可充电储能装置温度数据列表
-    private List<SubSystemTemperatureData> subSystemTemperatures;
+    private List<SubSystemTemperatureData> subSystemTemperatureList;
 
     public void setSampleTime(LocalDateTime sampleTime) {
   	  this.sampleTime = sampleTime;
@@ -153,12 +154,12 @@ public class RealInfoUpMsg extends GB32960DataPacket{
         this.subsystemVoltageCount = subsystemVoltageCount;
     }
 
-    public List<SubSystemVoltageData> getSubSystemVoltageDatas() {
-        return subSystemVoltageDatas;
+    public List<SubSystemVoltageData> getSubSystemVoltageDataList() {
+        return subSystemVoltageDataList;
     }
 
-    public void setSubSystemVoltageDatas(List<SubSystemVoltageData> subSystemVoltageDatas) {
-        this.subSystemVoltageDatas = subSystemVoltageDatas;
+    public void setSubSystemVoltageDataList(List<SubSystemVoltageData> subSystemVoltageDataList) {
+        this.subSystemVoltageDataList = subSystemVoltageDataList;
     }
 
     public Short getSubsystemTemperatureCount() {
@@ -169,12 +170,12 @@ public class RealInfoUpMsg extends GB32960DataPacket{
         this.subsystemTemperatureCount = subsystemTemperatureCount;
     }
 
-    public List<SubSystemTemperatureData> getSubSystemTemperatures() {
-        return subSystemTemperatures;
+    public List<SubSystemTemperatureData> getSubSystemTemperatureList() {
+        return subSystemTemperatureList;
     }
 
-    public void setSubSystemTemperatures(List<SubSystemTemperatureData> subSystemTemperatures) {
-        this.subSystemTemperatures = subSystemTemperatures;
+    public void setSubSystemTemperatureList(List<SubSystemTemperatureData> subSystemTemperatureList) {
+        this.subSystemTemperatureList = subSystemTemperatureList;
     }
 
     public RealInfoUpMsg(ByteBuf byteBuf) {
@@ -187,6 +188,8 @@ public class RealInfoUpMsg extends GB32960DataPacket{
     	this.sampleZonedTime = ZonedDateTime.of((this.payload.readByte()+ 2000),this.payload.readByte(),this.payload.readByte(),
         		this.payload.readByte(),this.payload.readByte(),this.payload.readByte(),0,gb32960Const.ZONE_UTC8);
     	this.sampleTime = sampleZonedTime.toLocalDateTime();
+    	
+    	//Vehicle vehicle = vehicleService.findByVin(header.getVin());
 
     	//
     	try {
@@ -299,10 +302,17 @@ public class RealInfoUpMsg extends GB32960DataPacket{
     	int count =  buf.readUnsignedShort();
     	fuelCellData.setTemperatureProbeCount(count);
         List<Short> list = new ArrayList<Short>();
+        StringBuffer probeTemperature = new StringBuffer();
     	for(int i= 0 ;i<count;i++) {
-    		list.add(buf.readUnsignedByte());
+    		Short temperature = buf.readUnsignedByte();
+    		list.add(temperature);
+    		probeTemperature.append(temperature);
+    		probeTemperature.append(",");
     	}
-    	fuelCellData.setProbeTemperature(list);
+    	if(list.size()>0) {
+    		fuelCellData.setProbeTemperatureList(list);
+    		fuelCellData.setProbeTemperature(probeTemperature.toString());
+    	}
     	fuelCellData.setHydrogenSystemMaxTemperature(buf.readUnsignedShort());
     	fuelCellData.setHydrogenSystemTemperatureProbeNum(buf.readUnsignedByte());
     	fuelCellData.setHydrogenSystemMaxConcentration(buf.readUnsignedShort());
@@ -499,15 +509,24 @@ public class RealInfoUpMsg extends GB32960DataPacket{
    		data.setCellCount(buf.readUnsignedShort());
    		data.setBatteryNumber(buf.readUnsignedShort());
    		data.setBatteryCount(buf.readUnsignedByte());
-   		List<Integer> cellVoltagesList = new ArrayList<Integer>();
+   		List<Integer> cellVoltageList = new ArrayList<Integer>();
+   		StringBuffer cellVoltages = new StringBuffer();
    		for(int j = 0; j<data.getBatteryCount();j++) {
-   			cellVoltagesList.add(buf.readUnsignedShort());
+   			Integer voltage = buf.readUnsignedShort();
+   			cellVoltageList.add(voltage);
+   			cellVoltages.append(voltage);
+   			cellVoltages.append(",");
+   			
    		}
-   		data.setCellVoltages(cellVoltagesList);  	
+   		if(cellVoltageList.size()>0) {
+   			data.setCellVoltageList(cellVoltageList);  	
+   			data.setCellVoltages(cellVoltages.toString());
+   		}
+   		
    		list.add(data);
    	}
    	subsystemVoltageCount=count;
-   	subSystemVoltageDatas = list;
+   	subSystemVoltageDataList = list;
    	return false;
    }
    
@@ -524,14 +543,22 @@ public class RealInfoUpMsg extends GB32960DataPacket{
 	   		data.setNum(buf.readUnsignedByte());
 	   		data.setTemperatureProbeCount(buf.readUnsignedShort());
 	   		List<Short> probeList = new ArrayList<Short>();
+	   		StringBuffer probeTemperatures = new StringBuffer();
 	   		for(int j=0; j<data.getTemperatureProbeCount();j++) {
-	   			probeList.add(buf.readUnsignedByte());
+	   			Short temperature = buf.readUnsignedByte();
+	   			probeList.add(temperature);
+	   			probeTemperatures.append(temperature);
+	   			probeTemperatures.append(",");
 	   		}
-	   		data.setProbeTemperatures(probeList);
+	   		if(probeList.size()>0) {
+	   			data.setProbeTemperatureList(probeList);
+	   			data.setProbeTemperatures(probeTemperatures.toString());
+	   		}
+	   		
 	   		list.add(data);
 	   	}
 	    subsystemTemperatureCount = count;
-	    subSystemTemperatures = list;
+	    subSystemTemperatureList = list;
 	    return false;
    }
 }

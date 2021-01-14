@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.eshop.gateway.gb32960.dao.EngineDataMapper">
+<resultMap id="BaseResultMap" type="com.eshop.gateway.gb32960.pojo.EngineData">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="vehicle_id" jdbcType="BIGINT" property="vehicleId" />
+    <result column="terminal_phone" jdbcType="VARCHAR" property="terminalPhone" />
+    <result column="vin" jdbcType="VARCHAR" property="vin" />
+    <result column="sample_time" jdbcType="TIMESTAMP" property="sampleTime" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="status" jdbcType="SMALLINT" property="status" />
+    <result column="crankshaft_speed" jdbcType="INTEGER" property="crankshaftSpeed" />
+    <result column="fuel_consumption" jdbcType="INTEGER" property="fuelConsumption" /> 
+ </resultMap>
+  <sql id="Base_Column_List">
+    id, vehicle_id, terminal_phone, vin, sample_time, create_time,status,crankshaft_speed,fuel_consumption
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ter_engine_data
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from ter_engine_data
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.eshop.gateway.gb32960.pojo.EngineData">
+    insert into ter_engine_data (id, vehicle_id, terminal_phone, vin, sample_time, create_time,status,crankshaft_speed,fuel_consumption
+      )
+    values (#{id,jdbcType=BIGINT}, #{vehicleId,jdbcType=BIGINT}, #{terminalPhone,jdbcType=VARCHAR}, 
+      #{vin,jdbcType=VARCHAR}, #{sampleTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP },
+      #{status,jdbcType=SMALLINT},#{crankshaftSpeed,jdbcType=INTEGER},#{fuelConsumption,jdbcType=INTEGER}
+      )
+  </insert>
+  
+  <insert id="insertSelective" parameterType="com.eshop.gateway.gb32960.pojo.EngineData">
+    insert into ter_engine_data
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="vehicleId != null">
+        vehicle_id,
+      </if>
+      <if test="terminalPhone != null">
+        terminal_phone,
+      </if>
+      <if test="vin != null">
+        vin,
+      </if>
+      <if test="sampleTime != null">
+        sample_time,
+      </if>
+      <if test="createTime != null">
+       create_time,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="crankshaftSpeed != null">
+        crankshaft_speed,
+      </if>
+      <if test="fuelConsumption != null">
+        fuel_consumption
+      </if>   
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="vehicleId != null">
+        #{vehicleId,jdbcType=BIGINT},
+      </if>
+      <if test="terminalPhone != null">
+        #{terminalPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="vin != null">
+        #{vin,jdbcType=VARCHAR},
+      </if>
+      <if test="sampleTime != null">
+        #{sampleTime,jdbcType=TIMESTAMP },
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP },
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=SMALLINT },
+      </if>
+      <if test="crankshaftSpeed != null">
+        #{crankshaftSpeed,jdbcType=INTEGER },
+      </if>
+      <if test="fuelConsumption != null">
+        #{fuelConsumption,jdbcType=INTEGER }
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.eshop.gateway.gb32960.pojo.EngineData">
+    update ter_engine_data
+    <set>
+      <if test="vehicleId != null">
+       vehicle_id = #{vehicleId,jdbcType=BIGINT},
+      </if>
+      <if test="terminalPhone != null">
+       terminal_phone = #{terminalPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="vin != null">
+        vin = #{vin,jdbcType=VARCHAR},
+      </if>
+      <if test="sampleTime != null">
+        sample_time = #{sampleTime,jdbcType=TIMESTAMP },
+      </if>
+      <if test="createTime != null">
+       create_time = #{createTime,jdbcType=TIMESTAMP },
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=SMALLINT },
+      </if>
+      <if test="crankshaftSpeed != null">
+       crankshaft_speed = #{crankshaftSpeed,jdbcType=INTEGER },
+      </if>
+      <if test="fuelConsumption != null">
+       fuel_consumption = #{fuelConsumption,jdbcType=INTEGER }
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <update id="updateByPrimaryKey" parameterType="com.eshop.gateway.gb32960.pojo.EngineData">
+    update ter_engine_data
+    set  vehicle_id = #{vehicleId,jdbcType=BIGINT},
+      	 terminal_phone = #{terminalPhone,jdbcType=VARCHAR},
+         vin = #{vin,jdbcType=VARCHAR},
+         sample_time = #{sampleTime,jdbcType=TIMESTAMP },
+         create_time = #{createTime,jdbcType=TIMESTAMP },
+         status = #{status,jdbcType=SMALLINT },
+         crankshaft_speed = #{crankshaftSpeed,jdbcType=INTEGER },
+         fuel_consumption = #{fuelConsumption,jdbcType=INTEGER }
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <select id="findAll" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ter_engine_data
+  </select>
+  
+  <select id="findByVehicleId" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ter_engine_data
+    where vehicle_id = #{vehicleId,jdbcType=BIGINT}
+  </select>
+</mapper>

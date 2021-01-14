@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.eshop.gateway.gb32960.dao.FuelCellDataMapper">
+<resultMap id="BaseResultMap" type="com.eshop.gateway.gb32960.pojo.FuelCellData">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="vehicle_id" jdbcType="BIGINT" property="vehicleId" />
+    <result column="terminal_phone" jdbcType="VARCHAR" property="terminalPhone" />
+    <result column="vin" jdbcType="VARCHAR" property="vin" />
+    <result column="sample_time" jdbcType="TIMESTAMP" property="sampleTime" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="voltage" jdbcType="INTEGER" property="voltage" />
+    <result column="current" jdbcType="INTEGER" property="current" />
+    <result column="fuel_consumption" jdbcType="INTEGER" property="fuelConsumption" />
+    <result column="temperature_probe_count" jdbcType="INTEGER" property="temperatureProbeCount" />
+    <result column="probe_temperature" jdbcType="VARCHAR" property="probeTemperature" />
+    <result column="hydrogen_system_max_temperature" jdbcType="INTEGER" property="hydrogenSystemMaxTemperature" />
+    <result column="hydrogen_system_temperature_probe_num" jdbcType="SMALLINT" property="hydrogenSystemTemperatureProbeNum" />
+    <result column="hydrogen_system_max_concentration" jdbcType="INTEGER" property="hydrogenSystemMaxConcentration" />
+    <result column="hydrogen_system_concentration_probe_num" jdbcType="SMALLINT" property="hydrogenSystemTemperatureProbeNum" />
+    <result column="hydrogen_system_max_pressure" jdbcType="INTEGER" property="hydrogenSystemMaxPressure" />
+    <result column="hydrogen_system_pressure_probe_num" jdbcType="SMALLINT" property="hydrogenSystemPressureProbeNum" />
+    <result column="dc_status" jdbcType="SMALLINT" property="dcStatus" />
+ </resultMap>
+  <sql id="Base_Column_List">
+    id, vehicle_id, terminal_phone, vin, sample_time, create_time,
+    voltage,current,fuel_consumption,temperature_probe_count,probe_temperature,hydrogen_system_max_temperature,
+    hydrogen_system_temperature_probe_num,hydrogen_system_max_concentration,hydrogen_system_concentration_probe_num,
+    hydrogen_system_max_pressure,hydrogen_system_pressure_probe_num,dc_status
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ter_fuel_cell_data
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from ter_fuel_cell_data
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.eshop.gateway.gb32960.pojo.FuelCellData">
+    insert into ter_fuel_cell_data (id, vehicle_id, terminal_phone, vin, sample_time, create_time,
+    voltage,current,fuel_consumption,temperature_probe_count,probe_temperature,hydrogen_system_max_temperature,
+    hydrogen_system_temperature_probe_num,hydrogen_system_max_concentration,hydrogen_system_concentration_probe_num,
+    hydrogen_system_max_pressure,hydrogen_system_pressure_probe_num,dc_status
+      )
+    values (#{id,jdbcType=BIGINT}, #{vehicleId,jdbcType=BIGINT}, #{terminalPhone,jdbcType=VARCHAR}, 
+      #{vin,jdbcType=VARCHAR}, #{sampleTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP },
+      #{voltage,jdbcType=INTEGER},#{current,jdbcType=INTEGER},#{fuelConsumption,jdbcType=INTEGER},
+      #{temperatureProbeCount,jdbcType=INTEGER},#{probeTemperature,jdbcType=VARCHAR },#{hydrogenSystemMaxTemperature,jdbcType=INTEGER},
+      #{hydrogenSystemTemperatureProbeNum,jdbcType=SMALLINT},#{hydrogenSystemMaxConcentration,jdbcType=INTEGER},#{hydrogenSystemConcentrationProbeNum,jdbcType=SMALLINT },
+      #{hydrogenSystemMaxPressure,jdbcType=INTEGER},#{hydrogenSystemPressureProbeNum,jdbcType=INTEGER},#{dcStatus,jdbcType=INTEGER}
+      )
+  </insert>
+  
+  <insert id="insertSelective" parameterType="com.eshop.gateway.gb32960.pojo.FuelCellData">
+    insert into ter_fuel_cell_data
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="vehicleId != null">
+        vehicle_id,
+      </if>
+      <if test="terminalPhone != null">
+        terminal_phone,
+      </if>
+      <if test="vin != null">
+        vin,
+      </if>
+      <if test="sampleTime != null">
+        sample_time,
+      </if>
+      <if test="createTime != null">
+       create_time,
+      </if>
+      <if test="voltage != null">
+        voltage,
+      </if>
+      <if test="current != null">
+        current,
+      </if>
+      <if test="fuelConsumption != null">
+        fuel_consumption,
+      </if>
+  	  <if test="temperatureProbeCount != null">
+        temperature_probe_count,
+      </if>
+      <if test="probeTemperature != null">
+        probe_temperature,
+      </if>
+      <if test="hydrogenSystemMaxTemperature != null">
+        hydrogen_system_max_temperature,
+      </if>
+      <if test="hydrogenSystemTemperatureProbeNum != null">
+        hydrogen_system_temperature_probe_num,
+      </if>
+      <if test="hydrogenSystemMaxConcentration != null">
+        hydrogen_system_max_concentration,
+      </if>
+      <if test="hydrogenSystemConcentrationProbeNum != null">
+        hydrogen_system_concentration_probe_num,
+      </if>
+      <if test="hydrogenSystemMaxPressure != null">
+        hydrogen_system_max_pressure,
+      </if>
+      <if test="hydrogenSystemPressureProbeNum != null">
+        hydrogen_system_pressure_probe_num,
+      </if>
+      <if test="dcStatus != null">
+        dc_status
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="vehicleId != null">
+        #{vehicleId,jdbcType=BIGINT},
+      </if>
+      <if test="terminalPhone != null">
+        #{terminalPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="vin != null">
+        #{vin,jdbcType=VARCHAR},
+      </if>
+      <if test="sampleTime != null">
+        #{sampleTime,jdbcType=TIMESTAMP },
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP },
+      </if>
+      <if test="voltage != null">
+        #{voltage,jdbcType=INTEGER },
+      </if>
+      <if test="current != null">
+        #{current,jdbcType=INTEGER },
+      </if>
+      <if test="fuelConsumption != null">
+        #{fuelConsumption,jdbcType=INTEGER },
+      </if>
+      <if test="temperatureProbeCount != null">
+        #{temperatureProbeCount,jdbcType=INTEGER },
+      </if>
+      <if test="probeTemperature != null">
+        #{probeTemperature,jdbcType=VARCHAR },
+      </if>
+      <if test="hydrogenSystemMaxTemperature != null">
+        #{hydrogenSystemMaxTemperature,jdbcType=INTEGER },
+      </if>
+      <if test="hydrogenSystemTemperatureProbeNum != null">
+        #{hydrogenSystemTemperatureProbeNum,jdbcType=SMALLINT },
+      </if>
+      <if test="hydrogenSystemMaxConcentration != null">
+        #{hydrogenSystemMaxConcentration,jdbcType=INTEGER },
+      </if>
+      <if test="hydrogenSystemConcentrationProbeNum != null">
+        #{hydrogenSystemConcentrationProbeNum,jdbcType=SMALLINT },
+      </if>
+      <if test="hydrogenSystemMaxPressure != null">
+        #{hydrogenSystemMaxPressure,jdbcType=INTEGER },
+      </if>
+      <if test="hydrogenSystemPressureProbeNum != null">
+        #{hydrogenSystemPressureProbeNum,jdbcType=SMALLINT },
+      </if>
+      <if test="dcStatus != null">
+        #{dcStatus,jdbcType=SMALLINT }
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.eshop.gateway.gb32960.pojo.FuelCellData">
+    update ter_fuel_cell_data
+    <set>
+      <if test="vehicleId != null">
+       vehicle_id = #{vehicleId,jdbcType=BIGINT},
+      </if>
+      <if test="terminalPhone != null">
+       terminal_phone = #{terminalPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="vin != null">
+        vin = #{vin,jdbcType=VARCHAR},
+      </if>
+      <if test="sampleTime != null">
+        sample_time = #{sampleTime,jdbcType=TIMESTAMP },
+      </if>
+      <if test="createTime != null">
+       create_time = #{createTime,jdbcType=TIMESTAMP },
+      </if>
+	  <if test="voltage != null">
+       voltage = #{voltage,jdbcType=INTEGER },
+      </if>
+      <if test="current != null">
+       current = #{current,jdbcType=INTEGER },
+      </if>
+      <if test="fuelConsumption != null">
+       fuel_consumption = #{fuelConsumption,jdbcType=INTEGER },
+      </if>
+      <if test="temperatureProbeCount != null">
+       temperature_probe_count = #{temperatureProbeCount,jdbcType=INTEGER },
+      </if>
+      <if test="probeTemperature != null">
+       probe_temperature = #{probeTemperature,jdbcType=VARCHAR },
+      </if>
+      <if test="hydrogenSystemMaxTemperature != null">
+       hydrogen_system_max_temperature = #{hydrogenSystemMaxTemperature,jdbcType=INTEGER },
+      </if>
+      <if test="hydrogenSystemTemperatureProbeNum != null">
+       hydrogen_system_temperature_probe_num = #{hydrogenSystemTemperatureProbeNum,jdbcType=SMALLINT },
+      </if>
+      <if test="hydrogenSystemMaxConcentration != null">
+       hydrogen_system_max_concentration = #{hydrogenSystemMaxConcentration,jdbcType=INTEGER },
+      </if>
+      <if test="hydrogenSystemConcentrationProbeNum != null">
+       hydrogen_system_concentration_probe_num = #{hydrogenSystemConcentrationProbeNum,jdbcType=SMALLINT },
+      </if>
+      <if test="hydrogenSystemMaxPressure != null">
+       hydrogen_system_max_pressure = #{hydrogenSystemMaxPressure,jdbcType=INTEGER },
+      </if>
+      <if test="hydrogenSystemPressureProbeNum != null">
+       hydrogen_system_pressure_probe_num = #{hydrogenSystemPressureProbeNum,jdbcType=SMALLINT },
+      </if>
+      <if test="dcStatus != null">
+       dc_status = #{dcStatus,jdbcType=SMALLINT }
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <update id="updateByPrimaryKey" parameterType="com.eshop.gateway.gb32960.pojo.FuelCellData">
+    update ter_fuel_cell_data
+    set  vehicle_id = #{vehicleId,jdbcType=BIGINT},
+       terminal_phone = #{terminalPhone,jdbcType=VARCHAR},
+       vin = #{vin,jdbcType=VARCHAR},
+       sample_time = #{sampleTime,jdbcType=TIMESTAMP },
+       create_time = #{createTime,jdbcType=TIMESTAMP },
+       voltage = #{voltage,jdbcType=INTEGER },
+       current = #{current,jdbcType=INTEGER },
+       fuel_consumption = #{fuelConsumption,jdbcType=INTEGER },
+       temperature_probe_count = #{temperatureProbeCount,jdbcType=INTEGER },
+       probe_temperature = #{probeTemperature,jdbcType=VARCHAR },
+       hydrogen_system_max_temperature = #{hydrogenSystemMaxTemperature,jdbcType=INTEGER },
+       hydrogen_system_temperature_probe_num = #{hydrogenSystemTemperatureProbeNum,jdbcType=SMALLINT },
+       hydrogen_system_max_concentration = #{hydrogenSystemMaxConcentration,jdbcType=INTEGER },
+       hydrogen_system_concentration_probe_num = #{hydrogenSystemConcentrationProbeNum,jdbcType=SMALLINT },
+       hydrogen_system_max_pressure = #{hydrogenSystemMaxPressure,jdbcType=INTEGER },
+       hydrogen_system_pressure_probe_num = #{hydrogenSystemPressureProbeNum,jdbcType=SMALLINT },
+       dc_status = #{dcStatus,jdbcType=SMALLINT }
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <select id="findAll" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ter_fuel_cell_data
+  </select>
+  
+  <select id="findByVehicleId" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ter_fuel_cell_data
+    where vehicle_id = #{vehicleId,jdbcType=BIGINT}
+  </select>
+</mapper>
