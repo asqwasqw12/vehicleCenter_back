@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import com.eshop.gateway.gb32960.config.ChannelManager;
 import com.eshop.gateway.gb32960.pojo.req.VehicleLoginMsg;
 import com.eshop.gateway.gb32960.res.CommonRespMsg;
+import com.eshop.gateway.gb32960.res.VehicleLoginRespMsg;
 import com.eshop.pojo.Vehicle;
 import com.eshop.service.VehicleService;
 
@@ -32,17 +33,16 @@ public class VehicleLoginMsgHandler extends BaseHandler<VehicleLoginMsg>{
 		String vin = msg.getHeader().getVin();
 		String iccid = msg.getIccid();
 		Integer flowId = msg.getFlowId();
-		LocalDateTime  requestTime = msg.getLoginTime();
-		
+		System.out.println("vin="+vin+", iccid="+iccid+", flowId="+flowId);
 		channelManager.add(iccid, ctx.channel());
 		Vehicle vehicle = null;
 		vehicle = vehicleService.findByVin(vin);
-		if(vehicle !=null && vin.equals(vehicle.getIccid())){
-			CommonRespMsg resp = CommonRespMsg.success(msg, flowId);
+		if(vehicle !=null && iccid.equals(vehicle.getIccid())){
+			VehicleLoginRespMsg resp = VehicleLoginRespMsg.success(msg);
 			write(ctx,resp);
 		}else {
-			CommonRespMsg resp = CommonRespMsg.failure(msg, flowId);
-			write(ctx,resp);
+			//do nothig
+			//write(ctx,resp);
 		}
 		
 	}

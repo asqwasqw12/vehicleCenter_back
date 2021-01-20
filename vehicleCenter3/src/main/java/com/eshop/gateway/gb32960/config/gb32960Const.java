@@ -24,12 +24,19 @@ public class gb32960Const {
     public static final short PLATFORM_LOGIN = 0x05; //平台登入
     public static final short PLATFORM_LOGOUT = 0x06; //平台登出
     public static final short VEHICLE_HEART_BEAT = 0x07; //心跳
+    public static final short CLOCK_CORRECT = 0x08; //终端校时
     
     // 应答标志
     public static final short RESPONSE_SUCCESS = 0x01; //接收到的信息正确
     public static final short RESPONSE_ERROR = 0x02; //设置未成功
     public static final short RESPONSE_VIN_DUPLICATE = 0x03;//VIN重复错误
     public static final short RESPONSE_ORDER = 0x04;//表示数据包为命令包，而非应答包
+    
+    public static final short ENCRYPTION_NO = 01;//不加密
+    public static final short ENCRYPTION_RSA = 02;//RSA加密
+    public static final short ENCRYPTION_AES128 = 03;//不加密
+    public static final short ENCRYPTION_EXCEPTION = 0xFE;//异常
+    public static final short ENCRYPTION_INVALID = 0xFE;//无效
     
 	 //默认英文字符集为ASCII
     public static final Charset ASCII_CHARSET = Charsets.US_ASCII;

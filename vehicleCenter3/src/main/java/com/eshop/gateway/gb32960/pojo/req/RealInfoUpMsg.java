@@ -248,6 +248,7 @@ public class RealInfoUpMsg extends GB32960DataPacket{
     	}
     	RunData runData =new RunData();
     	runData.setVin(header.getVin());
+    	runData.setSampleTime(sampleTime);
     	runData.setRunStatus(buf.readUnsignedByte());
     	runData.setChargeStatus(buf.readUnsignedByte());
     	runData.setOperationMode(buf.readUnsignedByte());
@@ -276,6 +277,7 @@ public class RealInfoUpMsg extends GB32960DataPacket{
     	for(int i=0;i<count;i++) {
     		DriveMotorData data = new DriveMotorData();
     		data.setVin(header.getVin());
+    		data.setSampleTime(sampleTime);
     		data.setNum(buf.readUnsignedByte());
     		data.setStatus(buf.readUnsignedByte());
     		data.setControllerTemperature(buf.readUnsignedByte());
@@ -296,6 +298,8 @@ public class RealInfoUpMsg extends GB32960DataPacket{
     		return true;
     	}
     	FuelCellData fuelCellData = new FuelCellData();
+    	fuelCellData.setVin(header.getVin());
+    	fuelCellData.setSampleTime(sampleTime);
     	fuelCellData.setVoltage(buf.readUnsignedShort());
     	fuelCellData.setCurrent(buf.readUnsignedShort());
     	fuelCellData.setFuelConsumption(buf.readUnsignedShort());
@@ -330,6 +334,8 @@ public class RealInfoUpMsg extends GB32960DataPacket{
    		return true;
    	}
 	   EngineData engineData = new EngineData();
+	   engineData.setVin(header.getVin());
+	   engineData.setSampleTime(sampleTime);
 	   engineData.setStatus(buf.readUnsignedByte());
 	   engineData.setCrankshaftSpeed(buf.readUnsignedShort());
 	   engineData.setFuelConsumption(buf.readUnsignedShort());
@@ -368,6 +374,8 @@ public class RealInfoUpMsg extends GB32960DataPacket{
 	   		return true;
 	   	}
 	   ExtremeData extremeData = new ExtremeData();
+	   extremeData.setSampleTime(sampleTime);
+	   extremeData.setVin(header.getVin());
 	   extremeData.setMaxVoltageSystemNum(buf.readUnsignedByte());
 	   extremeData.setMaxVoltageBatteryNum(buf.readUnsignedByte());
 	   extremeData.setBatteryMaxVoltage(buf.readUnsignedShort());
@@ -388,6 +396,8 @@ public class RealInfoUpMsg extends GB32960DataPacket{
  //解析报警数据
    private Boolean parseAlarmData(ByteBuf buf){
 	   AlarmData alarmData = new AlarmData();
+	   alarmData.setSampleTime(sampleTime);
+	   alarmData.setVin(header.getVin());
 	   alarmData.setLevel(buf.readUnsignedByte());
 	   Long generalAlarm = buf.readUnsignedInt();
 	   alarmData.setAlarmInfo(generalAlarm);
@@ -503,6 +513,8 @@ public class RealInfoUpMsg extends GB32960DataPacket{
    	List<SubSystemVoltageData> list = new ArrayList<SubSystemVoltageData>();
    	for(int i=0;i<count;i++) {
    		SubSystemVoltageData data= new SubSystemVoltageData();
+   		data.setSampleTime(sampleTime);
+   		data.setVin(header.getVin());
    		data.setNum(buf.readUnsignedByte());
    		data.setVoltage(buf.readUnsignedShort());
    		data.setCurrent(buf.readUnsignedShort());
@@ -540,6 +552,8 @@ public class RealInfoUpMsg extends GB32960DataPacket{
 	   	List<SubSystemTemperatureData> list = new ArrayList<SubSystemTemperatureData>();
 	   	for(int i=0;i<count; i++) {
 	   		SubSystemTemperatureData data = new SubSystemTemperatureData();
+	   		data.setSampleTime(sampleTime);
+	   		data.setVin(header.getVin());
 	   		data.setNum(buf.readUnsignedByte());
 	   		data.setTemperatureProbeCount(buf.readUnsignedShort());
 	   		List<Short> probeList = new ArrayList<Short>();

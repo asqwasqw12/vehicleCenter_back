@@ -93,6 +93,7 @@ public class RealInfoUpMsgHandler extends BaseHandler<RealInfoUpMsg>{
 		LocalDateTime  sampleTime = msg.getSampleTime();
 		
 		if(vehicle != null) {
+			System.out.println("Location:001  ");
 			Long vehicleId = vehicle.getId();
 			if (msg.getLocationData()!= null) {
 				LocationData locationData =msg.getLocationData();
@@ -100,12 +101,14 @@ public class RealInfoUpMsgHandler extends BaseHandler<RealInfoUpMsg>{
 				locationDataService.save(locationData);//保存位置信息到mysql			
 				locationDataInRedisService.save(locationData);//保存位置信息到Redis
 			}
+			System.out.println("Location:002  ");
 			if(msg.getAlarmData()!=null) {
 				AlarmData alarmData = msg.getAlarmData();
 				alarmData.setVehicleId(vehicleId);
 				alarmDataService.save(alarmData);//保存报警信息到mysql
 			}
-			if(msg.getDriveMotorDatas().size()>0) {
+			System.out.println("Location:003  ");
+			if(msg.getDriveMotorDatas() != null && msg.getDriveMotorDatas().size()>0) {
 				List<DriveMotorData> list = new ArrayList<DriveMotorData>();
 				list = msg.getDriveMotorDatas();
 				for(DriveMotorData item : list) {
@@ -113,11 +116,13 @@ public class RealInfoUpMsgHandler extends BaseHandler<RealInfoUpMsg>{
 					driveMotorDataService.save(item);//保存驱动电机信息到mysql
 				}
 			}
+			System.out.println("Location:004  ");
 			if(msg.getRunData() != null) {
 				RunData runData = msg.getRunData();
 				runData.setVehicleId(vehicleId);
 				runDataService.save(runData); //保存运行数据到mysql
 			}
+			System.out.println("Location:005  ");
 			if(msg.getEngineData() != null) {
 				EngineData engineData = msg.getEngineData();
 				engineData.setVehicleId(vehicleId);
@@ -128,12 +133,14 @@ public class RealInfoUpMsgHandler extends BaseHandler<RealInfoUpMsg>{
 				extremeData.setVehicleId(vehicleId);
 				extremeDataService.save(extremeData);//保存极值数据到mysql
 			}
+			System.out.println("Location:006  ");
 			if(msg.getFuelCellData() != null) {
 				FuelCellData fuelCellData = msg.getFuelCellData();
 				fuelCellData.setVehicleId(vehicleId);
 				fuelCellDataService.save(fuelCellData);//保存燃料电池数据到mysql
 			}
-			if(msg.getSubSystemTemperatureList().size()>0) {
+			System.out.println("Location:007  ");
+			if(msg.getSubSystemTemperatureList() !=null && msg.getSubSystemTemperatureList().size()>0) {
 				List<SubSystemTemperatureData> list = new ArrayList<SubSystemTemperatureData>();
 				list = msg.getSubSystemTemperatureList();
 				for(SubSystemTemperatureData item : list) {
@@ -142,7 +149,8 @@ public class RealInfoUpMsgHandler extends BaseHandler<RealInfoUpMsg>{
 				}
 				
 			}
-			if(msg.getSubSystemVoltageDataList().size()>0) {
+			System.out.println("Location:008  ");
+			if(msg.getSubSystemVoltageDataList() !=null && msg.getSubSystemVoltageDataList().size()>0) {
 				List<SubSystemVoltageData> list = new ArrayList<SubSystemVoltageData>();
 				list = msg.getSubSystemVoltageDataList();
 				for(SubSystemVoltageData item : list) {
@@ -152,6 +160,7 @@ public class RealInfoUpMsgHandler extends BaseHandler<RealInfoUpMsg>{
 				
 			}
 		}
+		System.out.println("Location:009  ");
         CommonRespMsg resp = CommonRespMsg.success(msg, getSerialNumber(ctx.channel()));
         workerGroup.execute(() -> write(ctx, resp));//直接write是由businessGroup执行，换成workerGroup写可以少一些判断逻辑，略微提升性能
 	}
