@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
-
 import com.eshop.common.page.PageRequest;
 import com.eshop.common.page.PageResult;
 import com.eshop.pojo.Vehicle;
@@ -30,6 +29,9 @@ public interface VehicleService extends CurdService<Vehicle>{
   	
     //查询车辆
   	Vehicle findByVin(String vin);
+  	
+  	//根据终端编号查询车辆
+  	 Vehicle findByTerminalNum(String terminalNum);
   	
   	//查询车辆名称和型号
   	List<Map<String,Object>> findNamesAndType();

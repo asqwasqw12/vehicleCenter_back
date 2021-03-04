@@ -20,6 +20,8 @@ public interface VehicleMapper {
    // Vehicle findByVinAndIccid(@Param("vin")String vin,@Param("iccid")String iccid);
     
     Vehicle findByVin(@Param("vin")String vin);
+    
+    Vehicle findByTerminalNum(@Param("termnialNum")String terminalNum);
 
     int updateByPrimaryKeySelective(Vehicle record);
 

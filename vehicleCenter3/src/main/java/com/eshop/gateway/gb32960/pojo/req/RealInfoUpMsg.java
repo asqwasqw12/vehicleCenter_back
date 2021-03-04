@@ -23,6 +23,7 @@ import com.eshop.pojo.Vehicle;
 
 import cn.hutool.core.date.DateTime;
 import io.netty.buffer.ByteBuf;
+import io.netty.buffer.ByteBufAllocator;
 
 public class RealInfoUpMsg extends GB32960DataPacket{
 	
@@ -352,8 +353,23 @@ public class RealInfoUpMsg extends GB32960DataPacket{
 	   locationData.setVin(header.getVin());
 	   locationData.setSampleTime(sampleTime);
 	   locationData.setStatus(buf.readUnsignedByte());
-	   locationData.setLongitude(buf.readUnsignedInt());
-	   locationData.setLatitude(buf.readUnsignedInt());
+	   Long tempNum = buf.readUnsignedInt();
+	   System.out.println("rawLongitude="+tempNum);
+	   double rawLongitude = (double)tempNum/1000000.0;
+	   //double rawLongitude = (double)buf.readUnsignedInt()/1000000.0;
+	   byte[] bytes =new byte[4];
+	   buf.readBytes(bytes);
+	   Long number =0L;
+	   for(int i=0;i<4;i++) {
+		   int temp = (bytes[i]>=0) ? bytes[i] : (bytes[i]+256) ;
+		   System.out.println("byte["+i+"]="+bytes[i]);
+		   System.out.println("temp="+temp);
+		   int rate =(int) Math.pow(256,3-i);
+		   number +=temp*rate;
+	   }
+	   double rawLatitude = (double)number/1000000.0;
+	   System.out.println("rawLatitude="+number);
+	  // double rawLatitude = (double)buf.readUnsignedInt()/1000000.0;
 	   
 	   
 	 //定位状态，bit0,0:有效定位，1：无效定位，bit1,0:北纬，1南纬，bit2,0:东经，1：西经
@@ -364,6 +380,18 @@ public class RealInfoUpMsg extends GB32960DataPacket{
 	   }
 	   locationData.setLongitudeDataType(locationData.getStatus() & 0x04);
 	   locationData.setLatitudeDataType(locationData.getStatus() & 0x02);
+	   //设置纬度
+	   if(locationData.getLongitudeDataType()==0) {
+		   locationData.setLongitude(rawLongitude);
+	   }else {
+		   locationData.setLongitude(-rawLongitude);
+	   }
+	   //设置经度
+	   if(locationData.getLatitudeDataType()==0) {
+		   locationData.setLatitude(rawLatitude);
+	   }else {
+		   locationData.setLatitude(-rawLatitude);
+	   }
 	   this.locationData = locationData;
 	   return false;
    }

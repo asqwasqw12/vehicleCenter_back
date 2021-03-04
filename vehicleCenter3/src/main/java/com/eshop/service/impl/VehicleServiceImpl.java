@@ -68,6 +68,11 @@ public class VehicleServiceImpl implements VehicleService {
   		return vehicleMapper.findByVin(vin);
   	}
 
+	//根据终端编号查询车辆
+	@Override
+ 	public  Vehicle findByTerminalNum(String terminalNum) {
+ 		 return vehicleMapper.findByTerminalNum(terminalNum);
+ 	 }
 
 	@Override
 	public List<String> findAllNames(){

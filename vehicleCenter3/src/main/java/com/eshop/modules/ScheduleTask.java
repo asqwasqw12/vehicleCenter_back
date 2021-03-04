@@ -31,7 +31,7 @@ public class ScheduleTask {
     public void printXXXXXXX(){
         try{
             //Thread.sleep(5000);  //睡眠5秒
-            //logger.info(Thread.currentThread().getName()); //打印当前线程名字
+            logger.info(Thread.currentThread().getName()); //打印当前线程名字
             String Strfilter = null;
             //List<Location> list1 = locationInRedisService.getAll(Strfilter);
             List<VehicleStatus> list = vehicleStatusInRedisService.getAll(Strfilter);

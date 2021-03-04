@@ -26,6 +26,12 @@ public class gb32960Const {
     public static final short VEHICLE_HEART_BEAT = 0x07; //心跳
     public static final short CLOCK_CORRECT = 0x08; //终端校时
     
+    //中车企业标准的命令标识
+    public static final short CRRC_LOGIN = 0xC0 ; //终端登入请求，上行
+    public static final short CRRC_VIN_SET = 0xC1; //VIN/ICCID设置，下行
+    public static final short CRRC_DATA_UP = 0xD0; //终端及CAN数据上传
+    public static final short CRRC_FAILURE_PREDICTION = 0xD2; //故障预测数据
+    
     // 应答标志
     public static final short RESPONSE_SUCCESS = 0x01; //接收到的信息正确
     public static final short RESPONSE_ERROR = 0x02; //设置未成功

@@ -17,6 +17,9 @@ public class Vehicle extends BasePojo {
     private String purchaseWay;	//购买方式
     private Byte  manufactureStatus;//制造状态，0-在制，1-入库，2-出库
     
+    //中车企标的终端编号
+    private String terminalNum; //终端编号
+    
     //按照gb32960新增
     private String iccid; //车辆终端所使用SIM卡ICCID编号
     private Integer energyType;//0：纯电，1：插电混动，2：燃料电池，3：燃油，4：燃气
@@ -158,6 +161,14 @@ public class Vehicle extends BasePojo {
     
     public Byte getManufactureStatus() {
     	return  manufactureStatus;
+    }
+    
+    public void setTerminalNum(String terminalNum) {
+    	this.terminalNum = terminalNum;
+    }
+    
+    public String getTerminalNum() {
+    	return terminalNum;
     }
     
     public void setIccid(String iccid) {

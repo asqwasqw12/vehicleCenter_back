@@ -6,6 +6,7 @@ import com.eshop.common.ProtocolParseUtil;
 import com.eshop.gateway.gb32960.config.MsgStatusEnum;
 import com.eshop.gateway.gb32960.config.gb32960Const;
 import com.eshop.gateway.gb32960.pojo.GB32960DataPacket;
+import com.eshop.gateway.gb32960.pojo.req.CRRCLoginMsg;
 import com.eshop.gateway.gb32960.pojo.req.ClockCorrectMsg;
 import com.eshop.gateway.gb32960.pojo.req.GB32960HeartBeatMsg;
 import com.eshop.gateway.gb32960.pojo.req.PlatformLoginMsg;
@@ -194,6 +195,9 @@ private GB32960DataPacket decode(ByteBuf escape) {
 			break;
 		case gb32960Const.CLOCK_CORRECT: // 终端校时
 			packet = new ClockCorrectMsg(bb);
+			break;
+		case gb32960Const.CRRC_LOGIN: //中车企标-终端登入请求
+			packet = new CRRCLoginMsg(bb);
 			break;
 		default:
 			packet = new GB32960DataPacket(bb);

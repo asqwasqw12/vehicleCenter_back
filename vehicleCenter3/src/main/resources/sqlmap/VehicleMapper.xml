@@ -20,6 +20,7 @@
     <result column="purchase_way" jdbcType="VARCHAR" property="purchaseWay" />
     <result column="user_company_id" jdbcType="BIGINT" property="userCompanyId" />
     <result column="owner_company_id" jdbcType="BIGINT" property="ownerCompanyId" />
+    <result column="terminal_num" jdbcType="VARCHAR" property="terminalNum" />
     <result column="iccid" jdbcType="VARCHAR" property="iccid" />
     <result column="energy_type" jdbcType="INTEGER" property="energyType" />
     <result column="max_speed" jdbcType="INTEGER" property="maxSpeed" />
@@ -35,7 +36,7 @@
   </resultMap>
   <sql id="Base_Column_List">
     id, name, type, vin, license,company_num,chassis,configure, create_by, create_time, last_update_by, 
-    last_update_time,brand,status,manufacture_status,purchase_way,user_company_id,owner_company_id,iccid,
+    last_update_time,brand,status,manufacture_status,purchase_way,user_company_id,owner_company_id,terminal_num,iccid,
     energy_type,max_speed,max_range,transmission_ratio,charge_device_count,drive_motor_count,engine_id,
     oil_type,oil_label,max_power,max_torque
   </sql>
@@ -62,6 +63,12 @@
   	from vehicle
   	where vin = #{vin,jdbcType=VARCHAR}
   </select>
+  <select id="findByTerminalNum" parameterType="java.lang.String" resultMap="BaseResultMap">
+  	select
+  	<include refid="Base_Column_List" />
+  	from vehicle
+  	where terminal_num = #{terminalNum,jdbcType=VARCHAR}
+  </select>
   <select id="findByIccid" parameterType="java.lang.String" resultMap="BaseResultMap">
   	select
   	<include refid="Base_Column_List" />
@@ -74,7 +81,7 @@
   </delete>
   <insert id="insert" parameterType="com.eshop.pojo.Vehicle">
     insert into vehicle (id, name, type, vin, license,company_num,chassis,configure, create_by, create_time, last_update_by, 
-    last_update_time,brand,status,manufacture_status,purchase_way,user_company_id,owner_company_id,iccid,
+    last_update_time,brand,status,manufacture_status,purchase_way,user_company_id,owner_company_id,terminal_num,iccid,
     energy_type,max_speed,max_range,transmission_ratio,charge_device_count,drive_motor_count,engine_id,
     oil_type,oil_label,max_power,max_torque
       )
@@ -85,6 +92,7 @@
       #{lastUpdateTime,jdbcType=TIMESTAMP},
        #{brand,jdbcType=VARCHAR},#{status,jdbcType=VARCHAR},#{manufactureStatus,jdbcType=TINYINT},#{puerchaseWay,jdbcType=VARCHAR},
        #{userCompanyId,jdbcType=BIGINT},#{ownerCompanyId,jdbcType=BIGINT},
+       #{terminalNum,jdbcType=VARCHAR},
        #{iccid,jdbcType=VARCHAR},#{energyType,jdbcType=INTEGER},
        #{maxSpeed,jdbcType=INTEGER},#{maxRange,jdbcType=INTEGER},
        #{transmissionRatio,jdbcType=VARCHAR},#{chargeDeviceCount,jdbcType=INTEGER},
@@ -150,6 +158,9 @@
       </if>
       <if test="ownerCompanyId != null">
         owner_company_id,
+      </if>
+      <if test="terminalNum != null">
+        terminal_num,
       </if>
       <if test="iccid != null">
         iccid,
@@ -242,6 +253,9 @@
       </if>
       <if test="ownerCompanyId != null">
         #{ownerCompanyId,jdbcType=BIGINT},
+      </if>
+      <if test="terminalNum != null">
+        #{terminalNum,jdbcType=VARCHAR},
       </if>
       <if test="iccid != null">
         #{iccid,jdbcType=VARCHAR},
@@ -336,6 +350,9 @@
        <if test="ownerCompanyId != null">
         owner_company_id = #{ownerCompanyId,jdbcType=BIGINT},
       </if>
+      <if test="terminalNum != null">
+        terminal_num = #{terminalNum,jdbcType=VARCHAR},
+      </if>
       <if test="iccid != null">
         iccid = #{iccid,jdbcType=VARCHAR},
       </if>
@@ -395,6 +412,7 @@
       purchase_way = #{purchaseWay,jdbcType=VARCHAR},
       user_company_id = #{userCompanyId,jdbcType=BIGINT},
       owner_company_id = #{ownerCompanyId,jdbcType=BIGINT},
+      terminal_num = #{terminalNum,jdbcType=VARCHAR},
       iccid = #{iccid,jdbcType=VARCHAR},
       energy_type = #{energyType,jdbcType=INTEGER},
       max_speed = #{maxSpeed,jdbcType=INTEGER},
@@ -472,6 +490,9 @@
     	<if test="lastUpdateBy != null and lastUpdateBy !=''">
         	and v.last_update_by LIKE CONCAT(CONCAT('%',#{lastUpdateBy}),'%')
     	</if>
+    	<if test="terminalNum !=null and terminalNum !=''">
+  			and v.terminal_num LIKE CONCAT(CONCAT('%',#{terminalNum}),'%')
+  		</if>
     	<if test="iccid !=null and iccid !=''">
   			and v.iccid LIKE CONCAT(CONCAT('%',#{iccid}),'%')
   		</if>

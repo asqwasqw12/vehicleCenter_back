@@ -7,8 +7,8 @@
     <result column="terminal_phone" jdbcType="VARCHAR" property="terminalPhone" />
     <result column="vin" jdbcType="VARCHAR" property="vin" />
     <result column="status" jdbcType="INTEGER" property="status" />
-    <result column="latitude" jdbcType="FLOAT" property="latitude" />
-    <result column="longitude" jdbcType="FLOAT" property="longitude" />
+    <result column="latitude" jdbcType="DOUBLE" property="latitude" />
+    <result column="longitude" jdbcType="DOUBLE" property="longitude" />
     <result column="sample_time" jdbcType="TIMESTAMP" property="sampleTime" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
   </resultMap>
@@ -29,8 +29,8 @@
     insert into ter_location_data (id, vehicle_id, terminal_phone, vin, status, latitude, longitude, sample_time, create_time
       )
     values (#{id,jdbcType=BIGINT}, #{vehicleId,jdbcType=BIGINT}, #{terminalPhone,jdbcType=VARCHAR}, 
-      #{vin,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{latitude,jdbcType=FLOAT}, 
-      #{longitude,jdbcType=FLOAT}, #{sampleTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP }
+      #{vin,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{latitude,jdbcType=DOUBLE}, 
+      #{longitude,jdbcType=DOUBLE}, #{sampleTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP }
       )
   </insert>
   
@@ -82,10 +82,10 @@
         #{status,jdbcType=INTEGER},
       </if>
       <if test="latitude != null">
-        #{latitude,jdbcType=FLOAT},
+        #{latitude,jdbcType=DOUBLE},
       </if>
       <if test="longitude != null">
-        #{longitude,jdbcType=FLOAT},
+        #{longitude,jdbcType=DOUBLE},
       </if>
       <if test="sampleTime != null">
         #{sampleTime,jdbcType=TIMESTAMP },
@@ -112,10 +112,10 @@
         status = #{status,jdbcType=INTEGER},
       </if>
       <if test="latitude != null">
-        latitude = #{latitude,jdbcType=FLOAT},
+        latitude = #{latitude,jdbcType=DOUBLE},
       </if>
       <if test="longitude != null">
-       longitude =  #{longitude,jdbcType=FLOAT},
+       longitude =  #{longitude,jdbcType=DOUBLE},
       </if>
       <if test="sampleTime != null">
         sample_time = #{sampleTime,jdbcType=TIMESTAMP },
@@ -133,8 +133,8 @@
       	 terminal_phone = #{terminalPhone,jdbcType=VARCHAR},
          vin = #{vin,jdbcType=VARCHAR},
          status = #{status,jdbcType=INTEGER},
-         latitude = #{latitude,jdbcType=FLOAT},
-         longitude =  #{longitude,jdbcType=FLOAT},
+         latitude = #{latitude,jdbcType=DOUBLE},
+         longitude =  #{longitude,jdbcType=DOUBLE},
          sample_time = #{sampleTime,jdbcType=TIMESTAMP },
          create_time = #{createTime,jdbcType=TIMESTAMP }
     where id = #{id,jdbcType=BIGINT}

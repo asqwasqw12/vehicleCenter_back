@@ -15,44 +15,56 @@ import io.netty.util.concurrent.GlobalEventExecutor;
 
 @Component
 public class ChannelManager {
-	private static final AttributeKey<String> TERMINAL_PHONE = AttributeKey.newInstance("terminalPhone");
+	
+	//需不需要设计成单例模式，仍需要测试
+	
+	
+	private static final AttributeKey<String> VEHICLE_IDENTIFICATION = AttributeKey.newInstance("vehicleIdentification");
 
     private ChannelGroup channelGroup = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
 
     private Map<String, ChannelId> channelIdMap = new ConcurrentHashMap<>();	//线程安全的Map
+    
+    //private Map<String, String> channelIdMap = new ConcurrentHashMap<>();	//线程安全的Map,<String,channel.id().asLongText()>
 
     private ChannelFutureListener remover = future -> {
-        String phone = future.channel().attr(TERMINAL_PHONE).get();
-        if (channelIdMap.get(phone) == future.channel().id()) {
-            channelIdMap.remove(phone);
+        String vehicleId = future.channel().attr(VEHICLE_IDENTIFICATION).get();
+        if (channelIdMap.get(vehicleId) == future.channel().id()) {
+            channelIdMap.remove(vehicleId);
         }
     };
-    public boolean add(String terminalPhone, Channel channel) {
+    public boolean add(String vin, Channel channel) {
         boolean added = channelGroup.add(channel);
         if (added) {
-            if (channelIdMap.containsKey(terminalPhone)) {//替换
-                Channel old = get(terminalPhone);
+            if (channelIdMap.containsKey(vin)) {//替换
+                Channel old = get(vin);
                 old.closeFuture().removeListener(remover);
                 old.close();
             }
-            channel.attr(TERMINAL_PHONE).set(terminalPhone);
+            channel.attr(VEHICLE_IDENTIFICATION).set(vin);
             channel.closeFuture().addListener(remover);
-            channelIdMap.put(terminalPhone, channel.id());
+            channelIdMap.put(vin, channel.id());
+            System.out.println("vin="+vin+"channelId="+channel.id().asLongText());
+            //channelIdMap.put(vehicleId, channel.id().asLongText());
         }
         return added;
     }
 
-    public boolean remove(String terminalPhone) {
-    	channelIdMap.remove(terminalPhone);
-        return channelGroup.remove(get(terminalPhone));
+    public boolean remove(String vehicleId) {
+    	channelIdMap.remove(vehicleId);
+        return channelGroup.remove(get(vehicleId));
     }
 
-    public Channel get(String terminalPhone) {
-        return channelGroup.find(channelIdMap.get(terminalPhone));
+    public Channel get(String vehicleId) {
+        return channelGroup.find(channelIdMap.get(vehicleId));
     }
 
     public ChannelGroup getChannelGroup() {
         return channelGroup;
+    }
+    
+    public Map<String, ChannelId> getChannelIdMap(){
+    	return channelIdMap;
     }
 
 }

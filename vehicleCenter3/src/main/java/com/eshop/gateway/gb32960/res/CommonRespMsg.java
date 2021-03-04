@@ -46,6 +46,17 @@ public class CommonRespMsg extends GB32960DataPacket{
         //resp.setResponseTime();//设置报文请求时间
         return resp;
     }
+	
+	public static CommonRespMsg success(GB32960DataPacket msg) {
+    	CommonRespMsg resp = new CommonRespMsg();
+    	resp.getHeader().setRequestType(msg.getHeader().getRequestType());
+        resp.getHeader().setResponseTag(gb32960Const.RESPONSE_SUCCESS);//设置应答标志
+        resp.getHeader().setVin(msg.getHeader().getVin()); //设置唯一识别码
+        resp.getHeader().setEncrypTionType(gb32960Const.ENCRYPTION_NO); //不加密
+        resp.getHeader().setPayloadLength(1); //设置数据长度
+        //resp.setResponseTime();//设置报文请求时间
+        return resp;
+    }
     
     public static CommonRespMsg failure(GB32960DataPacket msg, Integer flowId) {
     	CommonRespMsg resp = new CommonRespMsg();
@@ -58,7 +69,29 @@ public class CommonRespMsg extends GB32960DataPacket{
         return resp;
     }
     
+    public static CommonRespMsg failure(GB32960DataPacket msg) {
+    	CommonRespMsg resp = new CommonRespMsg();
+    	resp.getHeader().setRequestType(msg.getHeader().getRequestType());
+        resp.getHeader().setResponseTag(gb32960Const.RESPONSE_ERROR);//设置应答标志
+        resp.getHeader().setVin(msg.getHeader().getVin()); //设置唯一识别码
+        resp.getHeader().setEncrypTionType(gb32960Const.ENCRYPTION_NO); //不加密
+        resp.getHeader().setPayloadLength(1); //设置数据长度
+        //resp.setResponseTime();//设置报文请求时间
+        return resp;
+    }
+    
     public static CommonRespMsg vinRepeat(GB32960DataPacket msg, Integer flowId) {
+    	CommonRespMsg resp = new CommonRespMsg();
+    	resp.getHeader().setRequestType(msg.getHeader().getRequestType());
+        resp.getHeader().setResponseTag(gb32960Const.RESPONSE_VIN_DUPLICATE);//设置应答标志
+        resp.getHeader().setVin(msg.getHeader().getVin()); //设置唯一识别码
+        resp.getHeader().setEncrypTionType(gb32960Const.ENCRYPTION_NO); //不加密
+        resp.getHeader().setPayloadLength(1); //设置数据长度
+        //resp.setResponseTime();//设置报文请求时间
+        return resp;
+    }
+    
+    public static CommonRespMsg vinRepeat(GB32960DataPacket msg) {
     	CommonRespMsg resp = new CommonRespMsg();
     	resp.getHeader().setRequestType(msg.getHeader().getRequestType());
         resp.getHeader().setResponseTag(gb32960Const.RESPONSE_VIN_DUPLICATE);//设置应答标志

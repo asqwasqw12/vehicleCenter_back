@@ -18,10 +18,10 @@ public class LocationData {
     private Short status;
     
     //经度
-    private Long longitude;
+    private Double longitude;
 
     //纬度
-    private Long latitude;
+    private Double latitude;
     
     private Date createTime;	//创建时间
     
@@ -77,19 +77,19 @@ public class LocationData {
       this.status = status;
   }
   
-  public Long getLongitude() {
+  public Double getLongitude() {
       return longitude;
   }
 
-  public void setLongitude(Long longitude) {
+  public void setLongitude(Double longitude) {
       this.longitude = longitude;
   }
 
-  public Long getLatitude() {
+  public Double getLatitude() {
       return latitude;
   }
 
-  public void setLatitude(Long latitude) {
+  public void setLatitude(Double latitude) {
       this.latitude = latitude;
   }
   
