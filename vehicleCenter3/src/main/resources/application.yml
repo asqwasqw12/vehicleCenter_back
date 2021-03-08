@@ -51,7 +51,31 @@ pagehelper:
   supportMethodsArguments: true
   pageSizeZero: true
   params: count=countSql
-  
+# kafka
+kafka:
+  zookeeper:
+    connect: localhost:2181 
+  consumer:     
+    servers: localhost:9092 
+    enable-auto-commit: true
+    session-timeout: 6000   
+    auto-commit-interval: 100
+    auto-offset-reset: latest    
+    topic: test20210303
+    group-id: group-test-001   
+    key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+  producer:
+    servers: localhost:9092
+    ack-config: 1
+    retries: 0
+    batch-size: 4096
+    linger: 1
+    buffer-memory: 40960
+    key-serializer: org.apache.kafka.common.serialization.StringSerializer
+    value-serializer: org.apache.kafka.common.serialization.StringSerializer    
+  listener:
+    concurrency: 2
 #jwt
 jwt:
   header: Authorization

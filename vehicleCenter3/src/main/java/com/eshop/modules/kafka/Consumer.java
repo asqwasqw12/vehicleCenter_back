@@ -1,5 +1,6 @@
 package com.eshop.modules.kafka;
 
+import java.time.Duration;
 import java.util.Arrays;
 import java.util.Properties;
 
@@ -9,7 +10,7 @@ import org.apache.log4j.Logger;
 public class Consumer {
 	static Logger log = Logger.getLogger(Producer.class);
 
-    private static final String TOPIC = "milo2";
+    private static final String TOPIC = "test20210303";
     private static final String BROKER_LIST = "localhost:9092";
     private static KafkaConsumer<String,String> consumer = null;
 
@@ -33,11 +34,16 @@ public class Consumer {
 
     public static void main(String[] args) {
         while (true) {
-            ConsumerRecords<String, String> records = consumer.poll(100);
+            ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(1000));
+            System.out.println("准备开始消费消息。。。");
             for (ConsumerRecord<String, String> record : records) {
             	System.out.println("消费者消息="+record);
                 //log.info(record);
             }
         }
+    }
+    
+    public static KafkaConsumer<String,String> getConsumer(){
+    	return consumer;
     }
 }

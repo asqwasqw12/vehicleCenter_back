@@ -9,7 +9,7 @@ import org.apache.log4j.Logger;
 public class Producer {
 	static Logger log = Logger.getLogger(Producer.class);
 
-    private static final String TOPIC = "milo2";
+    private static final String TOPIC = "test20210303";
     private static final String BROKER_LIST = "localhost:9092";
     private static final String ARG1 = "1";
     private static KafkaProducer<String,String> producer = null;
@@ -37,14 +37,15 @@ public class Producer {
     public static void main(String[] args) throws InterruptedException {
         //消息实体
         ProducerRecord<String , String> record = null;
-        for (int i = 0; i < 100; i++) {
-            record = new ProducerRecord<String, String>(TOPIC, "value"+(int)(10*(Math.random())));
+        for (int i = 0; i < 10; i++) {
+            record = new ProducerRecord<String, String>(TOPIC, "key"+(int)(1000*(Math.random())),"valuexxx"+(int)(1000*(Math.random())));
             //发送消息
             producer.send(record, new Callback() {
                 @Override
                 public void onCompletion(RecordMetadata recordMetadata, Exception e) {
                     if (null != e){
                         log.info("send error" + e.getMessage());
+                        System.out.println("send error" + e.getMessage());
                     }else {
                     	 System.out.println("生产者生产消息");
                         System.out.println(String.format("offset:%s,partition:%s",recordMetadata.offset(),recordMetadata.partition()));
@@ -54,4 +55,7 @@ public class Producer {
         }
         producer.close();
   }
+    public static  KafkaProducer<String,String> getProducer(){
+    	return producer;
+    }
 }
