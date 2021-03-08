@@ -73,6 +73,8 @@ public class ScheduleTask {
             Thread.sleep(5000);
            // logger.info(Thread.currentThread().getName());
             
+            /*
+            //kafka测试1
             Vehicle vehicle = new Vehicle();
             vehicle.setBrand("东风");
             vehicle.setChargeDeviceCount(10);
@@ -80,7 +82,12 @@ public class ScheduleTask {
             vehicle.setName("洗扫车");
             vehicle.setVin("djlkdf4779798");
             kafkaTemplate.send("test20210303","VehicleData",JSONObject.toJSONString(vehicle));
+            */
+            
+            
+            
             /*
+            //kafka测试2
             KafkaProducer<String,String> producer = Producer.getProducer();
           //消息实体
             ProducerRecord<String , String> record = null;

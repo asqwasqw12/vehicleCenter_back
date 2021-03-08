@@ -8,8 +8,10 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
+import com.alibaba.fastjson.JSONObject;
 import com.eshop.gateway.gb32960.pojo.AlarmData;
 import com.eshop.gateway.gb32960.pojo.DriveMotorData;
 import com.eshop.gateway.gb32960.pojo.EngineData;
@@ -81,6 +83,9 @@ public class RealInfoUpMsgHandler extends BaseHandler<RealInfoUpMsg>{
 	@Autowired
 	SubSystemVoltageDataService subSystemVoltageDataService;
 	
+	@Autowired
+	private KafkaTemplate<String,String> kafkaTemplate;
+	
 	@Override
     protected void channelRead0(ChannelHandlerContext ctx, RealInfoUpMsg msg) throws Exception {
 		
@@ -100,6 +105,7 @@ public class RealInfoUpMsgHandler extends BaseHandler<RealInfoUpMsg>{
 				locationData.setVehicleId(vehicleId);			
 				locationDataService.save(locationData);//保存位置信息到mysql			
 				locationDataInRedisService.save(locationData);//保存位置信息到Redis
+				kafkaTemplate.send("test20210303","LOCATION_DATA_KEY",JSONObject.toJSONString(locationData));//传输到kafka
 			}
 			System.out.println("Location:002  ");
 			if(msg.getAlarmData()!=null) {
@@ -114,6 +120,7 @@ public class RealInfoUpMsgHandler extends BaseHandler<RealInfoUpMsg>{
 				for(DriveMotorData item : list) {
 					item.setVehicleId(vehicleId);
 					driveMotorDataService.save(item);//保存驱动电机信息到mysql
+					kafkaTemplate.send("test20210303","DRIVE_MOTOR_DATA_KEY",JSONObject.toJSONString(item));//传输到kafka
 				}
 			}
 			System.out.println("Location:004  ");
@@ -121,23 +128,27 @@ public class RealInfoUpMsgHandler extends BaseHandler<RealInfoUpMsg>{
 				RunData runData = msg.getRunData();
 				runData.setVehicleId(vehicleId);
 				runDataService.save(runData); //保存运行数据到mysql
+				kafkaTemplate.send("test20210303","RUN_DATA_KEY",JSONObject.toJSONString(runData));//传输到kafka
 			}
 			System.out.println("Location:005  ");
 			if(msg.getEngineData() != null) {
 				EngineData engineData = msg.getEngineData();
 				engineData.setVehicleId(vehicleId);
 				engineDataService.save(engineData);//保存引擎数据到mysql
+				kafkaTemplate.send("test20210303","ENGINE_DATA_KEY",JSONObject.toJSONString(engineData));//传输到kafka
 			}
 			if(msg.getExtremeData() != null) {
 				ExtremeData extremeData = msg.getExtremeData();
 				extremeData.setVehicleId(vehicleId);
 				extremeDataService.save(extremeData);//保存极值数据到mysql
+				kafkaTemplate.send("test20210303","EXTREME_DATA_KEY",JSONObject.toJSONString(extremeData));//传输到kafka
 			}
 			System.out.println("Location:006  ");
 			if(msg.getFuelCellData() != null) {
 				FuelCellData fuelCellData = msg.getFuelCellData();
 				fuelCellData.setVehicleId(vehicleId);
 				fuelCellDataService.save(fuelCellData);//保存燃料电池数据到mysql
+				kafkaTemplate.send("test20210303","FUEL_CELL_DATA_KEY",JSONObject.toJSONString(fuelCellData));//传输到kafka
 			}
 			System.out.println("Location:007  ");
 			if(msg.getSubSystemTemperatureList() !=null && msg.getSubSystemTemperatureList().size()>0) {
@@ -146,6 +157,7 @@ public class RealInfoUpMsgHandler extends BaseHandler<RealInfoUpMsg>{
 				for(SubSystemTemperatureData item : list) {
 					item.setVehicleId(vehicleId);
 					subSystemTemperatureDataService.save(item);//保存充电储能装置温度数据到mysql
+					kafkaTemplate.send("test20210303","SUB_SYSTEM_TEMPERATURE_DATA_KEY",JSONObject.toJSONString(item));//传输到kafka
 				}
 				
 			}
@@ -156,6 +168,7 @@ public class RealInfoUpMsgHandler extends BaseHandler<RealInfoUpMsg>{
 				for(SubSystemVoltageData item : list) {
 					item.setVehicleId(vehicleId);
 					subSystemVoltageDataService.save(item);//保存充电储能装置电压数据到mysql
+					kafkaTemplate.send("test20210303","SUB_SYSTEM_VOLTAGE_DATA_KEY",JSONObject.toJSONString(item));//传输到kafka
 				}
 				
 			}
