@@ -33,16 +33,19 @@ public class VehicleLoginMsgHandler extends BaseHandler<VehicleLoginMsg>{
 		String vin = msg.getHeader().getVin();
 		String iccid = msg.getIccid();
 		Integer flowId = msg.getFlowId();
-		System.out.println("vin="+vin+", iccid="+iccid+", flowId="+flowId);
-		channelManager.add(iccid, ctx.channel());
+		System.out.println("vin="+vin+", iccid="+iccid+", flowId="+flowId);		
 		Vehicle vehicle = null;
 		vehicle = vehicleService.findByVin(vin);
 		if(vehicle !=null && iccid.equals(vehicle.getIccid())){
-			VehicleLoginRespMsg resp = VehicleLoginRespMsg.success(msg);
-			write(ctx,resp);
+			if(channelManager.add(vin, ctx.channel())) {
+				VehicleLoginRespMsg resp = VehicleLoginRespMsg.success(msg);
+				write(ctx,resp);
+			}else {
+				System.out.println("channel添加失败");
+			}
+			
 		}else {
-			//do nothig
-			//write(ctx,resp);
+			ctx.close();
 		}
 		
 	}

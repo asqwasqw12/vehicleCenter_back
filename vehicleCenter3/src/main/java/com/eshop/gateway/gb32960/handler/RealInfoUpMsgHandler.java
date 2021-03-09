@@ -12,6 +12,7 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
 import com.alibaba.fastjson.JSONObject;
+import com.eshop.gateway.gb32960.config.ChannelManager;
 import com.eshop.gateway.gb32960.pojo.AlarmData;
 import com.eshop.gateway.gb32960.pojo.DriveMotorData;
 import com.eshop.gateway.gb32960.pojo.EngineData;
@@ -84,6 +85,9 @@ public class RealInfoUpMsgHandler extends BaseHandler<RealInfoUpMsg>{
 	SubSystemVoltageDataService subSystemVoltageDataService;
 	
 	@Autowired
+    private ChannelManager channelManager;
+	
+	@Autowired
 	private KafkaTemplate<String,String> kafkaTemplate;
 	
 	@Override
@@ -93,12 +97,17 @@ public class RealInfoUpMsgHandler extends BaseHandler<RealInfoUpMsg>{
 		
 		//log.debug(msg.toString());
 		System.out.println("LocationMsgHandler.msg:"+msg.toString());
-		
-		Vehicle vehicle = vehicleService.findByVin(msg.getHeader().getVin());
-		LocalDateTime  sampleTime = msg.getSampleTime();
-		
+		String vin = msg.getHeader().getVin();
+		System.out.println("vin====="+vin);
+		System.out.println("channelMap==="+channelManager.getChannelIdMap());
+		//LocalDateTime  sampleTime = msg.getSampleTime();
+		if(!(channelManager.getChannelIdMap().containsKey(vin))) {
+			System.out.println("非授权连接！");
+			ctx.close();
+			return;
+		}
+		Vehicle vehicle = vehicleService.findByVin(vin);
 		if(vehicle != null) {
-			System.out.println("Location:001  ");
 			Long vehicleId = vehicle.getId();
 			if (msg.getLocationData()!= null) {
 				LocationData locationData =msg.getLocationData();
@@ -107,13 +116,12 @@ public class RealInfoUpMsgHandler extends BaseHandler<RealInfoUpMsg>{
 				locationDataInRedisService.save(locationData);//保存位置信息到Redis
 				kafkaTemplate.send("test20210303","LOCATION_DATA_KEY",JSONObject.toJSONString(locationData));//传输到kafka
 			}
-			System.out.println("Location:002  ");
 			if(msg.getAlarmData()!=null) {
 				AlarmData alarmData = msg.getAlarmData();
 				alarmData.setVehicleId(vehicleId);
 				alarmDataService.save(alarmData);//保存报警信息到mysql
+				kafkaTemplate.send("test20210303","ALARM_DATA_KEY",JSONObject.toJSONString(alarmData));//传输到kafka
 			}
-			System.out.println("Location:003  ");
 			if(msg.getDriveMotorDatas() != null && msg.getDriveMotorDatas().size()>0) {
 				List<DriveMotorData> list = new ArrayList<DriveMotorData>();
 				list = msg.getDriveMotorDatas();
@@ -123,14 +131,12 @@ public class RealInfoUpMsgHandler extends BaseHandler<RealInfoUpMsg>{
 					kafkaTemplate.send("test20210303","DRIVE_MOTOR_DATA_KEY",JSONObject.toJSONString(item));//传输到kafka
 				}
 			}
-			System.out.println("Location:004  ");
 			if(msg.getRunData() != null) {
 				RunData runData = msg.getRunData();
 				runData.setVehicleId(vehicleId);
 				runDataService.save(runData); //保存运行数据到mysql
 				kafkaTemplate.send("test20210303","RUN_DATA_KEY",JSONObject.toJSONString(runData));//传输到kafka
 			}
-			System.out.println("Location:005  ");
 			if(msg.getEngineData() != null) {
 				EngineData engineData = msg.getEngineData();
 				engineData.setVehicleId(vehicleId);
@@ -143,14 +149,12 @@ public class RealInfoUpMsgHandler extends BaseHandler<RealInfoUpMsg>{
 				extremeDataService.save(extremeData);//保存极值数据到mysql
 				kafkaTemplate.send("test20210303","EXTREME_DATA_KEY",JSONObject.toJSONString(extremeData));//传输到kafka
 			}
-			System.out.println("Location:006  ");
 			if(msg.getFuelCellData() != null) {
 				FuelCellData fuelCellData = msg.getFuelCellData();
 				fuelCellData.setVehicleId(vehicleId);
 				fuelCellDataService.save(fuelCellData);//保存燃料电池数据到mysql
 				kafkaTemplate.send("test20210303","FUEL_CELL_DATA_KEY",JSONObject.toJSONString(fuelCellData));//传输到kafka
 			}
-			System.out.println("Location:007  ");
 			if(msg.getSubSystemTemperatureList() !=null && msg.getSubSystemTemperatureList().size()>0) {
 				List<SubSystemTemperatureData> list = new ArrayList<SubSystemTemperatureData>();
 				list = msg.getSubSystemTemperatureList();
@@ -161,7 +165,6 @@ public class RealInfoUpMsgHandler extends BaseHandler<RealInfoUpMsg>{
 				}
 				
 			}
-			System.out.println("Location:008  ");
 			if(msg.getSubSystemVoltageDataList() !=null && msg.getSubSystemVoltageDataList().size()>0) {
 				List<SubSystemVoltageData> list = new ArrayList<SubSystemVoltageData>();
 				list = msg.getSubSystemVoltageDataList();
@@ -180,3 +183,4 @@ public class RealInfoUpMsgHandler extends BaseHandler<RealInfoUpMsg>{
         
 
 }
+
