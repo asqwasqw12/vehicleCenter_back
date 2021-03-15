@@ -21,7 +21,7 @@ public interface VehicleMapper {
     
     Vehicle findByVin(@Param("vin")String vin);
     
-    Vehicle findByTerminalNum(@Param("termnialNum")String terminalNum);
+    Vehicle findByTerminalNum(@Param("terminalNum")String terminalNum);
 
     int updateByPrimaryKeySelective(Vehicle record);
 

@@ -7,18 +7,19 @@
 	import org.springframework.beans.factory.annotation.Qualifier;
 	import org.springframework.beans.factory.annotation.Value;
 	import org.springframework.stereotype.Component;
-	import com.eshop.gateway.gb32960.codec.gb32960Decoder;
-	import com.eshop.gateway.gb32960.codec.gb32960Encoder;
-    import com.eshop.gateway.gb32960.handler.CRRCLoginMsgHandler;
-    import com.eshop.gateway.gb32960.handler.ClockCorrectMsgHandler;
-    import com.eshop.gateway.gb32960.handler.HeartBeatMsgHandler;
-	import com.eshop.gateway.gb32960.handler.PlatformLoginMsgHandler;
-	import com.eshop.gateway.gb32960.handler.PlatformLogoutMsgHandler;
-	import com.eshop.gateway.gb32960.handler.RealInfoUpMsgHandler;
-	import com.eshop.gateway.gb32960.handler.VehicleLoginMsgHandler;
-	import com.eshop.gateway.gb32960.handler.VehicleLogoutMsgHandler;
 
-	import io.netty.channel.ChannelInitializer;
+import com.eshop.gateway.gb32960.codec.gb32960Decoder;
+import com.eshop.gateway.gb32960.codec.gb32960Encoder;
+import com.eshop.gateway.gb32960.handler.CRRCLoginMsgHandler;
+import com.eshop.gateway.gb32960.handler.ClockCorrectMsgHandler;
+import com.eshop.gateway.gb32960.handler.HeartBeatMsgHandler;
+import com.eshop.gateway.gb32960.handler.PlatformLoginMsgHandler;
+import com.eshop.gateway.gb32960.handler.PlatformLogoutMsgHandler;
+import com.eshop.gateway.gb32960.handler.RealInfoUpMsgHandler;
+import com.eshop.gateway.gb32960.handler.VehicleLoginMsgHandler;
+import com.eshop.gateway.gb32960.handler.VehicleLogoutMsgHandler;
+
+import io.netty.channel.ChannelInitializer;
 	import io.netty.channel.ChannelPipeline;
 	import io.netty.channel.socket.SocketChannel;
 	import io.netty.handler.timeout.IdleStateHandler;

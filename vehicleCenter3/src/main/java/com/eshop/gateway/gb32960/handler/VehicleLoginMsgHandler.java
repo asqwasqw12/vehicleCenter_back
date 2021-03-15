@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 
 import com.eshop.gateway.gb32960.config.ChannelManager;
 import com.eshop.gateway.gb32960.pojo.req.VehicleLoginMsg;
-import com.eshop.gateway.gb32960.res.CommonRespMsg;
 import com.eshop.gateway.gb32960.res.VehicleLoginRespMsg;
 import com.eshop.pojo.Vehicle;
 import com.eshop.service.VehicleService;
@@ -41,9 +40,8 @@ public class VehicleLoginMsgHandler extends BaseHandler<VehicleLoginMsg>{
 				VehicleLoginRespMsg resp = VehicleLoginRespMsg.success(msg);
 				write(ctx,resp);
 			}else {
-				System.out.println("channel添加失败");
+				System.out.println("车辆登录时，channel添加失败");
 			}
-			
 		}else {
 			ctx.close();
 		}
