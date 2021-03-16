@@ -26,7 +26,7 @@ public class gb32960Encoder extends MessageToByteEncoder<GB32960DataPacket>{
 	        bb.writeByte(ProtocolParseUtil.XorSumBytes(bb));
 	        bb.resetReaderIndex();
 	        //log.debug(">>>>> ip:{},hex:{}\n", ctx.channel().remoteAddress(), ByteBufUtil.hexDump(bb));
-	        System.out.println("ip:"+ctx.channel().remoteAddress()+"hex:"+ByteBufUtil.hexDump(bb));
+	        System.out.println("encode>>>>>>>ip:"+ctx.channel().remoteAddress()+"hex:"+ByteBufUtil.hexDump(bb));
 	        out.writeBytes(bb);
 	        ReferenceCountUtil.safeRelease(bb);
 	    }

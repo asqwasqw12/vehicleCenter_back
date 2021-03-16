@@ -38,12 +38,17 @@ public class VehicleLoginMsgHandler extends BaseHandler<VehicleLoginMsg>{
 		Vehicle vehicle = null;
 		vehicle = vehicleService.findByVin(vin);
 		if(vehicle !=null && iccid.equals(vehicle.getIccid())){
-			if(channelManager.add(vin, ctx.channel())) {
+			if(!channelManager.add(vin, ctx.channel())) {
+				System.out.println("车辆登录时，channel已存在");
+			}
+			VehicleLoginRespMsg resp = VehicleLoginRespMsg.success(msg);
+			write(ctx,resp);
+			/*if(channelManager.add(vin, ctx.channel())) {
 				VehicleLoginRespMsg resp = VehicleLoginRespMsg.success(msg);
 				write(ctx,resp);
 			}else {
-				System.out.println("车辆登录时，channel添加失败");
-			}
+				System.out.println("车辆登录时，channel已存在");
+			}*/
 		}else {
 			ctx.close();
 		}

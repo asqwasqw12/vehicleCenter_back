@@ -96,7 +96,8 @@ public class VehicleLoginRespMsg extends GB32960DataPacket {
         resp.getHeader().setResponseTag(gb32960Const.RESPONSE_SUCCESS);//设置应答标志
         resp.getHeader().setVin(msg.getHeader().getVin()); //设置唯一识别码
         resp.getHeader().setEncrypTionType(gb32960Const.ENCRYPTION_NO); //不加密
-        resp.getHeader().setPayloadLength(8); //设置数据长度
+        resp.getHeader().setPayloadLength(msg.getHeader().getPayloadLength()); //设置数据长度
+        //resp.getHeader().setPayloadLength(8); //设置数据长度
         LocalDateTime now = LocalDateTime.now();//获取当前时间
         resp.setResponseTime(now);//设置报文应答时间
         resp.setFlowId(msg.getFlowId());//设置流水号

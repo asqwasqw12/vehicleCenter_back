@@ -584,19 +584,20 @@ public class RealInfoUpMsg extends GB32960DataPacket{
 	   		data.setVin(header.getVin());
 	   		data.setNum(buf.readUnsignedByte());
 	   		data.setTemperatureProbeCount(buf.readUnsignedShort());
-	   		List<Short> probeList = new ArrayList<Short>();
-	   		StringBuffer probeTemperatures = new StringBuffer();
-	   		for(int j=0; j<data.getTemperatureProbeCount();j++) {
-	   			Short temperature = buf.readUnsignedByte();
-	   			probeList.add(temperature);
-	   			probeTemperatures.append(temperature);
-	   			probeTemperatures.append(",");
+	   		if(data.getTemperatureProbeCount()!=65535) {
+	   			List<Short> probeList = new ArrayList<Short>();
+	   			StringBuffer probeTemperatures = new StringBuffer();
+	   			for(int j=0; j<data.getTemperatureProbeCount();j++) {
+	   				Short temperature = buf.readUnsignedByte();
+	   				probeList.add(temperature);
+	   				probeTemperatures.append(temperature);
+	   				probeTemperatures.append(",");
+	   			}
+	   			if(probeList.size()>0) {
+	   				data.setProbeTemperatureList(probeList);
+	   				data.setProbeTemperatures(probeTemperatures.toString());
+	   			}
 	   		}
-	   		if(probeList.size()>0) {
-	   			data.setProbeTemperatureList(probeList);
-	   			data.setProbeTemperatures(probeTemperatures.toString());
-	   		}
-	   		
 	   		list.add(data);
 	   	}
 	    subsystemTemperatureCount = count;
