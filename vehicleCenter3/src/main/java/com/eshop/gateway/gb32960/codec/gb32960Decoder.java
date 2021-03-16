@@ -175,7 +175,9 @@ private GB32960DataPacket decode(ByteBuf escape) {
 		Short requestId = bb.getUnsignedByte(bb.readerIndex());
 		switch (requestId) {
 		case gb32960Const.VEHICLE_LOGIN: // 车辆登入
+			
 			packet = new VehicleLoginMsg(bb);
+			System.out.println("VehicleLoginMsg初始化完成");
 			break;
 		case gb32960Const.REAL_INFO_UP: // 实时信息上报
 		case gb32960Const.REISSUE_INFO_UP: // 补发信息上报
@@ -204,6 +206,7 @@ private GB32960DataPacket decode(ByteBuf escape) {
 			break;
 		}
 		packet.parse();
+		System.out.println("解析完成");
 		return packet;
 	}
 }

@@ -32,11 +32,13 @@ public class GB32960DataPacket {
 	 public void parse() {
 	        try{
 	            this.parseHead();
+	            System.out.println("包头解析完成");
 	            //验证包体长度
 	            if (this.header.getPayloadLength() != this.payload.readableBytes()) {
 	                throw new RuntimeException("包体长度有误");
 	            }
 	            this.parseBody();
+	            System.out.println("包体解析完成");
 	        }finally {
 	            ReferenceCountUtil.safeRelease(this.payload);
 	        }

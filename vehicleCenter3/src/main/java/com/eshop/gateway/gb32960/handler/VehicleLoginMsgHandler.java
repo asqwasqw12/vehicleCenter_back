@@ -28,11 +28,13 @@ public class VehicleLoginMsgHandler extends BaseHandler<VehicleLoginMsg>{
 	
 	@Override
     protected void channelRead0(ChannelHandlerContext ctx, VehicleLoginMsg msg) throws Exception {
-		
+		System.out.println("车辆登入处理器开始");
 		String vin = msg.getHeader().getVin();
+		System.out.println("vin="+vin);
 		String iccid = msg.getIccid();
+		System.out.println("iccid="+iccid);
 		Integer flowId = msg.getFlowId();
-		System.out.println("vin="+vin+", iccid="+iccid+", flowId="+flowId);		
+		System.out.println("flowId="+flowId);		
 		Vehicle vehicle = null;
 		vehicle = vehicleService.findByVin(vin);
 		if(vehicle !=null && iccid.equals(vehicle.getIccid())){
