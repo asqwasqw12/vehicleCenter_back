@@ -21,7 +21,9 @@ import io.netty.buffer.ByteBufUtil;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ReplayingDecoder;
 import io.netty.util.ReferenceCountUtil;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class gb32960Decoder extends ReplayingDecoder<MsgStatusEnum> {
 
 	//该段参考https://blog.csdn.net/nimasike/article/details/95483252，Netty源码分析-ReplayingDecoder
@@ -43,6 +45,7 @@ public class gb32960Decoder extends ReplayingDecoder<MsgStatusEnum> {
 			int startSymbol = in.readUnsignedShort();
             checkpoint(MsgStatusEnum.MSG_BODY);
             if (startSymbol != gb32960Const.START_SYMBOL) {
+            	log.info("实际可读长度=" + this.actualReadableBytes());
     			System.out.println("实际可读长度=" + this.actualReadableBytes());
     			in.skipBytes(this.actualReadableBytes());// 丢弃
     			ctx.close();

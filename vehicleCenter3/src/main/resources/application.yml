@@ -6,7 +6,9 @@ netty:
     boss: 1
     worker: 4
     business: 20 #业务线程数量
-spring:   
+spring: 
+# 选择加载不同环境的配置文件 dev pre prod
+  profiles.active: dev  
   datasource:
     name: druidDataSource
     type: com.alibaba.druid.pool.DruidDataSource

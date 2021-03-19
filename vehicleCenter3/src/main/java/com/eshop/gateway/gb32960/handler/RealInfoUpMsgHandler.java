@@ -95,14 +95,14 @@ public class RealInfoUpMsgHandler extends BaseHandler<RealInfoUpMsg>{
 		
 		
 		
-		//log.debug(msg.toString());
+		log.debug(msg.toString());
 		System.out.println("LocationMsgHandler.msg:"+msg.toString());
 		String vin = msg.getHeader().getVin();
 		System.out.println("vin====="+vin);
 		System.out.println("channelMap==="+channelManager.getChannelIdMap());
 		//LocalDateTime  sampleTime = msg.getSampleTime();
 		if(!(channelManager.getChannelIdMap().containsKey(vin))) {
-			System.out.println("非授权连接！");
+			System.out.println("非授权连接，断开该连接！");
 			ctx.close();
 			return;
 		}
