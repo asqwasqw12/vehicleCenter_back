@@ -78,4 +78,9 @@ public class PlatformLoginMsg extends GB32960DataPacket{
 	    	this.password = this.payload.readCharSequence(20, gb32960Const.ASCII_CHARSET).toString();
 	    	this.encryptionType = this.payload.readUnsignedByte();
 	    }
+	    
+	    @Override
+	    public String toString() {
+	    	return "loginTime="+loginTime.toString()+";flowId="+flowId+";userName="+userName+";password="+password+";encryptionType="+encryptionType;
+	    }
 }

@@ -101,5 +101,7 @@ public class CommonRespMsg extends GB32960DataPacket{
         //resp.setResponseTime();//设置报文请求时间
         return resp;
     }
+    
+    
 
 }

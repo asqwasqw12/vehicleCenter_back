@@ -41,4 +41,9 @@ public class CRRCLoginMsg extends GB32960DataPacket{
     	this.iccid = this.payload.readCharSequence(20, gb32960Const.ASCII_CHARSET).toString();
     }
 
+    @Override
+    public String toString() {
+    	return "terminalNum="+terminalNum+";iccid="+iccid;
+    }
+
 }

@@ -51,5 +51,9 @@ public class CRRCLoginRespMsg extends GB32960DataPacket {
         return resp;
     }
     
+    @Override
+    public String toString() {
+    	return "vin="+vin+";iccid="+iccid;
+    }
 
 }

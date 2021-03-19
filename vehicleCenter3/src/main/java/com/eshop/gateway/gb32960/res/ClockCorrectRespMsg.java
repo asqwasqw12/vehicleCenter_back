@@ -43,4 +43,9 @@ public class ClockCorrectRespMsg extends GB32960DataPacket{
         resp.getHeader().setPayloadLength(6); //设置数据长度
         return resp;
     }
+    
+    @Override
+    public String toString() {
+    	return "clockCorrectTime="+clockCorrectTime.toString();
+    }
 }

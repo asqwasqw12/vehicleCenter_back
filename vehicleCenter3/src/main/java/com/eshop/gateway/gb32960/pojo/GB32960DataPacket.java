@@ -52,6 +52,10 @@ public class GB32960DataPacket {
 	        header.setPayloadLength(payload.readUnsignedShort()); //读取数据包体
 	    }
 	 
+	 public String toString() {
+		return super.toString();
+	 }
+	 
 	    /**
 	     * 请求报文重写
 	     */
