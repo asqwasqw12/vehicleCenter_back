@@ -35,7 +35,7 @@ public class gb32960Decoder extends ReplayingDecoder<MsgStatusEnum> {
 	@Override
 	protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) {
 		
-		System.out.println("decode<<<<< ip:" + ctx.channel().remoteAddress() + "hex:"
+		log.info("decode<<<<< ip:" + ctx.channel().remoteAddress() + "hex:"
 				+ ByteBufUtil.hexDump(this.internalBuffer()));
 		switch (state()) {
 		case MSG_HEADER:
@@ -46,7 +46,6 @@ public class gb32960Decoder extends ReplayingDecoder<MsgStatusEnum> {
             checkpoint(MsgStatusEnum.MSG_BODY);
             if (startSymbol != gb32960Const.START_SYMBOL) {
             	log.info("实际可读长度=" + this.actualReadableBytes());
-    			System.out.println("实际可读长度=" + this.actualReadableBytes());
     			in.skipBytes(this.actualReadableBytes());// 丢弃
     			ctx.close();
     			return;
@@ -180,7 +179,6 @@ private GB32960DataPacket decode(ByteBuf escape) {
 		case gb32960Const.VEHICLE_LOGIN: // 车辆登入
 			
 			packet = new VehicleLoginMsg(bb);
-			System.out.println("VehicleLoginMsg初始化完成");
 			break;
 		case gb32960Const.REAL_INFO_UP: // 实时信息上报
 		case gb32960Const.REISSUE_INFO_UP: // 补发信息上报
@@ -209,7 +207,6 @@ private GB32960DataPacket decode(ByteBuf escape) {
 			break;
 		}
 		packet.parse();
-		System.out.println("解析完成");
 		return packet;
 	}
 }

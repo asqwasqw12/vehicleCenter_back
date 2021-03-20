@@ -15,12 +15,10 @@ public class PlatformLogoutMsgHandler extends BaseHandler<PlatformLogoutMsg>{
 	
 	    @Override
 	    protected void channelRead0(ChannelHandlerContext ctx, PlatformLogoutMsg msg) throws Exception {
-	        //log.debug(msg.toString());
-	        String vin = msg.getHeader().getVin();
+	        log.debug(msg.toString());
 	        
 	        //客户端平台登出，关闭连接
-	        // log.warn("客户端平台{}登出，关闭连接", ctx.channel().remoteAddress());
-	    	System.out.println("客户端平台"+ctx.channel().remoteAddress()+"登出，关闭连接");
+	        log.warn("客户端平台{}登出，关闭连接", ctx.channel().remoteAddress());
 	        ctx.close();
 	    }
 

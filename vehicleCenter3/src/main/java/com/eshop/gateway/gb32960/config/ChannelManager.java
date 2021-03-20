@@ -12,8 +12,10 @@ import io.netty.channel.group.ChannelGroup;
 import io.netty.channel.group.DefaultChannelGroup;
 import io.netty.util.AttributeKey;
 import io.netty.util.concurrent.GlobalEventExecutor;
+import lombok.extern.slf4j.Slf4j;
 
 @Component
+@Slf4j
 public class ChannelManager {
 	
 	//需不需要设计成单例模式，仍需要测试
@@ -44,7 +46,7 @@ public class ChannelManager {
             channel.attr(VEHICLE_IDENTIFICATION).set(vin);
             channel.closeFuture().addListener(remover);
             channelIdMap.put(vin, channel.id());
-            System.out.println("vin="+vin+"channelId="+channel.id().asLongText());
+            log.info("vin="+vin+"channelId="+channel.id().asLongText());
             //channelIdMap.put(vehicleId, channel.id().asLongText());
         }
         return added;

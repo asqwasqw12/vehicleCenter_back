@@ -96,13 +96,11 @@ public class RealInfoUpMsgHandler extends BaseHandler<RealInfoUpMsg>{
 		
 		
 		log.debug(msg.toString());
-		System.out.println("LocationMsgHandler.msg:"+msg.toString());
 		String vin = msg.getHeader().getVin();
-		System.out.println("vin====="+vin);
-		System.out.println("channelMap==="+channelManager.getChannelIdMap());
-		//LocalDateTime  sampleTime = msg.getSampleTime();
+		log.debug("vin====="+vin);
+		log.debug("channelMap==="+channelManager.getChannelIdMap());
 		if(!(channelManager.getChannelIdMap().containsKey(vin))) {
-			System.out.println("非授权连接，断开该连接！");
+			log.info("非授权连接，断开该连接！");
 			ctx.close();
 			return;
 		}
@@ -176,7 +174,6 @@ public class RealInfoUpMsgHandler extends BaseHandler<RealInfoUpMsg>{
 				
 			}
 		}
-		System.out.println("Location:009  ");
         CommonRespMsg resp = CommonRespMsg.success(msg, getSerialNumber(ctx.channel()));
         workerGroup.execute(() -> write(ctx, resp));//直接write是由businessGroup执行，换成workerGroup写可以少一些判断逻辑，略微提升性能
 	}

@@ -35,7 +35,7 @@ public class CRRCLoginMsgHandler extends BaseHandler<CRRCLoginMsg>{
 			if(iccid.equals(vehicle.getIccid()) && vin.equals(vehicle.getVin())){
 				Boolean channelAddFlag = channelManager.add(vin, ctx.channel());
 				if(!channelAddFlag) {
-					System.out.println("CRRC终端登入时，channel添加失败");
+					log.info("CRRC终端登入时，channel添加失败");
 				}else {
 					CommonRespMsg resp = CommonRespMsg.success(msg);
 					write(ctx,resp);

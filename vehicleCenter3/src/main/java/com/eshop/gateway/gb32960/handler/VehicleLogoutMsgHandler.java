@@ -20,8 +20,7 @@ public class VehicleLogoutMsgHandler extends BaseHandler<VehicleLogoutMsg>{
         
         Integer flowId = msg.getFlowId();
         //客户端平台登出，关闭连接
-        // log.warn("车辆{}登出，关闭连接", ctx.channel().remoteAddress());
-    	System.out.println("车辆-"+ctx.channel().remoteAddress()+"-登出，关闭连接");
+        log.warn("车辆{}登出，关闭连接", ctx.channel().remoteAddress());
     	VehicleLogoutRespMsg resp = VehicleLogoutRespMsg.success(msg, flowId);
     	write(ctx,resp);
         ctx.close();
