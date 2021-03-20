@@ -24,7 +24,9 @@ import com.eshop.sys.security.JwtUserDetails;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class JwtTokenUtils implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -60,7 +62,8 @@ public class JwtTokenUtils implements Serializable {
 	 * @return 令牌
 	 */
 	public static String generateToken(Authentication authentication) {
-		System.out.println("开始生成claim...");
+		//System.out.println("开始生成claim...");
+		log.info("开始生成claim...");
 	    Map<String, Object> claims = new HashMap<>(3);
 	    claims.put(USERNAME, SecurityUtils.getUsername(authentication));
 	    claims.put(CREATED, new Date());
@@ -75,7 +78,8 @@ public class JwtTokenUtils implements Serializable {
      * @return 令牌
      */
     private static String generateToken(Map<String, Object> claims) {
-    	System.out.println("开始生成token。。。");
+    	//System.out.println("开始生成token...");
+    	System.out.println("开始生成token...");
         Date expirationDate = new Date(System.currentTimeMillis() + EXPIRE_TIME);
         return Jwts.builder().setClaims(claims).setExpiration(expirationDate).signWith(SignatureAlgorithm.HS512, SECRET).compact();
     }
@@ -92,7 +96,8 @@ public class JwtTokenUtils implements Serializable {
 	        Claims claims = getClaimsFromToken(token);
 	        username = claims.getSubject();
 	    } catch (Exception e) {
-	    	System.out.println("解析token错误");
+	    	//System.out.println("解析token错误");
+	    	log.info("解析token错误");
 	        username = null;
 	    }
 	    return username;
@@ -110,10 +115,10 @@ public class JwtTokenUtils implements Serializable {
 		
 		// 请求令牌不能为空
 		if(token != null) {
-			System.out.println("解析后的token 不等于 null ");
 			// 上下文中Authentication为空
 			if(SecurityUtils.getAuthentication() == null) {		
-				System.out.println("获取服务端的Authenticaiton为null");
+				//System.out.println("获取服务端的Authenticaiton为null");
+				log.info("获取服务端的Authenticaiton为null");
 				Claims claims = getClaimsFromToken(token);
 				if(claims == null) {
 					System.out.println("token解析错误，设置服务端的Authenticaiton不成功，null返回");
@@ -121,11 +126,11 @@ public class JwtTokenUtils implements Serializable {
 				}
 				String username = claims.getSubject();
 				if(username == null) {
-					System.out.println("token解析错误，设置服务端的Authenticaiton不成功，null返回");
+					//System.out.println("token解析错误，设置服务端的Authenticaiton不成功，null返回");
 					return null;
 				}
 				if(isTokenExpired(token)) {
-					System.out.println("token过期，设置服务端的Authenticaiton不成功，null返回");
+					//System.out.println("token过期，设置服务端的Authenticaiton不成功，null返回");
 					return null;
 				}
 				Object authors = claims.get(AUTHORITIES);
@@ -135,19 +140,20 @@ public class JwtTokenUtils implements Serializable {
 						authorities.add(new GrantedAuthorityImpl((String) ((Map) object).get("authority")));
 					}
 				}
-				System.out.println("生成authentication成功 ");
+				//System.out.println("生成authentication成功 ");
 				User principal = new User(username, "", authorities);
 				authentication = new JwtAuthenticatioToken(principal, null, authorities, token);
 				
 			} else {
-				System.out.println("上下文authentication非空，username="+SecurityUtils.getUsername());
-				System.out.println("解析token，username="+getUsernameFromToken(token));			
+				//System.out.println("上下文authentication非空，username="+SecurityUtils.getUsername());
+				//System.out.println("解析token，username="+getUsernameFromToken(token));			
 				if(validateToken(token, SecurityUtils.getUsername())) {
 					// 如果上下文中Authentication非空，且请求令牌合法，直接返回当前登录认证信息
-					System.out.println("token解析的username和服务端authentication的username相等");
+					//System.out.println("token解析的username和服务端authentication的username相等");
 					authentication = SecurityUtils.getAuthentication();
 				}else {
-					System.out.println("token解析错误，或者token解析的username和服务端authentication的username不相等!");
+					//System.out.println("token解析错误，或者token解析的username和服务端authentication的username不相等!");
+					log.info("token解析错误，或者token解析的username和服务端authentication的username不相等!");
 				}
 			}
 		}

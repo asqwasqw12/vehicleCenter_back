@@ -10,8 +10,10 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 
 import com.eshop.sys.security.JwtAuthenticatioToken;
 
+import lombok.extern.slf4j.Slf4j;
 
 
+@Slf4j
 public class SecurityUtils {
 
 	/**
@@ -27,13 +29,16 @@ public class SecurityUtils {
 		
 		token.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 		// 执行登录认证过程
-		System.out.println("执行登录认证过程...");
+		//System.out.println("执行登录认证过程...");
+		log.info("执行登录认证过程...");
 	    Authentication authentication = authenticationManager.authenticate(token);
 	    // 认证成功存储认证信息到上下文
-	    System.out.println("认证成功存储认证信息到上下文...");
+	    //System.out.println("认证成功存储认证信息到上下文...");
+	    log.info("认证成功存储认证信息到上下文...");
 	    SecurityContextHolder.getContext().setAuthentication(authentication);
 		// 生成令牌并返回给客户端
-	    System.out.println("生成令牌并返回给客户端...");
+	    //System.out.println("生成令牌并返回给客户端...");
+	    log.info("生成令牌并返回给客户端...");
 	    token.setToken(JwtTokenUtils.generateToken(authentication));
 		return token;
 	}
@@ -59,7 +64,7 @@ public class SecurityUtils {
 		String username = null;
 		Authentication authentication = getAuthentication();
 		if(authentication != null) {
-			System.out.println("SecurityUtils中的authentication!=null,="+authentication);
+			//System.out.println("SecurityUtils中的authentication!=null,="+authentication);
 			Object principal = authentication.getPrincipal();
 			if(principal != null && principal instanceof UserDetails) {
 				username = ((UserDetails) principal).getUsername();
