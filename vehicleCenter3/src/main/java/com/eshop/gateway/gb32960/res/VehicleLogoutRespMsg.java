@@ -56,4 +56,9 @@ public class VehicleLogoutRespMsg extends GB32960DataPacket{
         resp.setFlowId(flowId);
         return resp;
     }
+    
+    @Override
+    public String toString() {
+    	return "responseTime="+responseTime+";flowId="+flowId;
+    }
 }

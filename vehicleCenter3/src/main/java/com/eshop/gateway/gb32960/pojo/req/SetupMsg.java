@@ -59,4 +59,15 @@ public class SetupMsg extends GB32960DataPacket {
     	}
     	parameterIds = list; //参数解析并未完全解析完毕
     }
+    
+    @Override
+    public String toString() {
+    	String setupList =null;
+    	if(parameterIds != null && parameterIds.size()>0) {
+    	   for(Short setup:parameterIds) {
+    		setupList= setup+" ";
+    	   }
+    	}
+    	return "sampleTime="+sampleTime.toString()+";parameterCount="+parameterCount+";parameterIds="+setupList;
+    }
 }

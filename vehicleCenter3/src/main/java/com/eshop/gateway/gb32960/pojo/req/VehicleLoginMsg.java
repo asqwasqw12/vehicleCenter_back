@@ -91,4 +91,15 @@ public class VehicleLoginMsg extends GB32960DataPacket{
     	}
     	
     }
+    
+    @Override
+    public String toString() {
+    	String codeList =null;
+    	if(codes != null && codes.size()>0) {
+    	   for(String code:codes) {
+    		codeList+= code;
+    	   }
+    	}
+    	return "loginTime="+loginTime.toString()+";flowId="+flowId+";iccid="+iccid+";count="+count+";length="+length+";codeList="+codeList;
+    }
 }

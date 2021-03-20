@@ -39,4 +39,9 @@ public class VehicleLogoutMsg extends GB32960DataPacket{
         		this.payload.readByte(),this.payload.readByte(),this.payload.readByte(),0,gb32960Const.ZONE_UTC8).toLocalDateTime();
     	this.flowId = this.payload.readUnsignedShort();
     }
+    
+    @Override
+    public String toString() {
+    	return "sampleTime="+sampleTime+";flowId="+flowId;
+    }
 }

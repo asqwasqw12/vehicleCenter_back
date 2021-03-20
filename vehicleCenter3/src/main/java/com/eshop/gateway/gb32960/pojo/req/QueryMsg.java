@@ -59,4 +59,15 @@ public class QueryMsg extends GB32960DataPacket{
     	}
     	parameterIds = list; //参数解析并未完全解析完毕
     }
+    
+    @Override
+    public String toString() {
+    	String codeList =null;
+    	if(parameterIds != null && parameterIds.size()>0) {
+    	   for(Short code:parameterIds) {
+    		codeList= code+" ";
+    	   }
+    	}
+    	return "sampleTime="+sampleTime.toString()+";parameterCount="+parameterCount+";parameterIds="+codeList;
+    }
 }

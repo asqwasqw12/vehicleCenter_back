@@ -9,7 +9,7 @@ import com.eshop.gateway.gb32960.pojo.GB32960DataPacket;
 import io.netty.buffer.ByteBuf;
 
 public class PlatformLogoutMsg extends GB32960DataPacket {
-	//平台登出时间
+	  //平台登出时间
 	   private LocalDateTime loginTime;
 
 	    //登入流水号
@@ -42,6 +42,11 @@ public class PlatformLogoutMsg extends GB32960DataPacket {
 	    	this.loginTime = ZonedDateTime.of((this.payload.readByte()+ 2000),this.payload.readByte(),this.payload.readByte(),
 	        		this.payload.readByte(),this.payload.readByte(),this.payload.readByte(),0,gb32960Const.ZONE_UTC8).toLocalDateTime();
 	    	this.flowId = this.payload.readUnsignedShort();
+	    }
+	    
+	    @Override
+	    public String toString() {
+	    	return "loginTime="+loginTime.toString()+";flowId="+flowId;
 	    }
 
 }

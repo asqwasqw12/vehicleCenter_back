@@ -63,4 +63,15 @@ public class ControlMsg extends GB32960DataPacket {
     		//todo...
     	}
     }
+    
+    @Override
+    public String toString() {
+    	String orderList =null;
+    	if(orderParameter != null && orderParameter.size()>0) {
+    	   for(Short order:orderParameter) {
+    		orderList= order+" ";
+    	   }
+    	}
+    	return "sampleTime="+sampleTime.toString()+";orderId="+orderId+";orderParameter="+orderList;
+    }
 }
