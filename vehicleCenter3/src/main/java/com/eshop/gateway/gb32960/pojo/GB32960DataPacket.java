@@ -5,7 +5,9 @@ import com.eshop.gateway.gb32960.config.gb32960Const;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
 import io.netty.util.ReferenceCountUtil;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class GB32960DataPacket {
 	protected GB32960DataHeader header = new GB32960DataHeader(); //数据包头
 	protected ByteBuf payload; //数据包
@@ -32,13 +34,13 @@ public class GB32960DataPacket {
 	 public void parse() {
 	        try{
 	            this.parseHead();
-	            System.out.println("包头解析完成");
+	            log.debug("包头解析完成");
 	            //验证包体长度
 	            if (this.header.getPayloadLength() != this.payload.readableBytes()) {
 	                throw new RuntimeException("包体长度有误");
 	            }
 	            this.parseBody();
-	            System.out.println("包体解析完成");
+	            log.debug("包体解析完成");
 	        }finally {
 	            ReferenceCountUtil.safeRelease(this.payload);
 	        }
@@ -76,7 +78,7 @@ public class GB32960DataPacket {
 	        bb.writeByte(header.getResponseTag());//应答标志
 	        bb.writeBytes(header.getVin().getBytes(gb32960Const.ASCII_CHARSET));//vin
 	        bb.writeByte(header.getEncrypTionType());//加密方式
-	        System.out.println("length="+header.getPayloadLength());
+	        log.debug("length="+header.getPayloadLength());
 	        bb.writeShort(header.getPayloadLength());//长度
 	        //bb.writeInt(header.getPayloadLength());//长度
 	        return bb;

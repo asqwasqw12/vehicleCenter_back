@@ -1,12 +1,12 @@
 
-	package com.eshop.gateway.gb32960.server;
+package com.eshop.gateway.gb32960.server;
 
-	import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeUnit;
 
-	import org.springframework.beans.factory.annotation.Autowired;
-	import org.springframework.beans.factory.annotation.Qualifier;
-	import org.springframework.beans.factory.annotation.Value;
-	import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import com.eshop.gateway.gb32960.codec.gb32960Decoder;
 import com.eshop.gateway.gb32960.codec.gb32960Encoder;
@@ -73,7 +73,7 @@ import io.netty.channel.ChannelInitializer;
 	        pipeline.addLast(vehicleLoginMsgHandler); //车辆登入处理器
 	        pipeline.addLast(crrcLoginMsgHandler); //中车企标-终端登入处理器
 	        pipeline.addLast(heartBeatMsgHandler); //心跳处理器
-	        pipeline.addLast(businessGroup, realInfoUpMsgHandler);//因为locationMsgHandler中涉及到数据库操作，所以放入businessGroup        
+	        pipeline.addLast(businessGroup, realInfoUpMsgHandler);//因为realInfoUpMsgHandler中涉及到数据库操作，所以放入businessGroup        
 	        pipeline.addLast(clockCorrectMsgHandler); //终端校时处理器
 	        pipeline.addLast(vehicleLogoutMsgHandler); //车辆登出处理器
 

@@ -18,8 +18,11 @@ import org.springframework.stereotype.Component;
 
 import com.alibaba.fastjson.JSONObject;
 
+import lombok.extern.slf4j.Slf4j;
+
 @ServerEndpoint("/webSocket/vehicleStatus/{userName}")
 @Component
+@Slf4j
 public class WebsocketServer {
 	
 	//concurrent包的线程安全Set，用来存放每个客户端对应的MyWebSocket对象。
@@ -33,18 +36,18 @@ public class WebsocketServer {
 	//连接成功调用的方法
 	@OnOpen
 	public void onOpen(Session session,@PathParam(value="userName")String userName ) {
-		System.out.println("成功建立连接！！！");
+		log.info("成功建立连接！！！");
 		this.session = session;
 		sessionPool.put(userName, session);
 		websocketSet.add(this);
-		System.out.println("【websocket消息】有新的连接，总数为:"+websocketSet.size());
+		log.info("【websocket消息】有新的连接，总数为:"+websocketSet.size());
 	}
 	
 	//连接关闭调用的方法
 	@OnClose
 	public void onClose() {
 		websocketSet.remove(this);
-		System.out.println("【websocket消息】连接断开，总数为:"+websocketSet.size());
+		log.info("【websocket消息】连接断开，总数为:"+websocketSet.size());
 	}
 	
 	/**
@@ -52,25 +55,24 @@ public class WebsocketServer {
 	 * @param message 客户端发送过来的消息*/	
 	@OnMessage
 	public void onMessage(String message, Session session,@PathParam(value="userName")String userName) {
-		System.out.println("【websocket消息】收到客户端"+userName+"消息:"+message);
+		log.info("【websocket消息】收到客户端"+userName+"消息:"+message);
 		//群发消息
         sendAllMessage(message);	
 	}
 	
 	@OnError
 	public void onError(Session session, Throwable error) {
-		System.out.println("发生错误");
-		error.printStackTrace();
+		log.error("websocket发生错误{}"+error);
 	}
 	
 	// 此为广播消息
     public void sendAllMessage(String message) {
         for(WebsocketServer webSocket : websocketSet) {
-            System.out.println("【websocket消息】广播消息:"+message);
+            log.info("【websocket消息】广播消息:"+message);
             try {
                 webSocket.session.getAsyncRemote().sendText(message);
             } catch (Exception e) {
-                e.printStackTrace();
+                log.error("websocket广播消息错误{}"+e);
             }
         }
     }
@@ -82,7 +84,7 @@ public class WebsocketServer {
             try {
                 session.getBasicRemote().sendText(message);
             } catch (Exception e) {
-                e.printStackTrace();
+            	log.error("websocket单点发送文本消息错误{}"+e);
             }
         }
     }
@@ -94,7 +96,7 @@ public class WebsocketServer {
             try {
                 session.getAsyncRemote().sendObject(message);
             } catch (Exception e) {
-                e.printStackTrace();
+            	log.error("websocket单点发送对象消息错误{}"+e);
             }
         }
     }

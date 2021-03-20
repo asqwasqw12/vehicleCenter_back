@@ -35,10 +35,9 @@ public class Consumer {
     public static void main(String[] args) {
         while (true) {
             ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(1000));
-            System.out.println("准备开始消费消息。。。");
+            log.info("准备开始消费消息。。。");
             for (ConsumerRecord<String, String> record : records) {
-            	System.out.println("消费者消息="+record);
-                //log.info(record);
+            	log.info("消费者消息="+record);
             }
         }
     }

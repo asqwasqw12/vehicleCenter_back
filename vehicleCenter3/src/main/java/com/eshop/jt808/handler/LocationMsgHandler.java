@@ -40,8 +40,7 @@ public class LocationMsgHandler extends BaseHandler<LocationMsg>{
 	
 	@Override
     protected void channelRead0(ChannelHandlerContext ctx, LocationMsg msg) throws Exception {
-        //log.debug(msg.toString());
-		System.out.println("LocationMsgHandler.msg:"+msg.toString());
+        log.debug(msg.toString());
 		Location location = Location.parseFromLocationMsg(msg);
 		VehicleDevice vehicleDevice = vehicleDeviceService.findByTerminalPhone(location.getTerminalPhone());
 		Long vehicleId =null;

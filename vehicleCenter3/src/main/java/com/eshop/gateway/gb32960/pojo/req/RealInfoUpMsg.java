@@ -354,7 +354,6 @@ public class RealInfoUpMsg extends GB32960DataPacket{
 	   locationData.setSampleTime(sampleTime);
 	   locationData.setStatus(buf.readUnsignedByte());
 	   Long tempNum = buf.readUnsignedInt();
-	   System.out.println("rawLongitude="+tempNum);
 	   double rawLongitude = (double)tempNum/1000000.0;
 	   //double rawLongitude = (double)buf.readUnsignedInt()/1000000.0;
 	   byte[] bytes =new byte[4];
@@ -362,13 +361,10 @@ public class RealInfoUpMsg extends GB32960DataPacket{
 	   Long number =0L;
 	   for(int i=0;i<4;i++) {
 		   int temp = (bytes[i]>=0) ? bytes[i] : (bytes[i]+256) ;
-		   System.out.println("byte["+i+"]="+bytes[i]);
-		   System.out.println("temp="+temp);
 		   int rate =(int) Math.pow(256,3-i);
 		   number +=temp*rate;
 	   }
 	   double rawLatitude = (double)number/1000000.0;
-	   System.out.println("rawLatitude="+number);
 	  // double rawLatitude = (double)buf.readUnsignedInt()/1000000.0;
 	   
 	   

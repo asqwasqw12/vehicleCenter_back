@@ -19,8 +19,7 @@ public class HeartBeatMsgHandler extends BaseHandler<HeartBeatMsg> {
 	
 	@Override
     protected void channelRead0(ChannelHandlerContext ctx, HeartBeatMsg msg) throws Exception {
-        //log.debug(msg.toString());
-		System.out.println("HeartBeatMsgHandler.msg:"+msg.toString());
+        log.debug(msg.toString());
         CommonRespMsg resp = CommonRespMsg.success(msg, getSerialNumber(ctx.channel()));
         write(ctx,resp);
     }

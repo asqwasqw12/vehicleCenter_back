@@ -21,7 +21,6 @@ public class CustomLogoutHandler implements LogoutHandler {
 	@Log("退出登录")
 	@Override
 	public void logout(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
-		System.out.println("执行了退出登录");
 		onlineUserService.logout(JwtTokenUtils.getToken(request));
         /*//确定注入了tokenStore
         Assert.notNull(tokenStore, "tokenStore must be set");

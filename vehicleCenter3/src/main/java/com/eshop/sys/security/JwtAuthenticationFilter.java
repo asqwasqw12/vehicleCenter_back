@@ -15,10 +15,13 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 
 import com.eshop.common.SecurityUtils;
 
+import lombok.extern.slf4j.Slf4j;
+
 
 
 
 //登录认证过滤器
+@Slf4j
 public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
     
 	//@Autowired  
@@ -34,9 +37,9 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
     	// 获取token, 并检查登录状态
-    	System.out.println("登录开始过滤...");
+    	log.info("登录开始过滤...");
         SecurityUtils.checkAuthentication(request);
         chain.doFilter(request, response);
-        System.out.println("过滤程序执行完毕...");    
+        log.info("过滤程序执行完毕...");    
    }
 }

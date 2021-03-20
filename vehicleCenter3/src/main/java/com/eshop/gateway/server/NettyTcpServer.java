@@ -21,8 +21,10 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.util.ResourceLeakDetector;
 import io.netty.util.concurrent.EventExecutorGroup;
+import lombok.extern.slf4j.Slf4j;
 
 @Component
+@Slf4j
 public class NettyTcpServer {
 	
 	@Value("${netty.port}")
@@ -41,9 +43,6 @@ public class NettyTcpServer {
     private EventExecutorGroup businessGroup;
 	
 	@Autowired
-	private JT808ChannelInitializer jt808ChannelInitializer;
-	 
-	@Autowired
 	private GB32960ChannelInitializer gb32960ChannelInitializer;
 	 
 	 @PostConstruct
@@ -55,13 +54,12 @@ public class NettyTcpServer {
 		 .childHandler(gb32960ChannelInitializer)  //使用gb32960协议handler
 		 .option(ChannelOption.SO_BACKLOG,1024)   //服务端可连接队列数，对应TCP/IP协议listen函数中backlog参数
 		 .option(ChannelOption.SO_RCVBUF, 16 * 1024) //TCP接收缓冲区大小
-         .option(ChannelOption.SO_SNDBUF, 16 * 1024) //TCP发送缓冲区大小
 		 .childOption(ChannelOption.TCP_NODELAY,true)	//立即写出
 		 .childOption(ChannelOption.SO_KEEPALIVE,true);	//长连接
 		 ResourceLeakDetector.setLevel(ResourceLeakDetector.Level.SIMPLE);	////内存泄漏检测 开发推荐PARANOID 线上SIMPLE
 		 ChannelFuture channelFuture = serverBootstrap.bind(port).sync();
 		 if(channelFuture.isSuccess()) {
-			 System.out.println("TCP服务启动完毕,port="+this.port);
+			 log.info("TCP服务启动完毕,port="+this.port);
 		 }
 	 }
 	 
@@ -70,7 +68,7 @@ public class NettyTcpServer {
 	        bossGroup.shutdownGracefully().syncUninterruptibly();
 	        workerGroup.shutdownGracefully().syncUninterruptibly();
 	        businessGroup.shutdownGracefully().syncUninterruptibly();
-	        System.out.println("关闭成功");
+	        log.warn("关闭成功");
 	    }
 
 }

@@ -10,7 +10,9 @@ import com.eshop.jt808.util.BCD;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
 import io.netty.util.ReferenceCountUtil;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class DataPacket {
 	 protected DataHeader header = new DataHeader(); //消息头
 	 protected ByteBuf payload; //消息体
@@ -99,15 +101,15 @@ public class DataPacket {
 	     * @return
 	     */
 	    public String readString(int length) {
-	    	System.out.println("length:"+length);
+	    	log.debug("length:"+length);
 	    	byte[] bytes = { 49,50,51,52,53};
-	    	System.out.println("bytes:"+Arrays.toString(bytes));
+	    	log.debug("bytes:"+Arrays.toString(bytes));
 	    	byte[] byteSuccess = "success".getBytes();
-	    	System.out.println("byteSuccess:"+Arrays.toString(byteSuccess));
+	    	log.debug("byteSuccess:"+Arrays.toString(byteSuccess));
 	    	String strSuccess =new String(byteSuccess,JT808Const.DEFAULT_CHARSET);
-	    	System.out.println("strSuccess:"+strSuccess);
+	    	log.debug("strSuccess:"+strSuccess);
 	    	String str = new String(bytes,JT808Const.DEFAULT_CHARSET);
-	    	System.out.println("test:"+str);
+	    	log.debug("test:"+str);
 	       return new String(readBytes(length),JT808Const.DEFAULT_CHARSET);
 	    }
 }

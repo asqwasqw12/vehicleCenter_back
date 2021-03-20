@@ -19,8 +19,7 @@ public class JT808Encoder extends MessageToByteEncoder<DataPacket>{
 	
 	 @Override
 	    protected void encode(ChannelHandlerContext ctx, DataPacket msg, ByteBuf out) throws Exception {
-	        //log.debug(msg.toString());
-		    System.out.println("encode.msg"+msg.toString());
+	        log.debug(msg.toString());
 	        ByteBuf bb = msg.toByteBufMsg();
 	        bb.markWriterIndex();//标记一下，先到前面去写覆盖的，然后回到标记写校验码
 	        short bodyLen = (short) (bb.readableBytes() - 12);//包体长度=总长度-头部长度
@@ -31,8 +30,7 @@ public class JT808Encoder extends MessageToByteEncoder<DataPacket>{
 	        bb.writeShort(bodyProps);
 	        bb.resetWriterIndex();
 	        bb.writeByte(JT808Util.XorSumBytes(bb));
-	        //log.debug(">>>>> ip:{},hex:{}\n", ctx.channel().remoteAddress(), ByteBufUtil.hexDump(bb));
-	        System.out.println("ip:"+ctx.channel().remoteAddress()+"hex:"+ByteBufUtil.hexDump(bb));
+	        log.debug(">>>>> ip:{},hex:{}\n", ctx.channel().remoteAddress(), ByteBufUtil.hexDump(bb));
 	        ByteBuf escape = escape(bb);
 	        out.writeBytes(escape);
 	        ReferenceCountUtil.safeRelease(escape);

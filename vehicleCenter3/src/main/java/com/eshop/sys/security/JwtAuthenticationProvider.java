@@ -9,7 +9,10 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 
 import com.eshop.common.PasswordEncoder;
 
+import lombok.extern.slf4j.Slf4j;
+
 //身份验证组件（利用user和password登录）
+@Slf4j
 public class JwtAuthenticationProvider extends DaoAuthenticationProvider {
 
     public JwtAuthenticationProvider(UserDetailsService userDetailsService) {
@@ -19,7 +22,7 @@ public class JwtAuthenticationProvider extends DaoAuthenticationProvider {
     @Override
 	protected void additionalAuthenticationChecks(UserDetails userDetails, UsernamePasswordAuthenticationToken authentication)
 			throws AuthenticationException {
-    	System.out.println("身份验证组件开始...");
+    	log.info("身份验证组件开始...");
 		if (authentication.getCredentials() == null) {
 			logger.debug("Authentication failed: no credentials provided");
 			throw new BadCredentialsException(messages.getMessage("AbstractUserDetailsAuthenticationProvider.badCredentials", "Bad credentials"));

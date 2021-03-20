@@ -44,11 +44,10 @@ public class Producer {
                 @Override
                 public void onCompletion(RecordMetadata recordMetadata, Exception e) {
                     if (null != e){
-                        log.info("send error" + e.getMessage());
-                        System.out.println("send error" + e.getMessage());
+                        log.error("send error" + e.getMessage());
                     }else {
-                    	 System.out.println("生产者生产消息");
-                        System.out.println(String.format("offset:%s,partition:%s",recordMetadata.offset(),recordMetadata.partition()));
+                    	log.info("生产者生产消息");
+                        log.info(String.format("offset:%s,partition:%s",recordMetadata.offset(),recordMetadata.partition()));
                     }
                 }
             });

@@ -37,15 +37,13 @@ public abstract class BaseHandler<T> extends SimpleChannelInboundHandler<T>{
         ctx.writeAndFlush(msg).addListener(future -> {
             if (!future.isSuccess()) {
                 log.error("发送失败", future.cause());
-            	System.out.println("发送失败"+future.cause());
             }
         });
     }
     
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
-        //log.error("exceptionCaught",cause);
-    	System.out.println("exceptionCaught"+cause);
+        log.error("exceptionCaught",cause);
         ctx.close();
     }
     
@@ -55,15 +53,12 @@ public abstract class BaseHandler<T> extends SimpleChannelInboundHandler<T>{
             //此实例项目只设置了读取超时时间,可以通过state分别做处理,一般服务端在这里关闭连接节省资源，客户端发送心跳维持连接
             IdleState state = ((IdleStateEvent) evt).state();
             if (state == IdleState.READER_IDLE) {
-               // log.warn("客户端{}读取超时,关闭连接", ctx.channel().remoteAddress());
-            	System.out.println("客户端"+ctx.channel().remoteAddress()+"读取超时，关闭连接");
+               log.warn("客户端{}读取超时,关闭连接", ctx.channel().remoteAddress());
                 ctx.close();
             } else if (state == IdleState.WRITER_IDLE) {
-                //log.warn("客户端{}写入超时", ctx.channel().remoteAddress());
-                System.out.println("客户端"+ctx.channel().remoteAddress()+"写入超时");
+                log.warn("客户端{}写入超时", ctx.channel().remoteAddress());
             }else if(state == IdleState.ALL_IDLE){
-               // log.warn("客户端{}读取写入超时", ctx.channel().remoteAddress());
-                System.out.println("客户端"+ctx.channel().remoteAddress()+"读取写入超时");
+               log.warn("客户端{}读取写入超时", ctx.channel().remoteAddress());
             }
         } else {
             super.userEventTriggered(ctx, evt);

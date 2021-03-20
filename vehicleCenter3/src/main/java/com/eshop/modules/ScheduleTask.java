@@ -29,10 +29,13 @@ import com.eshop.pojo.Vehicle;
 import com.eshop.pojo.VehicleStatus;
 import com.eshop.service.VehicleStatusInRedisService;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Component
+@Slf4j
 public class ScheduleTask {
 	
-	Logger logger = LoggerFactory.getLogger(ScheduleTask.class);
+	//Logger logger = LoggerFactory.getLogger(ScheduleTask.class);
 	@Autowired
 	LocationInRedisService locationInRedisService;
 	@Autowired
@@ -63,7 +66,7 @@ public class ScheduleTask {
                  //log.info(record);
              }*/
         }catch (Exception e){
-            logger.error(e.getMessage());
+            log.error("定时任务1错误{}"+e);
         }
     }
  
@@ -109,7 +112,7 @@ public class ScheduleTask {
             }*/
  
         }catch (Exception e){
-            logger.error(e.getMessage());
+        	 log.error("定时任务2错误{}"+e);
         }
     }
 

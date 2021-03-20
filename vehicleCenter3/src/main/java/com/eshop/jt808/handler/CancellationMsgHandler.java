@@ -17,8 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 public class CancellationMsgHandler extends BaseHandler<CancellationMsg> {
 	 @Override
 	    protected void channelRead0(ChannelHandlerContext ctx, CancellationMsg msg) throws Exception {
-		//log.debug(msg.toString());
-	    	System.out.println("CancellationMsgHandler.msg:"+msg.toString());
+		    log.debug(msg.toString());
 	        CommonRespMsg resp = CommonRespMsg.success(msg, getSerialNumber(ctx.channel()));
 	        write(ctx,resp);
 	    }

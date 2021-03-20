@@ -31,11 +31,13 @@ import com.eshop.sys.pojo.SysUser;
 import com.eshop.sys.service.SysUserService;
 
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 
 
 
 @RestController
 @RequestMapping("user")
+@Slf4j
 public class SysUserController {
 
 	@Autowired
@@ -45,10 +47,10 @@ public class SysUserController {
 	@PreAuthorize("hasAuthority('sys:user:add') AND hasAuthority('sys:user:edit')")
 	@PostMapping(value="/save")
 	public HttpResult save(@RequestBody SysUser record) {
-		System.out.println("user:"+record);
 		SysUser user = sysUserService.findById(record.getId());
 		if(user != null) {
 			if(SysConstants.ADMIN.equalsIgnoreCase(user.getName())) {
+				log.warn("超级管理员不允许修改!");
 				return HttpResult.error("超级管理员不允许修改!");
 			}
 		}
@@ -57,6 +59,7 @@ public class SysUserController {
 			if(user == null) {
 				// 新增用户
 				if(sysUserService.findByName(record.getName()) != null) {
+					log.warn("用户名已存在!");
 					return HttpResult.ok("用户名已存在!");
 				}
 				String password = PasswordUtils.encode(record.getPassword(), salt);
@@ -81,6 +84,7 @@ public class SysUserController {
 		for(SysUser record:records) {
 			SysUser sysUser = sysUserService.findById(record.getId());
 			if(sysUser != null && SysConstants.ADMIN.equalsIgnoreCase(sysUser.getName())) {
+				log.warn("超级管理员不允许删除!");
 				return HttpResult.error("超级管理员不允许删除!");
 			}
 		}
@@ -160,12 +164,15 @@ public class SysUserController {
 	public HttpResult updatePassword(@RequestParam String password, @RequestParam String newPassword) {
 		SysUser user = sysUserService.findByName(SecurityUtils.getUsername());
 		if(user == null) {
+			log.warn("用户不存在!");
 			HttpResult.error("用户不存在!");
 		}
 		if(SysConstants.ADMIN.equalsIgnoreCase(user.getName())) {
+			log.warn("超级管理员不允许修改!");
 			return HttpResult.error("超级管理员不允许修改!");
 		}
 		if(!PasswordUtils.matches(user.getSalt(), password, user.getPassword())) {
+			log.warn("原密码不正确!");
 			return HttpResult.error("原密码不正确!");
 		}
 		user.setPassword(PasswordUtils.encode(newPassword, user.getSalt()));

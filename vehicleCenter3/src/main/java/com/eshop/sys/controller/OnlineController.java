@@ -19,6 +19,8 @@ import com.eshop.common.page.PageResult;
 import com.eshop.sys.pojo.OnlineUser;
 import com.eshop.sys.service.OnlineUserService;
 
+import lombok.extern.slf4j.Slf4j;
+
 @RestController
 @RequestMapping("online")
 public class OnlineController {
@@ -29,7 +31,6 @@ public class OnlineController {
 	@PreAuthorize("hasAuthority('sys:online:view')")	  
 	@PostMapping(value="/findPage") 
 	public HttpResult findPage(@RequestBody PageRequest pageRequest) {
-		  System.out.println("查询在线用户中...");
 		  return HttpResult.ok(onlineUserService.findPage(pageRequest));
 	}
 	

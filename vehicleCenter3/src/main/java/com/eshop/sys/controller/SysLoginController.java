@@ -30,9 +30,12 @@ import com.eshop.sys.security.JwtUserDetails;
 import com.eshop.sys.service.OnlineUserService;
 import com.eshop.sys.service.SysUserService;
 
+import lombok.extern.slf4j.Slf4j;
+
 
 
 @RestController
+@Slf4j
 public class SysLoginController {
 	
 	@Autowired
@@ -50,25 +53,25 @@ public class SysLoginController {
 	@Log("用户登录")
 	@PostMapping(value = "/login")
 	public HttpResult login(@RequestBody LoginBean loginBean, HttpServletRequest request) throws IOException {
+		/*
 		String path = System.getProperty("user.dir");
-		System.out.println("path="+path);
+		log.debug("path="+path);
 		String path1 = ResourceUtils.getURL("classpath:").getPath();
-		 String absolutePath =URLDecoder.decode(new File(path1).getAbsolutePath(),"utf-8") + File.separator;
-		   String projectRootAbsolutePath = absolutePath;
-
-	        int index = projectRootAbsolutePath.indexOf("file:");
-	        System.out.println("index="+String.valueOf(index));
-	        if (index != -1){
+		String absolutePath =URLDecoder.decode(new File(path1).getAbsolutePath(),"utf-8") + File.separator;
+		String projectRootAbsolutePath = absolutePath;
+	    int index = projectRootAbsolutePath.indexOf("file:");
+	    log.debug("index="+String.valueOf(index));
+	    if (index != -1){
 	            projectRootAbsolutePath = projectRootAbsolutePath.substring(0, index);
 	        }
 
-	        System.out.println("static="+projectRootAbsolutePath + "static" + File.separator);
-		 System.out.println("absolutePath="+absolutePath);
+	    System.out.println("static="+projectRootAbsolutePath + "static" + File.separator);
+		System.out.println("absolutePath="+absolutePath);
 		System.out.println("path1="+path1);
 		String classPath = FileUtil.class.getClassLoader().getResource("").getPath();
 		System.out.println("path1="+classPath);
 		String path2 = new File(classPath).getParentFile().getParentFile().getAbsolutePath();
-		System.out.println("path1="+path2);
+		System.out.println("path1="+path2);*/
 		/*
 		 * File upload = new File(path.getAbsolutePath(),"static/images/upload/");
 		 * if(!upload.exists()) upload.mkdirs();
@@ -76,22 +79,24 @@ public class SysLoginController {
 		 */
 		String username = loginBean.getAccount();
 		String password = loginBean.getPassword();
-		System.out.println("Account:"+username+"password:"+password);
 		// 用户信息
 		SysUser user = sysUserService.findByName(username);
 		// 账号不存在、密码错误
 		if (user == null) {
+			log.warn("账号不存在");
 			return HttpResult.error("账号不存在");
 		}
 		if (!PasswordUtils.matches(user.getSalt(), password, user.getPassword())) {
+			log.warn("密码不正确");
 			return HttpResult.error("密码不正确");
 		}
 		
 		// 账号锁定
 		if (user.getStatus() == 0) {
+			log.warn("账号已被锁定,请联系管理员");
 			return HttpResult.error("账号已被锁定,请联系管理员");
 		}
-		System.out.println("开始系统登录认证。。。");
+		log.info("开始系统登录认证。。。");
 		// 系统登录认证
 		JwtAuthenticatioToken token = SecurityUtils.login(request, username, password, authenticationManager);
 		String strToken = token.getToken();
@@ -103,7 +108,7 @@ public class SysLoginController {
 	        onlineUserService.save(jwtUser, strToken, request);
 		}
 		
-		System.out.println("系统登录认证结束！！！");
+		log.info("系统登录认证结束！！！");
 		return HttpResult.ok(token);
 	}
 
@@ -111,12 +116,13 @@ public class SysLoginController {
 	@GetMapping("/getInfo")
 	public HttpResult getInfo() {
 		String userName = SecurityUtils.getUsername();
-		System.out.println("用户名："+userName);
+		log.info("用户名："+userName);
 		if(userName != null)
 		{
 		JwtUserDetails jwtUser =  (JwtUserDetails) userDetailsService.loadUserByUsername(userName);
 		return HttpResult.ok(jwtUser);
 		}else {
+			log.warn("用户令牌过期或者错误");
 			return HttpResult.error("用户令牌过期或者错误");
 		}
 	}
@@ -124,9 +130,9 @@ public class SysLoginController {
 	@Log("用户注册")
 	@PostMapping(value = "/register")
 	public HttpResult saveRegisterInfo(@RequestBody SysUser record) {
-		System.out.println("user:"+record);
 		SysUser user = sysUserService.findByName(record.getName());
 		if(user !=null) {
+			log.warn("用户名已存在，请重新申请！");
 			return HttpResult.error("用户名已存在，请重新申请！");
 		}else {
 			String salt = PasswordUtils.getSalt();

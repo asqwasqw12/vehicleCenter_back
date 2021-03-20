@@ -1,4 +1,4 @@
-package com.eshop.jt808.config;
+package com.eshop.gateway.gb32960.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

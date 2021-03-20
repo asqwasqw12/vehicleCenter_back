@@ -17,14 +17,16 @@ import io.netty.buffer.ByteBufUtil;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
 import io.netty.util.ReferenceCountUtil;
+import lombok.extern.slf4j.Slf4j;
 
 
 //@Description:JT808协议解码器,转义规则: 0x7d 0x01 -> 0x7d
 //* 0x7d 0x02 -> 0x7e
+@Slf4j
 public class JT808Decoder extends ByteToMessageDecoder {
 	@Override
     protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) {
-        System.out.println("decode<<<<< ip:"+ctx.channel().remoteAddress()+"hex:"+ByteBufUtil.hexDump(in));
+        log.info("decode<<<<< ip:"+ctx.channel().remoteAddress()+"hex:"+ByteBufUtil.hexDump(in));
         DataPacket msg = decode(in);
         if (msg != null) {
             out.add(msg);
@@ -38,15 +40,14 @@ public class JT808Decoder extends ByteToMessageDecoder {
         //转义
         byte[] raw = new byte[in.readableBytes()];
         in.readBytes(raw);
-        System.out.println("raw:"+raw);
+        log.info("raw:"+raw);
         ByteBuf escape = revert(raw);
         //校验
         byte pkgCheckSum = escape.getByte(escape.writerIndex() - 1);
         escape.writerIndex(escape.writerIndex() - 1);//排除校验码
         byte calCheckSum = JT808Util.XorSumBytes(escape);
         if (pkgCheckSum != calCheckSum) {
-            //log.warn("校验码错误,pkgCheckSum:{},calCheckSum:{}", pkgCheckSum, calCheckSum);
-            System.out.println("校验码错误,pkgCheckSum:"+pkgCheckSum+",calCheckSum:"+ calCheckSum);
+            log.warn("校验码错误,pkgCheckSum:{},calCheckSum:{}", pkgCheckSum, calCheckSum);
             ReferenceCountUtil.safeRelease(escape);
             return null;
         }
@@ -75,7 +76,7 @@ public class JT808Decoder extends ByteToMessageDecoder {
                 buf.writeByte(raw[i]);
             }
         }
-        System.out.println("buf:"+buf);
+        log.info("buf:"+buf);
         return buf;
     }
 

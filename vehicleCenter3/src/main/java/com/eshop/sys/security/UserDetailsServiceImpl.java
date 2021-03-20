@@ -14,7 +14,10 @@ import org.springframework.stereotype.Service;
 import com.eshop.sys.pojo.SysUser;
 import com.eshop.sys.service.SysUserService;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Service("userDetailsServiceImpl")
+@Slf4j
 public class UserDetailsServiceImpl implements UserDetailsService {
 	
 	 @Autowired
@@ -22,7 +25,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		System.out.println("执行UserDetails loadUserByUsername...");
+		log.info("执行UserDetails loadUserByUsername...");
 		SysUser user = sysUserService.findByName(username);
         if (user == null) {
             throw new UsernameNotFoundException("该用户不存在");
@@ -31,7 +34,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         Set<String> permissions = sysUserService.findPermissions(user.getName());
         List<GrantedAuthority> grantedAuthorities = permissions.stream().map(GrantedAuthorityImpl::new).collect(Collectors.toList());
         for(GrantedAuthority authority:grantedAuthorities) {
-        System.out.println("Authority:"+authority.getAuthority());
+          log.info("Authority:"+authority.getAuthority());
         }
         //return new JwtUserDetails(user.getName(), user.getPassword(), user.getSalt(), grantedAuthorities);
         return createJwtUserDetails(user,grantedAuthorities);

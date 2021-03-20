@@ -84,7 +84,6 @@ public class VehicleLoginMsg extends GB32960DataPacket{
     		List<String> codeList = new ArrayList<>();
     		for(int i=0;i<this.count;i++) {
     			String code = this.payload.readCharSequence(this.length, gb32960Const.ASCII_CHARSET).toString();
-    			System.out.println("code="+code);
     			codeList.add(code);
     		}
     		this.codes = codeList;
