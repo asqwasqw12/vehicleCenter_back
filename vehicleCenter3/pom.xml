@@ -213,6 +213,22 @@
          				<exclude>/**/*.xml</exclude>
       				</excludes>
    				</configuration> -->
+   				<configuration>
+   					<mainClass>com.eshop.VehicleCenter3Application</mainClass>
+                    <!-- <includes>
+                        <include>
+                            <groupId>nothing</groupId>
+                            <artifactId>nothing</artifactId>
+                        </include>
+                    </includes> -->
+                </configuration>
+   				<executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
 			</plugin>
 		</plugins>
 	</build>
