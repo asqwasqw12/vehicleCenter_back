@@ -20,6 +20,10 @@
 		<logback.version>1.2.3</logback.version>
 		<druid.version>1.1.10</druid.version>
         <hutool.version>5.0.6</hutool.version>
+ 		<!-- 跳过测试 -->
+    	<skipTests>true</skipTests>
+    	<!-- 指定要执行的启动类，如何不指定的话，spring会找有这个【public static void main(String[] args】方法的类，当可执行类 -->
+    	<start-class>com.eshop.VehicleCenter3Application</start-class>
 	</properties>
 
 	<dependencies>
@@ -202,6 +206,13 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<version>2.1.13.RELEASE</version>
+				<!-- <configuration>
+                	<excludes>
+        			 注意这玩意从编译结果目录开始算目录结构
+         				<exclude>application.yml</exclude>
+         				<exclude>/**/*.xml</exclude>
+      				</excludes>
+   				</configuration> -->
 			</plugin>
 		</plugins>
 	</build>
