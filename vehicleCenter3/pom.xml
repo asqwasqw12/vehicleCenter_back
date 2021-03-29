@@ -207,63 +207,25 @@
 			</plugin>
 		</plugins>
 	</build> -->
-	
-    <!-- 将项目中的配置文件分出来打包 -->
-	<!-- <build>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-				<version>2.1.13.RELEASE</version>
-				<configuration>
-					<archive>
-						<manifest>
-							<addClasspath>true</addClasspath>
-							<classpathPrefix></classpathPrefix>
-							<mainClass>com.eshop.VehicleCenter3Application</mainClass>
-						</manifest>
-					</archive>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-assembly-plugin</artifactId>
-				<version>3.3.0</version>
-				The configuration of the plugin
-				<configuration>
-					<descriptors>
-						<descriptor>src/main/resources/config/package.xml</descriptor>
-					</descriptors>
-				</configuration>
-				<executions>
-					<execution>
-						<id>make-assembly</id>
-						<phase>package</phase>
-						<goals>
-							<goal>single</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
-	</build> -->
-	
+		
+	<!-- 将项目中的配置文件分出来打包 -->
 	<build>
 		<plugins>
 			<plugin>
 				<groupId>org.apche.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
+				<version>3.0.2</version>
 				<configuration>
 					<!-- 不打包资源文件 -->
 					<excludes>
-						<exclude>bin/**</exclude>
-						<exclude>config/**</exclude>
-						<exclude>sqlmap/**</exclude>
-						<exclude>static/**</exclude>
-						<exclude>ip2region/**</exclude>
-						<exclude>*.yml</exclude>
-						<exclude>*.xml</exclude>
-						<exclude>*.properties</exclude>
+						<exclude>**/bin/**</exclude>
+						<exclude>**/config/**</exclude>
+						<exclude>**/sqlmap/**</exclude>
+						<exclude>**/static/**</exclude>
+						<exclude>**/ip2region/**</exclude>
+						<exclude>**/*.yml</exclude>
+						<exclude>/logback-spring.xml</exclude>
+						<exclude>**/*.properties</exclude>
 					</excludes>
 					<outputDirectory>${project.build.directory}</outputDirectory>
 				</configuration>
@@ -309,6 +271,22 @@
 							<outputDirectory>${project.build.directory}/resources</outputDirectory>
 						</configuration>
 					</execution>
+					<!-- <execution>
+						<id>copy-bin</id>
+						<phase>package</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<encoding>UTF-8</encoding>
+							<resources>
+								<resource>
+									<directory>bin</directory>
+								</resource>
+							</resources>
+							<outputDirectory>${project.build.directory}/bin</outputDirectory>
+						</configuration>
+					</execution> -->
 				</executions>
 			</plugin>
 			
@@ -328,8 +306,10 @@
 					</includes>
 					<layout>ZIP</layout>
 					<!-- 使用外部配置文件，jar包里没有资源文件 -->
+					<!-- <addResources>true</addResources> -->
 					<addResources>true</addResources>
 					<outputDirectory>${project.build.directory}</outputDirectory>
+					<!-- <outputDirectory>${project.build.directory}/test</outputDirectory> -->
 				</configuration>
 				<executions>
 					<execution>

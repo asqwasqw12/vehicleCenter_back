@@ -10,17 +10,24 @@
     <fileSets>
        <fileSet>
        	   <directory>${project.build.directory}</directory>
-       	   <outputDirectory>/</outputDirectory>
+       	   <outputDirectory></outputDirectory>
        	   <includes>
        	   	   <include>${artifact.artifactId}-${artifact.version}.jar</include>
        	   </includes>
        </fileSet>
+      <!--  <fileSet>
+       	   <directory>${project.build.directory}/test</directory>
+       	   <outputDirectory>${file.separator}test</outputDirectory>
+       	   <includes>
+       	   	   <include>${artifact.artifactId}-${artifact.version}.jar</include>
+       	   </includes>
+       </fileSet> -->
        <fileSet>
            <directory>src/main/resources</directory>
        	   <outputDirectory>${file.separator}resources</outputDirectory>
        </fileSet>
        <fileSet>
-           <directory>../bin</directory>
+           <directory>bin/</directory>
        	   <outputDirectory>${file.separator}bin</outputDirectory>
        </fileSet>
        <fileSet>

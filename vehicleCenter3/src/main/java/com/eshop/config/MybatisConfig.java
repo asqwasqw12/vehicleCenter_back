@@ -23,8 +23,8 @@ public class MybatisConfig {
     sessionFactory.setTypeAliasesPackage("com.eshop.**.pojo");    // 扫描pojo
     
     PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
-    sessionFactory.setMapperLocations(resolver.getResources("classpath*:**/sqlmap/*.xml"));    // 扫描映射文件
-    
+    //sessionFactory.setMapperLocations(resolver.getResources("classpath*:**/sqlmap/*.xml"));    // 扫描映射文件
+    sessionFactory.setMapperLocations(resolver.getResources("classpath:resources/sqlmap/*.xml"));    // 扫描映射文件
     return sessionFactory.getObject();
   }
 }
